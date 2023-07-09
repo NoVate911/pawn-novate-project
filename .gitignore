@@ -1,1 +1,6 @@
 .vscode
+
+gamemodes/gamemode.amx
+logs
+
+server_log.txt
