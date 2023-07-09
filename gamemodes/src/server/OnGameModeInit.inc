@@ -14,6 +14,8 @@ public OnGameModeInit()
         case 1049: return printf("%s Не удалось подключиться к базе данных. Неверное имя базы данных. (Код ошибки: %d)", DEBUG_MYSQL, mysql_errno(SInfo[MySQL]));
         default: printf("%s База данных подключена и готова к работе.", DEBUG_MYSQL);
     }
+
+    SetGameModeText(SERVER_VERSION);
     
     return printf("%s Мод загружен за %dms.", DEBUG_LOAD, GetTickCount() - tickCount);
 }

@@ -9,9 +9,13 @@
 Данная сборка была написана русским разработчиком.
 Некоторый переведённый текст может отображаться с ошибками или же вовсе не будет переведён.
 
+Если появились неизвестные символы, то откройте проект с кодировкой "Windows 1251 (cp1251)".
+
 -- [ ENG ] --
 This build was written by a Russian developer.
 Some translated text may be displayed with errors or will not be translated at all.
+
+If unknown characters appear, then open the project with the encoding "Windows 1251 (cp1251)".
 
 */
 
@@ -34,6 +38,11 @@ main(){}
 #include "./src/config.inc"
 #include "./src/utils.inc"
 
+/*      [ ДИАЛОГОВЫЕ ОКНА ]      */
+/*      [ DIALOG BOXES ]      */
+#include "./src/dialogs/Authorization.inc"
+#include "./src/dialogs/Kick.inc"
+
 /*      [ СЕРВЕРНАЯ СТОРОНА ]      */
 /*      [ SERVER SIDE ]      */
 #include "./src/server/OnGameModeInit.inc"
@@ -41,5 +50,6 @@ main(){}
 
 /*      [ КЛИЕНТСКАЯ СТОРОНА ]      */
 /*      [ CLIENT SIDE ]      */
+#include "./src/player/timers/OnPlayerSecond.inc"
 #include "./src/player/OnPlayerConnect.inc"
 #include "./src/player/OnPlayerDisconnect.inc"
