@@ -5,12 +5,12 @@ dCreate:Dlg_Char_List(playerid)
     for(new i = 0; i < MAX_CHARACTERS; i++)
     {
         if(CInfo[playerid][i][ID] == 0)
-            format(temp, sizeof(temp), ""C_GRAY"[%d] "C_WHITE"Ñîçäàòü ïåðñîíàæà\n", i+1);
+            format(temp, sizeof(temp), ""C_GRAY"[%d] "C_WHITE"Ð¡Ð¾Ð·Ð´Ð°Ñ‚ÑŒ Ð¿ÐµÑ€ÑÐ¾Ð½Ð°Ð¶Ð°\n", i+1);
         else
             format(temp, sizeof(temp), ""C_GRAY"[%d] "C_WHITE"%s %s "C_GRAY"(%d LVL / %d EXP)\n", i+1, CInfo[playerid][i][FirstName], CInfo[playerid][i][LastName], CInfo[playerid][i][Level], CInfo[playerid][i][Exp]);
         strcat(string, temp, sizeof(string));
     }
-    return Dialog_Open(playerid, Dialog:Dlg_Char_List, DIALOG_STYLE_LIST, ""C_WHITE"Âûáîð ïåðñîíàæà", string, "Âûáîð", "Âûõîä");
+    return Dialog_Open(playerid, Dialog:Dlg_Char_List, DIALOG_STYLE_LIST, ""C_WHITE"Ð’Ñ‹Ð±Ð¾Ñ€ Ð¿ÐµÑ€ÑÐ¾Ð½Ð°Ð¶Ð°", string, "Ð’Ñ‹Ð±Ð¾Ñ€", "Ð’Ñ‹Ñ…Ð¾Ð´");
 }
 
 dResponse:Dlg_Char_List(playerid)
@@ -38,16 +38,16 @@ dResponse:Dlg_Char_List(playerid)
         }
     }
     else
-        Player_Kick(playerid, _, "Âûõîä");
+        Player_Kick(playerid, _, "Ð’Ñ‹Ñ…Ð¾Ð´");
     return 1;
 }
 
 dCreate:Dlg_Char_CreateFirstName(playerid)
 {
     static const message[] = "\
-    "C_WHITE"\n\\cÂâåäèòå èìÿ ñâîåãî áóäóùåãî ïåðñîíàæà.\n\
-    "C_WHITE"\\cÏîñëå ââîäà èìåíè, íàæìèòå "C_EMERALD"\"Äàëåå\""C_WHITE".\n\n";
-    return Dialog_Open(playerid, Dialog:Dlg_Char_CreateFirstName, DIALOG_STYLE_INPUT, ""C_GRAY"Ðåãèñòðàöèÿ "C_BLACK"| "C_WHITE"Ñîçäàíèå ïåðñîíàæà", message, "Äàëåå", "");
+    "C_WHITE"\n\\cÐ’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð¸Ð¼Ñ ÑÐ²Ð¾ÐµÐ³Ð¾ Ð±ÑƒÐ´ÑƒÑ‰ÐµÐ³Ð¾ Ð¿ÐµÑ€ÑÐ¾Ð½Ð°Ð¶Ð°.\n\
+    "C_WHITE"\\cÐŸÐ¾ÑÐ»Ðµ Ð²Ð²Ð¾Ð´Ð° Ð¸Ð¼ÐµÐ½Ð¸, Ð½Ð°Ð¶Ð¼Ð¸Ñ‚Ðµ "C_EMERALD"\"Ð”Ð°Ð»ÐµÐµ\""C_WHITE".\n\n";
+    return Dialog_Open(playerid, Dialog:Dlg_Char_CreateFirstName, DIALOG_STYLE_INPUT, ""C_GRAY"Ð ÐµÐ³Ð¸ÑÑ‚Ñ€Ð°Ñ†Ð¸Ñ "C_BLACK"| "C_WHITE"Ð¡Ð¾Ð·Ð´Ð°Ð½Ð¸Ðµ Ð¿ÐµÑ€ÑÐ¾Ð½Ð°Ð¶Ð°", message, "Ð”Ð°Ð»ÐµÐµ", "");
 }
 
 dResponse:Dlg_Char_CreateFirstName(playerid)
@@ -56,13 +56,13 @@ dResponse:Dlg_Char_CreateFirstName(playerid)
     {
         if(!strlen(inputtext))
         {
-            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Âñå ïîëÿ äîëæíû áûòü çàïîëíåíû.");
+            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Ð’ÑÐµ Ð¿Ð¾Ð»Ñ Ð´Ð¾Ð»Ð¶Ð½Ñ‹ Ð±Ñ‹Ñ‚ÑŒ Ð·Ð°Ð¿Ð¾Ð»Ð½ÐµÐ½Ñ‹.");
             return Dialog_Show(playerid, Dialog:Dlg_Char_CreateFirstName);
         }
 
         if(!(3 < strlen(inputtext) < MAX_PLAYER_NAME))
         {
-            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Èìÿ ñëèøêîì êîðîòêîå èëè ñëèøêîì äëèííîå.");
+            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Ð˜Ð¼Ñ ÑÐ»Ð¸ÑˆÐºÐ¾Ð¼ ÐºÐ¾Ñ€Ð¾Ñ‚ÐºÐ¾Ðµ Ð¸Ð»Ð¸ ÑÐ»Ð¸ÑˆÐºÐ¾Ð¼ Ð´Ð»Ð¸Ð½Ð½Ð¾Ðµ.");
             return Dialog_Show(playerid, Dialog:Dlg_Char_CreateFirstName);
         }
 
@@ -74,7 +74,7 @@ dResponse:Dlg_Char_CreateFirstName(playerid)
         }
         else
         {
-            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Èìÿ ìîæåò ñîäåðæàòü òîëüêî ëàòèíñêèå ñèìâîëû.");
+            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Ð˜Ð¼Ñ Ð¼Ð¾Ð¶ÐµÑ‚ ÑÐ¾Ð´ÐµÑ€Ð¶Ð°Ñ‚ÑŒ Ñ‚Ð¾Ð»ÑŒÐºÐ¾ Ð»Ð°Ñ‚Ð¸Ð½ÑÐºÐ¸Ðµ ÑÐ¸Ð¼Ð²Ð¾Ð»Ñ‹.");
             return Dialog_Show(playerid, Dialog:Dlg_Char_CreateFirstName);
         }
         Regex_Delete(regex_firstname_check);
@@ -85,9 +85,9 @@ dResponse:Dlg_Char_CreateFirstName(playerid)
 dCreate:Dlg_Char_CreateLastName(playerid)
 {
     static const message[] = "\
-    "C_WHITE"\n\\cÂâåäèòå ôàìèëèþ ñâîåãî áóäóùåãî ïåðñîíàæà.\n\
-    "C_WHITE"\\cÏîñëå ââîäà ôàìèëèè, íàæìèòå "C_EMERALD"\"Äàëåå\""C_WHITE".\n\n";
-    return Dialog_Open(playerid, Dialog:Dlg_Char_CreateLastName, DIALOG_STYLE_INPUT, ""C_GRAY"Ðåãèñòðàöèÿ "C_BLACK"| "C_WHITE"Ñîçäàíèå ïåðñîíàæà", message, "Äàëåå", "");
+    "C_WHITE"\n\\cÐ’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ñ„Ð°Ð¼Ð¸Ð»Ð¸ÑŽ ÑÐ²Ð¾ÐµÐ³Ð¾ Ð±ÑƒÐ´ÑƒÑ‰ÐµÐ³Ð¾ Ð¿ÐµÑ€ÑÐ¾Ð½Ð°Ð¶Ð°.\n\
+    "C_WHITE"\\cÐŸÐ¾ÑÐ»Ðµ Ð²Ð²Ð¾Ð´Ð° Ñ„Ð°Ð¼Ð¸Ð»Ð¸Ð¸, Ð½Ð°Ð¶Ð¼Ð¸Ñ‚Ðµ "C_EMERALD"\"Ð”Ð°Ð»ÐµÐµ\""C_WHITE".\n\n";
+    return Dialog_Open(playerid, Dialog:Dlg_Char_CreateLastName, DIALOG_STYLE_INPUT, ""C_GRAY"Ð ÐµÐ³Ð¸ÑÑ‚Ñ€Ð°Ñ†Ð¸Ñ "C_BLACK"| "C_WHITE"Ð¡Ð¾Ð·Ð´Ð°Ð½Ð¸Ðµ Ð¿ÐµÑ€ÑÐ¾Ð½Ð°Ð¶Ð°", message, "Ð”Ð°Ð»ÐµÐµ", "");
 }
 
 dResponse:Dlg_Char_CreateLastName(playerid)
@@ -96,13 +96,13 @@ dResponse:Dlg_Char_CreateLastName(playerid)
     {
         if(!strlen(inputtext))
         {
-            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Âñå ïîëÿ äîëæíû áûòü çàïîëíåíû.");
+            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Ð’ÑÐµ Ð¿Ð¾Ð»Ñ Ð´Ð¾Ð»Ð¶Ð½Ñ‹ Ð±Ñ‹Ñ‚ÑŒ Ð·Ð°Ð¿Ð¾Ð»Ð½ÐµÐ½Ñ‹.");
             return Dialog_Show(playerid, Dialog:Dlg_Char_CreateLastName);
         }
 
         if(!(3 < strlen(inputtext) < MAX_PLAYER_NAME))
         {
-            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Ôàìèëèÿ ñëèøêîì êîðîòêàÿ èëè ñëèøêîì äëèííàÿ.");
+            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Ð¤Ð°Ð¼Ð¸Ð»Ð¸Ñ ÑÐ»Ð¸ÑˆÐºÐ¾Ð¼ ÐºÐ¾Ñ€Ð¾Ñ‚ÐºÐ°Ñ Ð¸Ð»Ð¸ ÑÐ»Ð¸ÑˆÐºÐ¾Ð¼ Ð´Ð»Ð¸Ð½Ð½Ð°Ñ.");
             return Dialog_Show(playerid, Dialog:Dlg_Char_CreateLastName);
         }
 
@@ -114,7 +114,7 @@ dResponse:Dlg_Char_CreateLastName(playerid)
         }
         else
         {
-            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Ôàìèëèÿ ìîæåò ñîäåðæàòü òîëüêî ëàòèíñêèå ñèìâîëû.");
+            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Ð¤Ð°Ð¼Ð¸Ð»Ð¸Ñ Ð¼Ð¾Ð¶ÐµÑ‚ ÑÐ¾Ð´ÐµÑ€Ð¶Ð°Ñ‚ÑŒ Ñ‚Ð¾Ð»ÑŒÐºÐ¾ Ð»Ð°Ñ‚Ð¸Ð½ÑÐºÐ¸Ðµ ÑÐ¸Ð¼Ð²Ð¾Ð»Ñ‹.");
             return Dialog_Show(playerid, Dialog:Dlg_Char_CreateLastName);
         }
         Regex_Delete(regex_lastname_check);
@@ -125,9 +125,9 @@ dResponse:Dlg_Char_CreateLastName(playerid)
 dCreate:Dlg_Char_CreateAge(playerid)
 {
     static const message[] = "\
-    "C_WHITE"\n\\cÂâåäèòå âîçðàñò ñâîåãî áóäóùåãî ïåðñîíàæà.\n\
-    "C_WHITE"\\cÏîñëå ââîäà âîçðàñòà, íàæìèòå "C_EMERALD"\"Äàëåå\""C_WHITE".\n\n";
-    return Dialog_Open(playerid, Dialog:Dlg_Char_CreateAge, DIALOG_STYLE_INPUT, ""C_GRAY"Ðåãèñòðàöèÿ "C_BLACK"| "C_WHITE"Ñîçäàíèå ïåðñîíàæà", message, "Äàëåå", "");
+    "C_WHITE"\n\\cÐ’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð²Ð¾Ð·Ñ€Ð°ÑÑ‚ ÑÐ²Ð¾ÐµÐ³Ð¾ Ð±ÑƒÐ´ÑƒÑ‰ÐµÐ³Ð¾ Ð¿ÐµÑ€ÑÐ¾Ð½Ð°Ð¶Ð°.\n\
+    "C_WHITE"\\cÐŸÐ¾ÑÐ»Ðµ Ð²Ð²Ð¾Ð´Ð° Ð²Ð¾Ð·Ñ€Ð°ÑÑ‚Ð°, Ð½Ð°Ð¶Ð¼Ð¸Ñ‚Ðµ "C_EMERALD"\"Ð”Ð°Ð»ÐµÐµ\""C_WHITE".\n\n";
+    return Dialog_Open(playerid, Dialog:Dlg_Char_CreateAge, DIALOG_STYLE_INPUT, ""C_GRAY"Ð ÐµÐ³Ð¸ÑÑ‚Ñ€Ð°Ñ†Ð¸Ñ "C_BLACK"| "C_WHITE"Ð¡Ð¾Ð·Ð´Ð°Ð½Ð¸Ðµ Ð¿ÐµÑ€ÑÐ¾Ð½Ð°Ð¶Ð°", message, "Ð”Ð°Ð»ÐµÐµ", "");
 }
 
 dResponse:Dlg_Char_CreateAge(playerid)
@@ -136,13 +136,13 @@ dResponse:Dlg_Char_CreateAge(playerid)
     {
         if(!strval(inputtext))
         {
-            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Âñå ïîëÿ äîëæíû áûòü çàïîëíåíû.");
+            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Ð’ÑÐµ Ð¿Ð¾Ð»Ñ Ð´Ð¾Ð»Ð¶Ð½Ñ‹ Ð±Ñ‹Ñ‚ÑŒ Ð·Ð°Ð¿Ð¾Ð»Ð½ÐµÐ½Ñ‹.");
             return Dialog_Show(playerid, Dialog:Dlg_Char_CreateAge);
         }
 
         if(!(MIN_CHARACTER_AGE < strval(inputtext) < MAX_CHARACTER_AGE))
         {
-            SCMf(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Âîçðàñò ïåðñîíàæà ìîæåò áûòü îò %d äî %d ëåò.", MIN_CHARACTER_AGE, MAX_CHARACTER_AGE);
+            SCMf(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Ð’Ð¾Ð·Ñ€Ð°ÑÑ‚ Ð¿ÐµÑ€ÑÐ¾Ð½Ð°Ð¶Ð° Ð¼Ð¾Ð¶ÐµÑ‚ Ð±Ñ‹Ñ‚ÑŒ Ð¾Ñ‚ %d Ð´Ð¾ %d Ð»ÐµÑ‚.", MIN_CHARACTER_AGE, MAX_CHARACTER_AGE);
             return Dialog_Show(playerid, Dialog:Dlg_Char_CreateAge);
         }
 
@@ -155,8 +155,8 @@ dResponse:Dlg_Char_CreateAge(playerid)
 dCreate:Dlg_Char_CreateSex(playerid)
 {
     static const message[] = "\
-    "C_WHITE"\n\\cÂûáåðèòå ïîë áóäóùåãî ïåðñîíàæà.\n\n";
-    return Dialog_Open(playerid, Dialog:Dlg_Char_CreateSex, DIALOG_STYLE_MSGBOX, ""C_GRAY"Ðåãèñòðàöèÿ "C_BLACK"| "C_WHITE"Ñîçäàíèå ïåðñîíàæà", message, "Ìóæñêîé", "Æåíñêèé");
+    "C_WHITE"\n\\cÐ’Ñ‹Ð±ÐµÑ€Ð¸Ñ‚Ðµ Ð¿Ð¾Ð» Ð±ÑƒÐ´ÑƒÑ‰ÐµÐ³Ð¾ Ð¿ÐµÑ€ÑÐ¾Ð½Ð°Ð¶Ð°.\n\n";
+    return Dialog_Open(playerid, Dialog:Dlg_Char_CreateSex, DIALOG_STYLE_MSGBOX, ""C_GRAY"Ð ÐµÐ³Ð¸ÑÑ‚Ñ€Ð°Ñ†Ð¸Ñ "C_BLACK"| "C_WHITE"Ð¡Ð¾Ð·Ð´Ð°Ð½Ð¸Ðµ Ð¿ÐµÑ€ÑÐ¾Ð½Ð°Ð¶Ð°", message, "ÐœÑƒÐ¶ÑÐºÐ¾Ð¹", "Ð–ÐµÐ½ÑÐºÐ¸Ð¹");
 }
 
 dResponse:Dlg_Char_CreateSex(playerid)
@@ -171,10 +171,10 @@ dResponse:Dlg_Char_CreateSex(playerid)
 dCreate:Dlg_Char_CreateRace(playerid)
 {
     static const message[] = "\
-    "C_WHITE"Åâðîïåîèäíàÿ\n\
-    "C_WHITE"Íåãðîèäíàÿ\n\
-    "C_WHITE"Ìîíãîëîèäíàÿ";
-    return Dialog_Open(playerid, Dialog:Dlg_Char_CreateRace, DIALOG_STYLE_LIST, ""C_GRAY"Ðåãèñòðàöèÿ "C_BLACK"| "C_WHITE"Ñîçäàíèå ïåðñîíàæà", message, "Ñîçäàòü", "");
+    "C_WHITE"Ð•Ð²Ñ€Ð¾Ð¿ÐµÐ¾Ð¸Ð´Ð½Ð°Ñ\n\
+    "C_WHITE"ÐÐµÐ³Ñ€Ð¾Ð¸Ð´Ð½Ð°Ñ\n\
+    "C_WHITE"ÐœÐ¾Ð½Ð³Ð¾Ð»Ð¾Ð¸Ð´Ð½Ð°Ñ";
+    return Dialog_Open(playerid, Dialog:Dlg_Char_CreateRace, DIALOG_STYLE_LIST, ""C_GRAY"Ð ÐµÐ³Ð¸ÑÑ‚Ñ€Ð°Ñ†Ð¸Ñ "C_BLACK"| "C_WHITE"Ð¡Ð¾Ð·Ð´Ð°Ð½Ð¸Ðµ Ð¿ÐµÑ€ÑÐ¾Ð½Ð°Ð¶Ð°", message, "Ð¡Ð¾Ð·Ð´Ð°Ñ‚ÑŒ", "");
 }
 
 dResponse:Dlg_Char_CreateRace(playerid)
@@ -218,8 +218,8 @@ dResponse:Dlg_Char_CreateRace(playerid)
             Player_CharacterShow(playerid);
         else
         {
-            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Ïðè ñîçäàíèè ïåðñîíàæà ïðîèçîøëà îøèáêà. Îáðàòèòåñü ê Àäìèíèñòðàöèè!");
-            Player_Kick(playerid, _, "Îøèáêà");
+            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"ÐŸÑ€Ð¸ ÑÐ¾Ð·Ð´Ð°Ð½Ð¸Ð¸ Ð¿ÐµÑ€ÑÐ¾Ð½Ð°Ð¶Ð° Ð¿Ñ€Ð¾Ð¸Ð·Ð¾ÑˆÐ»Ð° Ð¾ÑˆÐ¸Ð±ÐºÐ°. ÐžÐ±Ñ€Ð°Ñ‚Ð¸Ñ‚ÐµÑÑŒ Ðº ÐÐ´Ð¼Ð¸Ð½Ð¸ÑÑ‚Ñ€Ð°Ñ†Ð¸Ð¸!");
+            Player_Kick(playerid, _, "ÐžÑˆÐ¸Ð±ÐºÐ°");
         }
         cache_delete(cache);
     }

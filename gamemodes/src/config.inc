@@ -1,4 +1,4 @@
-/*      [ — »Õ€ œ≈–—ŒÕ¿∆≈… ]      */
+/*      [ –°–ö–ò–ù–´ –ü–ï–†–°–û–ù–ê–ñ–ï–ô ]      */
 /*      [ CHARACTER SKINS ]      */
 new const Skins_Male[9][4] = {
     {18,21,22,28},
@@ -24,7 +24,7 @@ new const Skins_Female[9][2] = {
     {13,69}
 };
 
-/*      [ œŒ«»÷»» œŒﬂ¬À≈Õ»ﬂ (œ–» —œ¿¬Õ≈ / —œ¿¬Õ Õ≈ Õ¿…ƒ≈Õ) ]      */
+/*      [ –ü–û–ó–ò–¶–ò–ò –ü–û–Ø–í–õ–ï–ù–ò–Ø (–ü–†–ò –°–ü–ê–í–ù–ï / –°–ü–ê–í–ù –ù–ï –ù–ê–ô–î–ï–ù) ]      */
 /*      [ SPAWN POSITIONS (AT SPAWN / SPAWN NOT FOUND) ]      */
 new const Float:Positions_Spawn[MAX_POSITIONS_SPAWN][4] = { // X, Y, Z, Rotation
     {0.0, 0.0, 3.0, 0.0} // Default

@@ -1,4 +1,4 @@
-/*      [ оепелеммше дкъ яепбепю ]      */
+/*      [ п÷п∙п═п∙п°п∙п²п²п╚п∙ п■п⌡п╞ п║п∙п═п▓п∙п═п░ ]      */
 /*      [ SERVER VARIABLES ]      */
 enum ServerInfo
 {
@@ -6,7 +6,7 @@ enum ServerInfo
 }
 new SInfo[ServerInfo];
 
-/*      [ оепелеммше дкъ хцпнйю ]      */
+/*      [ п÷п∙п═п∙п°п∙п²п²п╚п∙ п■п⌡п╞ п≤п⌠п═п·п п░ ]      */
 /*      [ PLAYER INFORMATION ]      */
 enum PlayerInfo
 {
@@ -29,7 +29,7 @@ enum PlayerInfo
 }
 new PInfo[MAX_PLAYERS][PlayerInfo];
 
-/*      [ оепелеммше рюилепю дкъ хцпнйю ]      */
+/*      [ п÷п∙п═п∙п°п∙п²п²п╚п∙ п╒п░п≥п°п∙п═п░ п■п⌡п╞ п≤п⌠п═п·п п░ ]      */
 /*      [ INFORMATION ABOUT PLAYER TIMERS ]      */
 enum PlayerTimerInfo
 {
@@ -40,7 +40,7 @@ enum PlayerTimerInfo
 }
 new PTimerInfo[MAX_PLAYERS][PlayerTimerInfo];
 
-/*      [ оепелеммше йхйю дкъ хцпнйю ]      */
+/*      [ п÷п∙п═п∙п°п∙п²п²п╚п∙ п п≤п п░ п■п⌡п╞ п≤п⌠п═п·п п░ ]      */
 /*      [ INFORMATION ABOUT THE PLAYER'S KICK ]      */
 enum PlayerKickInfo
 {
@@ -49,7 +49,7 @@ enum PlayerKickInfo
 }
 new PKickInfo[MAX_PLAYERS][PlayerKickInfo];
 
-/*      [ оепелеммше дкъ оепянмюфю ]      */
+/*      [ п÷п∙п═п∙п°п∙п²п²п╚п∙ п■п⌡п╞ п÷п∙п═п║п·п²п░п√п░ ]      */
 /*      [ VARIABLES FOR THE CHARACTER ]      */
 enum CharacterInfo
 {

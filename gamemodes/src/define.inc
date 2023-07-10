@@ -1,40 +1,40 @@
-/*      [ ”—“¿ÕŒ¬ ¿ ÕŒ¬€’ «Õ¿◊≈Õ»… ]      */
+/*      [ –£–°–¢–ê–ù–û–í–ö–ê –ù–û–í–´–• –ó–ù–ê–ß–ï–ù–ò–ô ]      */
 /*      [ SETTING NEW VALUES ]      */
 #undef MAX_PLAYER_NAME
     #define MAX_PLAYER_NAME         (24)
 #undef MAX_PLAYERS
     #define MAX_PLAYERS             (50)
 
-/*      [ ÿ¿¡ÀŒÕ ƒÀﬂ ¬€¬Œƒ¿ ]      */
+/*      [ –®–ê–ë–õ–û–ù –î–õ–Ø –í–´–í–û–î–ê ]      */
 /*      [ TEMPLATES FOR OUTPUT ]      */
 #define DEBUG_MYSQL                 "[MySQL] |"
 #define DEBUG_LOAD                  "[LOAD] |"
 #define DEBUG_INFO                  "[INFO] |"
 
-/*      [ ÿ¿¡ÀŒÕ “›√¿ ”¬≈ƒŒÃÀ≈Õ»… ]      */
+/*      [ –®–ê–ë–õ–û–ù –¢–≠–ì–ê –£–í–ï–î–û–ú–õ–ï–ù–ò–ô ]      */
 /*      [ NOTIFICATION TAG TEMPLATES ]      */
-#define NOTIF_ERROR                 ""C_RED"[Œ¯Ë·Í‡]"
-#define NOTIF_WARNING               ""C_YELLOW"[¬ÌËÏ‡ÌËÂ]"
-#define NOTIF_SUCCESS               ""C_GREEN"[”ÒÔÂ¯ÌÓ]"
+#define NOTIF_ERROR                 ""C_RED"[–û—à–∏–±–∫–∞]"
+#define NOTIF_WARNING               ""C_YELLOW"[–í–Ω–∏–º–∞–Ω–∏–µ]"
+#define NOTIF_SUCCESS               ""C_GREEN"[–£—Å–ø–µ—à–Ω–æ]"
 
-/*      [ Õ¿—“–Œ… ¿ ¡¿«€ ƒ¿ÕÕ€’ ]      */
+/*      [ –ù–ê–°–¢–†–û–ô–ö–ê –ë–ê–ó–´ –î–ê–ù–ù–´–• ]      */
 /*      [ DATABASE SETTINGS ]      */
 #define MYSQL_HOSTNAME              "localhost"
 #define MYSQL_USERNAME              "root"
 #define MYSQL_PASSWORD              ""
 #define MYSQL_DATABASE              "samp-novateproject"
 
-/*      [ »Õ‘Œ–Ã¿÷»ﬂ Œ —≈–¬≈–≈ ]      */
+/*      [ –ò–ù–§–û–†–ú–ê–¶–ò–Ø –û –°–ï–†–í–ï–†–ï ]      */
 /*      [ SERVER INFORMATION ]      */
 #define SERVER_NAME                 "NoVate Project"
 #define SERVER_AUTHOR               "NoVate Source"
 #define SERVER_VERSION              "v1.0.0"
 #define SERVER_TYPE                 "RolePlay"
 
-/*      [ œ≈–≈Ã≈ÕÕ€≈  ŒÀ»◊≈—“¬¿ ]      */
+/*      [ –ü–ï–†–ï–ú–ï–ù–ù–´–ï –ö–û–õ–ò–ß–ï–°–¢–í–ê ]      */
 /*      [ VARIABLE QUANTITIES ]      */
-#define MAX_AUTHORIZATION_TIME      (120) // Second / —ÂÍÛÌ‰
-#define MAX_REGISTRATION_TIME       (180) // Second / —ÂÍÛÌ‰
+#define MAX_AUTHORIZATION_TIME      (120) // Second / –°–µ–∫—É–Ω–¥
+#define MAX_REGISTRATION_TIME       (180) // Second / –°–µ–∫—É–Ω–¥
 #define AUTHORIZATION_COUNT_TRY     (3)
 
 #define MAX_PASSWORD_LEN            (32)
@@ -49,7 +49,7 @@
 
 #define MAX_POSITIONS_SPAWN         (1)
 
-/*      [ ÷¬≈“¿ ]      */
+/*      [ –¶–í–ï–¢–ê ]      */
 /*      [ COLORS ]      */
 #define C_F_WHITE                   0xFFFFFFFF
 #define C_WHITE                     "{FFFFFF}"
@@ -66,7 +66,7 @@
 #define C_F_GREEN                   0x33DD00FF
 #define C_GREEN                     "{33DD00}"
 
-/*      [ œ≈–≈Ã≈ÕÕ€≈ ‘”Õ ÷»… ]      */
+/*      [ –ü–ï–†–ï–ú–ï–ù–ù–´–ï –§–£–ù–ö–¶–ò–ô ]      */
 /*      [ FUNCTION VARIABLES ]      */
 #define function%0(%1)              forward%0(%1); public%0(%1)
 #define dCreate:%0(%1)              DialogCreate:%0(%1)

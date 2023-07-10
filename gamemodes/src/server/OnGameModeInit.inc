@@ -2,20 +2,20 @@ public OnGameModeInit()
 {
     new tickCount = GetTickCount();
 
-    // Подключение к базе данных
+    // РџРѕРґРєР»СЋС‡РµРЅРёРµ Рє Р±Р°Р·Рµ РґР°РЅРЅС‹С…
     // Connecting to the database
     SInfo[MySQL] = mysql_connect(MYSQL_HOSTNAME, MYSQL_USERNAME, MYSQL_PASSWORD, MYSQL_DATABASE);
     mysql_log(ALL);
     mysql_set_charset("cp1251", SInfo[MySQL]);
     switch(mysql_errno(SInfo[MySQL]))
     {
-        case 2005: return printf("%s Не удалось подключиться к базе данных. Неверное имя хоста. (Код ошибки: %d)", DEBUG_MYSQL, mysql_errno(SInfo[MySQL]));
-        case 1045: return printf("%s Не удалось подключиться к базе данных. Неверное имя пользователя. (Код ошибки: %d)", DEBUG_MYSQL, mysql_errno(SInfo[MySQL]));
-        case 1049: return printf("%s Не удалось подключиться к базе данных. Неверное имя базы данных. (Код ошибки: %d)", DEBUG_MYSQL, mysql_errno(SInfo[MySQL]));
-        default: printf("%s База данных подключена и готова к работе.", DEBUG_MYSQL);
+        case 2005: return printf("%s РќРµ СѓРґР°Р»РѕСЃСЊ РїРѕРґРєР»СЋС‡РёС‚СЊСЃСЏ Рє Р±Р°Р·Рµ РґР°РЅРЅС‹С…. РќРµРІРµСЂРЅРѕРµ РёРјСЏ С…РѕСЃС‚Р°. (РљРѕРґ РѕС€РёР±РєРё: %d)", DEBUG_MYSQL, mysql_errno(SInfo[MySQL]));
+        case 1045: return printf("%s РќРµ СѓРґР°Р»РѕСЃСЊ РїРѕРґРєР»СЋС‡РёС‚СЊСЃСЏ Рє Р±Р°Р·Рµ РґР°РЅРЅС‹С…. РќРµРІРµСЂРЅРѕРµ РёРјСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ. (РљРѕРґ РѕС€РёР±РєРё: %d)", DEBUG_MYSQL, mysql_errno(SInfo[MySQL]));
+        case 1049: return printf("%s РќРµ СѓРґР°Р»РѕСЃСЊ РїРѕРґРєР»СЋС‡РёС‚СЊСЃСЏ Рє Р±Р°Р·Рµ РґР°РЅРЅС‹С…. РќРµРІРµСЂРЅРѕРµ РёРјСЏ Р±Р°Р·С‹ РґР°РЅРЅС‹С…. (РљРѕРґ РѕС€РёР±РєРё: %d)", DEBUG_MYSQL, mysql_errno(SInfo[MySQL]));
+        default: printf("%s Р‘Р°Р·Р° РґР°РЅРЅС‹С… РїРѕРґРєР»СЋС‡РµРЅР° Рё РіРѕС‚РѕРІР° Рє СЂР°Р±РѕС‚Рµ.", DEBUG_MYSQL);
     }
 
     SetGameModeText(SERVER_VERSION);
     
-    return printf("%s Мод загружен за %dms.", DEBUG_LOAD, GetTickCount() - tickCount);
+    return printf("%s РњРѕРґ Р·Р°РіСЂСѓР¶РµРЅ Р·Р° %dms.", DEBUG_LOAD, GetTickCount() - tickCount);
 }

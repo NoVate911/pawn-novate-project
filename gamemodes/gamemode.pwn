@@ -1,15 +1,15 @@
 /*
 
 [ ============================== ]
-   ПРОЧТИТЕ ПЕРЕД ЗАПУСКОМ МОДА
+   РџР РћР§РўРРўР• РџР•Р Р•Р” Р—РђРџРЈРЎРљРћРњ РњРћР”Рђ
   READ BEFORE LAUNCHING THE MOD
 [ ============================== ]
 
 -- [ RUS ] --
-Данная сборка была написана русским разработчиком.
-Некоторый переведённый текст может отображаться с ошибками или же вовсе не будет переведён.
+Р”Р°РЅРЅР°СЏ СЃР±РѕСЂРєР° Р±С‹Р»Р° РЅР°РїРёСЃР°РЅР° СЂСѓСЃСЃРєРёРј СЂР°Р·СЂР°Р±РѕС‚С‡РёРєРѕРј.
+РќРµРєРѕС‚РѕСЂС‹Р№ РїРµСЂРµРІРµРґС‘РЅРЅС‹Р№ С‚РµРєСЃС‚ РјРѕР¶РµС‚ РѕС‚РѕР±СЂР°Р¶Р°С‚СЊСЃСЏ СЃ РѕС€РёР±РєР°РјРё РёР»Рё Р¶Рµ РІРѕРІСЃРµ РЅРµ Р±СѓРґРµС‚ РїРµСЂРµРІРµРґС‘РЅ.
 
-Если появились неизвестные символы, то откройте проект с кодировкой "Windows 1251 (cp1251)".
+Р•СЃР»Рё РїРѕСЏРІРёР»РёСЃСЊ РЅРµРёР·РІРµСЃС‚РЅС‹Рµ СЃРёРјРІРѕР»С‹, С‚Рѕ РѕС‚РєСЂРѕР№С‚Рµ РїСЂРѕРµРєС‚ СЃ РєРѕРґРёСЂРѕРІРєРѕР№ "Windows 1251 (cp1251)".
 
 -- [ ENG ] --
 This build was written by a Russian developer.
@@ -21,7 +21,7 @@ If unknown characters appear, then open the project with the encoding "Windows 1
 
 main(){}
 
-/*      [ ПОДКЛЮЧЕНИЕ БИБЛИОТЕК(ИНКЛУДОВ) ]      */
+/*      [ РџРћР”РљР›Р®Р§Р•РќРР• Р‘РР‘Р›РРћРўР•Рљ(РРќРљР›РЈР”РћР’) ]      */
 /*      [ CONNECTING LIBRARIES (INCLUDS) ]      */
 #include <a_samp>
 #include "../include/a_mysql.inc"
@@ -33,25 +33,25 @@ main(){}
 #include "../include/YSF.inc"
 #include "../include/mdialog.inc"
 
-/*      [ ДОПОЛНИТЕЛЬНЫЕ ФУНКЦИИ И КОНФИГИ ]      */
+/*      [ Р”РћРџРћР›РќРРўР•Р›Р¬РќР«Р• Р¤РЈРќРљР¦РР Р РљРћРќР¤РР“Р ]      */
 /*      [ ADDITIONAL FUNCTIONS AND CONFIGS ]      */
 #include "./src/define.inc"
 #include "./src/enum.inc"
 #include "./src/config.inc"
 #include "./src/utils.inc"
 
-/*      [ ДИАЛОГОВЫЕ ОКНА ]      */
+/*      [ Р”РРђР›РћР“РћР’Р«Р• РћРљРќРђ ]      */
 /*      [ DIALOG BOXES ]      */
 #include "./src/dialogs/Authorization.inc"
 #include "./src/dialogs/Character.inc"
 #include "./src/dialogs/Kick.inc"
 
-/*      [ СЕРВЕРНАЯ СТОРОНА ]      */
+/*      [ РЎР•Р Р’Р•Р РќРђРЇ РЎРўРћР РћРќРђ ]      */
 /*      [ SERVER SIDE ]      */
 #include "./src/server/OnGameModeInit.inc"
 #include "./src/server/OnGameModeExit.inc"
 
-/*      [ КЛИЕНТСКАЯ СТОРОНА ]      */
+/*      [ РљР›РР•РќРўРЎРљРђРЇ РЎРўРћР РћРќРђ ]      */
 /*      [ CLIENT SIDE ]      */
 #include "./src/player/timers/OnPlayerSecond.inc"
 #include "./src/player/OnPlayerConnect.inc"

@@ -9,7 +9,7 @@ function Timer_OnPlayerSecond(playerid)
         
         if(PInfo[playerid][AuthorizationTime] <= 0)
         {
-            Player_Kick(playerid, "Ñåðâåð", "Âðåìÿ èñòåêëî");
+            Player_Kick(playerid, "Ð¡ÐµÑ€Ð²ÐµÑ€", "Ð’Ñ€ÐµÐ¼Ñ Ð¸ÑÑ‚ÐµÐºÐ»Ð¾");
         }
         return 1;
     }
