@@ -5,8 +5,8 @@ public OnPlayerText(playerid, text[])
 
     if(!PInfo[playerid][IsLogged])
     {
-        SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Для использования чата необходимо быть авторизированным.");
-        return Player_Kick(playerid, _, "Не авторизирован");
+        SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Р”Р»СЏ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ С‡Р°С‚Р° РЅРµРѕР±С…РѕРґРёРјРѕ Р°РІС‚РѕСЂРёР·РѕРІР°С‚СЊСЃСЏ.");
+        return Player_Kick(playerid, _, "РќРµ Р°РІС‚РѕСЂРёР·РёСЂРѕРІР°РЅ");
     }
 
     return 0;
