@@ -28,14 +28,14 @@ dResponse:Dlg_Auth_Log_Password(playerid)
         {
             strmid(PInfo[playerid][Password], inputtext, 0, strlen(inputtext), MAX_PASSWORD_LEN);
 
-            static const query[] = "SELECT email,regIP,lastIP,regDate,lastDate FROM accounts WHERE password = md5('%s')";
+            static const query[] = "SELECT email,regIP,lastIP,regDate,lastDate FROM accounts WHERE password = md5('%s') LIMIT 1";
             new mysql[sizeof(query)+(-2+MAX_PASSWORD_LEN)];
             mysql_format(SInfo[MySQL], mysql, sizeof(mysql), query, PInfo[playerid][Password]);
             new Cache:cache = mysql_query(SInfo[MySQL], mysql, true);
             if(cache_num_rows())
             {
                 Data_Get_PlayerInfo(playerid);
-                Player_SpawnAfterAuthorization(playerid);
+                Player_CharacterShow(playerid);
                 SCM(playerid, C_F_WHITE, ""NOTIF_SUCCESS" "C_WHITE"Вы авторизовались на сервере.");
                 printf("%s Игрок %s(%d) [%s] авторизовался на сервере.", DEBUG_INFO, PInfo[playerid][Nick], playerid, PInfo[playerid][LastIP]);
 
@@ -80,7 +80,7 @@ dCreate:Dlg_Auth_Reg_Password(playerid)
     "C_WHITE"\n\\cДобро пожаловать на сервер "C_EMERALD""SERVER_NAME" "C_WHITE"| "C_EMERALD""SERVER_TYPE""C_WHITE".\n\
     "C_WHITE"\\cНа данный логин не зарегистрировано ни одного аккаунта.\n\
     "C_WHITE"\\cДля регистрации, введите пароль в поле ввода и нажмите "C_EMERALD"\"Далее\""C_WHITE".\n\n";
-    return Dialog_Open(playerid, Dialog:Dlg_Auth_Reg_Password, DIALOG_STYLE_PASSWORD, ""C_GRAY"Аутентификация "C_BLACK"| "C_WHITE"Регистрация", message, "Далее", "Выход");
+    return Dialog_Open(playerid, Dialog:Dlg_Auth_Reg_Password, DIALOG_STYLE_INPUT, ""C_GRAY"Аутентификация "C_BLACK"| "C_WHITE"Регистрация", message, "Далее", "Выход");
 }
 
 dResponse:Dlg_Auth_Reg_Password(playerid)
@@ -147,20 +147,26 @@ dResponse:Dlg_Auth_Reg_Email(playerid)
         if(Regex_Check(inputtext, regex_email_check))
         {
             strmid(PInfo[playerid][Email], inputtext, 0, strlen(inputtext), MAX_EMAIL_LEN);
-            new year, month, day;
+            new year, month, day, hour, minute, second, date[15], time[15];
             getdate(year, month, day);
-            new date[14];
+            gettime(hour, minute, second);
             format(date, sizeof(date), "%02d.%02d.%02d", year, month, day);
-            new ip[15];
-            GetPlayerIp(playerid, ip, sizeof(ip));
+            format(time, sizeof(time), "%02d:%02d:%02d", hour, minute, second);
+            format(PInfo[playerid][RegDate], 22, "%s / %s", date, time);
+            format(PInfo[playerid][LastDate], 22, "%s / %s", date, time);
+            GetPlayerIp(playerid, PInfo[playerid][RegIP], 16);
+            GetPlayerIp(playerid, PInfo[playerid][LastIP], 16);
 
             static const query[] = "INSERT INTO accounts (nick,password,email,regIP,lastIP,regDate,lastDate) VALUES ('%s',md5('%s'),'%s','%s','%s','%s','%s')";
-            new mysql[sizeof(query)+(-2+MAX_PLAYER_NAME)+(-2+MAX_PASSWORD_LEN)+(-2+MAX_EMAIL_LEN)+(-2+15)+(-2+15)+(-2+12)+(-2+12)];
-            mysql_format(SInfo[MySQL], mysql, sizeof(mysql), query, PInfo[playerid][Nick], PInfo[playerid][Password], PInfo[playerid][Email], ip, ip, date, date);
+            new mysql[sizeof(query)+(-2+MAX_PLAYER_NAME)+(-2+MAX_PASSWORD_LEN)+(-2+MAX_EMAIL_LEN)+(-2+16)+(-2+16)+(-2+22)+(-2+22)];
+            mysql_format(SInfo[MySQL], mysql, sizeof(mysql), query, PInfo[playerid][Nick], PInfo[playerid][Password], PInfo[playerid][Email], PInfo[playerid][RegIP], PInfo[playerid][LastIP], PInfo[playerid][RegDate], PInfo[playerid][LastDate]);
             new Cache:cache = mysql_query(SInfo[MySQL], mysql, true);
-            Player_SpawnAfterAuthorization(playerid);
-            SCM(playerid, C_F_WHITE, ""NOTIF_SUCCESS" "C_WHITE"Вы зарегистрировались на сервере.");
-            printf("%s Игрок %s(%d) [%s] зарегистрировался на сервере.", DEBUG_INFO, PInfo[playerid][Nick], playerid, ip);
+            if(cache_num_results())
+            {
+                Player_CharacterShow(playerid);
+                SCM(playerid, C_F_WHITE, ""NOTIF_SUCCESS" "C_WHITE"Вы зарегистрировались на сервере.");
+                printf("%s Игрок %s(%d) [%s] зарегистрировался на сервере.", DEBUG_INFO, PInfo[playerid][Nick], playerid, PInfo[playerid][RegIP]);
+            }
             cache_delete(cache);
         }
         else

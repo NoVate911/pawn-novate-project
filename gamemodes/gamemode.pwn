@@ -35,12 +35,15 @@ main(){}
 
 /*      [ днонкмхрекэмше тсмйжхх х йнмтхцх ]      */
 /*      [ ADDITIONAL FUNCTIONS AND CONFIGS ]      */
+#include "./src/define.inc"
+#include "./src/enum.inc"
 #include "./src/config.inc"
 #include "./src/utils.inc"
 
 /*      [ дхюкнцнбше нймю ]      */
 /*      [ DIALOG BOXES ]      */
 #include "./src/dialogs/Authorization.inc"
+#include "./src/dialogs/Character.inc"
 #include "./src/dialogs/Kick.inc"
 
 /*      [ яепбепмюъ ярнпнмю ]      */
@@ -53,3 +56,4 @@ main(){}
 #include "./src/player/timers/OnPlayerSecond.inc"
 #include "./src/player/OnPlayerConnect.inc"
 #include "./src/player/OnPlayerDisconnect.inc"
+#include "./src/player/OnPlayerText.inc"

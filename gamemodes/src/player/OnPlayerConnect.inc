@@ -15,7 +15,7 @@ function Timer_OnPlayerConnect(playerid)
     SetPlayerVirtualWorld(playerid, playerid + 1000);
     PInfo[playerid][IsConnection] = true;
 
-    static const query[] = "SELECT nick FROM accounts WHERE nick = '%s'";
+    static const query[] = "SELECT nick FROM accounts WHERE nick = '%s' LIMIT 1";
     new mysql[sizeof(query)+(-2+MAX_PLAYER_NAME)];
     mysql_format(SInfo[MySQL], mysql, sizeof(mysql), query, PInfo[playerid][Nick]);
     new Cache:cache = mysql_query(SInfo[MySQL], mysql, true);

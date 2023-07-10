@@ -22,10 +22,10 @@ stock Data_Clear_PlayerInfo(playerid)
 {
     PInfo[playerid][IsConnection] = false;
     PInfo[playerid][IsLogged] = false;
-    PInfo[playerid][IsSpawning] = false;
     PInfo[playerid][AuthorizationTime] = 0;
     PInfo[playerid][AuthorizationCountTry] = 0;
 
+    PInfo[playerid][ID] = 0;
     PInfo[playerid][Nick] = EOS;
     PInfo[playerid][Password] = EOS;
     PInfo[playerid][Email] = EOS;
@@ -33,6 +33,9 @@ stock Data_Clear_PlayerInfo(playerid)
     PInfo[playerid][LastIP] = EOS;
     PInfo[playerid][RegDate] = EOS;
     PInfo[playerid][LastDate] = EOS;
+
+    PInfo[playerid][CharactersCount] = 0;
+    PInfo[playerid][CharacterSelect] = 0;
     return 1;
 }
 
@@ -44,15 +47,112 @@ stock Data_Clear_PlayerTimerInfo(playerid)
     return 1;
 }
 
+/*      [ Œ¡Õ”Àﬂ≈Ã »Õ‘Œ–Ã¿÷»ﬁ Œ  » ≈ »√–Œ ¿ ]      */
+/*      [ WE RESET THE INFORMATION ABOUT THE PLAYER'S KICK ]      */
+stock Data_Clear_PlayerKickInfo(playerid)
+{
+    PKickInfo[playerid][Nick] = EOS;
+    PKickInfo[playerid][Reason] = EOS;
+    return 1;
+}
+
+/*      [ Œ¡Õ”Àﬂ≈Ã »Õ‘Œ–Ã¿÷»ﬁ Œ  » ≈ »√–Œ ¿ ]      */
+stock Data_Clear_CharacterInfo(playerid)
+{
+    for(new i = 0; i < PInfo[playerid][CharactersCount]; i++)
+    {
+        CInfo[playerid][i][IsSpawning] = false;
+
+        CInfo[playerid][i][ID] = 0;
+        CInfo[playerid][i][Login] = EOS;
+        CInfo[playerid][i][FirstName] = EOS;
+        CInfo[playerid][i][LastName] = EOS;
+        CInfo[playerid][i][Skin] = 0;
+        CInfo[playerid][i][Age] = 0;
+        CInfo[playerid][i][Sex] = 0;
+        CInfo[playerid][i][Race] = 0;
+        CInfo[playerid][i][Level] = 0;
+        CInfo[playerid][i][Exp] = 0;
+        CInfo[playerid][i][RegIP] = EOS;
+        CInfo[playerid][i][LastIP] = EOS;
+        CInfo[playerid][i][RegDate] = EOS;
+        CInfo[playerid][i][LastDate] = EOS;
+        for(new pos = 0; pos < 3; pos++)
+            CInfo[playerid][i][Position][pos] = 0.0;
+        CInfo[playerid][i][Rotation] = 0.0;
+        CInfo[playerid][i][Interior] = 0;
+        CInfo[playerid][i][VirtualWorld] = 0;
+        CInfo[playerid][i][Health] = 0.0;
+        CInfo[playerid][i][Armour] = 0.0;
+    }
+    return 1;
+}
+
+/*      [ œŒÀ”◊¿≈Ã ƒ¿ÕÕ€≈ »√–Œ ¿ »« ¡¿«€ ƒ¿ÕÕ€’ ]      */
+/*      [ GETTING PLAYER DATA FROM THE DATABASE ]      */
 stock Data_Get_PlayerInfo(playerid)
 {
+    cache_get_value_name_int(0, "id", PInfo[playerid][ID]);
     cache_get_value_name(0, "email", PInfo[playerid][Email], MAX_EMAIL_LEN);
-    cache_get_value_name(0, "regIP", PInfo[playerid][RegIP], 15);
-    GetPlayerIp(playerid, PInfo[playerid][LastIP], 15);
-    cache_get_value_name(0, "regDate", PInfo[playerid][RegDate], 12);
-    new year, month, day;
+    cache_get_value_name(0, "regIP", PInfo[playerid][RegIP], 16);
+    GetPlayerIp(playerid, PInfo[playerid][LastIP], 16);
+    cache_get_value_name(0, "regDate", PInfo[playerid][RegDate], 22);
+    new year, month, day, hour, minute, second, date[15], time[15];
     getdate(year, month, day);
-    format(PInfo[playerid][LastDate], 14, "%02d.%02d.%02d", year, month, day);
+    gettime(hour, minute, second);
+    format(date, 15, "%02d.%02d.%02d", year, month, day);
+    format(time, 15, "%02d:%02d:%02d", hour, minute, second);
+    format(PInfo[playerid][LastDate], 22, "%s / %s", date, time);
+    return 1;
+}
+
+/*      [ œŒÀ”◊¿≈Ã ƒ¿ÕÕ€≈ œ≈–—ŒÕ¿∆¿ »« ¡¿«€ ƒ¿ÕÕ€’ ]      */
+/*      [ GETTING CHARACTER DATA FROM THE DATABASE ]      */
+stock Data_Get_CharacterInfo(playerid)
+{
+    for(new i = 0; i < PInfo[playerid][CharactersCount]; i++)
+    {
+        cache_get_value_name_int(i, "id", CInfo[playerid][i][ID]);
+        cache_get_value_name(i, "login", CInfo[playerid][i][Login], MAX_PLAYER_NAME);
+        cache_get_value_name(i, "firstname", CInfo[playerid][i][FirstName], MAX_PLAYER_NAME);
+        cache_get_value_name(i, "lastname", CInfo[playerid][i][LastName], MAX_PLAYER_NAME);
+        cache_get_value_name_int(i, "age", CInfo[playerid][i][Age]);
+        cache_get_value_name_int(i, "sex", CInfo[playerid][i][Sex]);
+        cache_get_value_name_int(i, "race", CInfo[playerid][i][Race]);
+        cache_get_value_name_int(i, "skin", CInfo[playerid][i][Skin]);
+        cache_get_value_name_int(i, "level", CInfo[playerid][i][Level]);
+        cache_get_value_name_int(i, "exp", CInfo[playerid][i][Exp]);
+        cache_get_value_name_float(i, "positionX", CInfo[playerid][i][Position][0]);
+        cache_get_value_name_float(i, "positionY", CInfo[playerid][i][Position][1]);
+        cache_get_value_name_float(i, "positionZ", CInfo[playerid][i][Position][2]);
+        cache_get_value_name_float(i, "rotation", CInfo[playerid][i][Rotation]);
+        cache_get_value_name_int(i, "interior", CInfo[playerid][i][Interior]);
+        cache_get_value_name_int(i, "vw", CInfo[playerid][i][VirtualWorld]);
+        cache_get_value_name_float(i, "health", CInfo[playerid][i][Health]);
+        cache_get_value_name_float(i, "armour", CInfo[playerid][i][Armour]);
+        cache_get_value_name(i, "regIP", CInfo[playerid][i][RegIP], 15);
+        cache_get_value_name(i, "lastIP", CInfo[playerid][i][LastIP], 15);
+        cache_get_value_name(i, "regDate", CInfo[playerid][i][RegDate], 14);
+        cache_get_value_name(i, "lastDate", CInfo[playerid][i][LastDate], 14);
+    }
+    return 1;
+}
+
+/*      [ «¿œ»—€¬¿≈Ã ƒ¿ÕÕ€≈ œ≈–—ŒÕ¿∆¿ ¬ ¡¿«” ƒ¿ÕÕ€’ ]      */
+/*      [ WE WRITE THE CHARACTER'S DATA TO THE DATABASE ]      */
+stock Data_Set_CharacterInfo(playerid)
+{
+    GetPlayerPos(playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Position][0], CInfo[playerid][PInfo[playerid][CharacterSelect]][Position][1], CInfo[playerid][PInfo[playerid][CharacterSelect]][Position][2]);
+    GetPlayerFacingAngle(playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Rotation]);
+    CInfo[playerid][PInfo[playerid][CharacterSelect]][Interior] = GetPlayerInterior(playerid);
+    CInfo[playerid][PInfo[playerid][CharacterSelect]][VirtualWorld] = GetPlayerVirtualWorld(playerid);
+    GetPlayerHealth(playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Health]);
+    GetPlayerArmour(playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Armour]);
+
+    static const query[] = "UPDATE characters SET level = '%d', exp = '%d', positionX = '%f', positionY = '%f', positionZ = '%f', rotation = '%f', interior = '%d', vw = '%d', health = '%f', armour = '%f' WHERE login = '%s' LIMIT 1";
+    new mysql[sizeof(query)+(-2+3)+(-2+3)+(-2+8)+(-2+8)+(-2+8)+(-2+8)+(-2+3)+(-2+10)+(-2+3)+(-2+3)+(-2+MAX_PLAYER_NAME)];
+    mysql_format(SInfo[MySQL], mysql, sizeof(mysql), query, CInfo[playerid][PInfo[playerid][CharacterSelect]][Level], CInfo[playerid][PInfo[playerid][CharacterSelect]][Exp], CInfo[playerid][PInfo[playerid][CharacterSelect]][Position][0], CInfo[playerid][PInfo[playerid][CharacterSelect]][Position][1], CInfo[playerid][PInfo[playerid][CharacterSelect]][Position][2], CInfo[playerid][PInfo[playerid][CharacterSelect]][Rotation], CInfo[playerid][PInfo[playerid][CharacterSelect]][Interior], CInfo[playerid][PInfo[playerid][CharacterSelect]][VirtualWorld], CInfo[playerid][PInfo[playerid][CharacterSelect]][Health], CInfo[playerid][PInfo[playerid][CharacterSelect]][Armour], CInfo[playerid][PInfo[playerid][CharacterSelect]][Login]);
+    mysql_query(SInfo[MySQL], mysql, false);
     return 1;
 }
 
@@ -79,10 +179,40 @@ function Timer_OnPlayerKick(playerid)
 stock Player_SpawnAfterAuthorization(playerid)
 {
     TogglePlayerSpectating(playerid, false);
-    SetPlayerVirtualWorld(playerid, 0);
-    SetSpawnInfo(playerid, 0, 0, 0.0, 0.0, 3.0, 0.0, 0, 0, 0, 0, 0, 0);
+    if(CInfo[playerid][PInfo[playerid][CharacterSelect]][Position][0] == 0.0 && CInfo[playerid][PInfo[playerid][CharacterSelect]][Position][1] == 0.0 && CInfo[playerid][PInfo[playerid][CharacterSelect]][Position][2] == 0.0)
+        SetSpawnInfo(playerid, 0, CInfo[playerid][PInfo[playerid][CharacterSelect]][Skin], Positions_Spawn[0][0], Positions_Spawn[0][1], Positions_Spawn[0][2], Positions_Spawn[0][3], 0, 0, 0, 0, 0, 0);
+    else
+        SetSpawnInfo(playerid, 0, CInfo[playerid][PInfo[playerid][CharacterSelect]][Skin], CInfo[playerid][PInfo[playerid][CharacterSelect]][Position][0], CInfo[playerid][PInfo[playerid][CharacterSelect]][Position][1], CInfo[playerid][PInfo[playerid][CharacterSelect]][Position][2], CInfo[playerid][PInfo[playerid][CharacterSelect]][Rotation], 0, 0, 0, 0, 0, 0);
     SpawnPlayer(playerid);
+    SetCameraBehindPlayer(playerid);
+    SetPlayerVirtualWorld(playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][VirtualWorld]);
+    SetPlayerInterior(playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Interior]);
+    SetPlayerHealth(playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Health]);
+    SetPlayerArmour(playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Armour]);
     PInfo[playerid][IsLogged] = true;
-    PInfo[playerid][IsSpawning] = true;
+    CInfo[playerid][PInfo[playerid][CharacterSelect]][IsSpawning] = true;
+    new name[MAX_PLAYER_NAME];
+    format(name, sizeof(name), "%s_%s", CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName]);
+    SetPlayerName(playerid, name);
+    printf("%s %s(%d) [%s] ·˚Î Á‡ÒÔ‡‚ÌÂÌ ÔÓ‰ ÔÂÒÓÌ‡ÊÂÏ %s %s", DEBUG_INFO, PInfo[playerid][Nick], playerid, PInfo[playerid][LastIP], CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName]);
     return 1;
+}
+
+/*      [ Œ“Œ¡–¿∆¿≈“ ¬€¡Œ– œ≈–—ŒÕ¿∆¿ ]      */
+/*      [ DISPLAYS THE CHARACTER SELECTION ]      */
+stock Player_CharacterShow(playerid)
+{
+    static const query[] = "SELECT id,login,firstname,lastname,age,sex,race,skin,level,exp,positionX,positionY,positionZ,rotation,interior,vw,health,armour,regIP,lastIP,regDate,lastDate FROM characters WHERE login = '%s' LIMIT %d";
+    new mysql[sizeof(query)+(-2+MAX_PLAYER_NAME)+(-2+1)];
+    mysql_format(SInfo[MySQL], mysql, sizeof(mysql), query, PInfo[playerid][Nick], MAX_CHARACTERS);
+    new Cache:cache = mysql_query(SInfo[MySQL], mysql, true);
+    cache_get_row_count(PInfo[playerid][CharactersCount]);
+    if(PInfo[playerid][CharactersCount])
+    {
+        Data_Get_CharacterInfo(playerid);
+        Dialog_Show(playerid, Dialog:Dlg_Char_List);
+    }
+    else
+        Dialog_Show(playerid, Dialog:Dlg_Char_CreateFirstName);
+    return cache_delete(cache);
 }
