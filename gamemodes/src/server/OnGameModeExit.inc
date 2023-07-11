@@ -1,4 +1,5 @@
 public OnGameModeExit()
 {
-    return mysql_close(SInfo[MySQL]);
+    MySQL_CloseConnectionDatabase();
+    return 1;
 }

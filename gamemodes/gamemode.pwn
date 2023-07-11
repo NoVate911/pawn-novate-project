@@ -21,8 +21,8 @@ If unknown characters appear, then open the project with the encoding "Windows 1
 
 main(){}
 
-/*      [ ПОДКЛЮЧЕНИЕ БИБЛИОТЕК(ИНКЛУДОВ) ]      */
-/*      [ CONNECTING LIBRARIES (INCLUDS) ]      */
+/*    [ ПОДКЛЮЧЕНИЕ БИБЛИОТЕК(ИНКЛУДОВ) ]   */
+/*    [ CONNECTING LIBRARIES (INCLUDS) ]    */
 #include <a_samp>
 #include "../include/a_mysql.inc"
 #include "../include/md5.inc"
@@ -33,27 +33,30 @@ main(){}
 #include "../include/YSF.inc"
 #include "../include/mdialog.inc"
 
-/*      [ ДОПОЛНИТЕЛЬНЫЕ ФУНКЦИИ И КОНФИГИ ]      */
-/*      [ ADDITIONAL FUNCTIONS AND CONFIGS ]      */
+/*    [ ДОПОЛНИТЕЛЬНЫЕ ФУНКЦИИ И КОНФИГИ ]    */
+/*    [ ADDITIONAL FUNCTIONS AND CONFIGS ]    */
 #include "./src/define.inc"
 #include "./src/enum.inc"
 #include "./src/config.inc"
 #include "./src/utils.inc"
 
-/*      [ ДИАЛОГОВЫЕ ОКНА ]      */
-/*      [ DIALOG BOXES ]      */
-#include "./src/dialogs/Authorization.inc"
+/*    [ ДИАЛОГОВЫЕ ОКНА ]   */
+/*    [ DIALOG BOXES ]    */
 #include "./src/dialogs/Character.inc"
 #include "./src/dialogs/Kick.inc"
 
-/*      [ СЕРВЕРНАЯ СТОРОНА ]      */
-/*      [ SERVER SIDE ]      */
+/*    [ СЕРВЕРНАЯ СТОРОНА ]   */
+/*    [ SERVER SIDE ]   */
 #include "./src/server/OnGameModeInit.inc"
 #include "./src/server/OnGameModeExit.inc"
 
-/*      [ КЛИЕНТСКАЯ СТОРОНА ]      */
-/*      [ CLIENT SIDE ]      */
+/*    [ КЛИЕНТСКАЯ СТОРОНА ]    */
+/*    [ CLIENT SIDE ]   */
 #include "./src/player/timers/OnPlayerSecond.inc"
 #include "./src/player/OnPlayerConnect.inc"
 #include "./src/player/OnPlayerDisconnect.inc"
 #include "./src/player/OnPlayerText.inc"
+
+/*    [ СИСТЕМЫ ]    */
+/*    [ SYSTEMS ]    */
+#include "./src/system/Authorization.inc"

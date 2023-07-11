@@ -17,13 +17,6 @@
 #define NOTIF_WARNING               ""C_YELLOW"[Внимание]"
 #define NOTIF_SUCCESS               ""C_GREEN"[Успешно]"
 
-/*      [ НАСТРОЙКА БАЗЫ ДАННЫХ ]      */
-/*      [ DATABASE SETTINGS ]      */
-#define MYSQL_HOSTNAME              "localhost"
-#define MYSQL_USERNAME              "root"
-#define MYSQL_PASSWORD              ""
-#define MYSQL_DATABASE              "samp-novateproject"
-
 /*      [ ИНФОРМАЦИЯ О СЕРВЕРЕ ]      */
 /*      [ SERVER INFORMATION ]      */
 #define SERVER_NAME                 "NoVate Project"
