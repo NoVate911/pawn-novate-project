@@ -1,11 +1,11 @@
-/*      [ Œ◊»—“ ¿ √ÀŒ¡¿À‹ÕŒ√Œ ◊¿“¿ ]      */
+/*      [ –û–ß–ò–°–¢–ö–ê –ì–õ–û–ë–ê–õ–¨–ù–û–ì–û –ß–ê–¢–ê ]      */
 /*      [ CLEARING THE GLOBAL CHAT ]      */
 stock Chat_Clear_All()
 {
     return 1;
 }
 
-/*      [ Œ◊»—“ ¿ œ≈–—ŒÕ¿À‹ÕŒ√Œ ◊¿“¿ ]      */
+/*      [ –û–ß–ò–°–¢–ö–ê –ü–ï–†–°–û–ù–ê–õ–¨–ù–û–ì–û –ß–ê–¢–ê ]      */
 /*      [ CLEARING A PERSONAL CHAT ]      */
 stock Chat_Clear_Player(playerid, count = 50)
 {

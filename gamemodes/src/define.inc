@@ -1,27 +1,27 @@
-/*      [ БАЗА ДАННЫХ ]      */
+/*      [ Р‘РђР—Рђ Р”РђРќРќР«РҐ ]      */
 /*      [ DATABASE ]      */
 #define MYSQL_HOSTNAME              "localhost"
 #define MYSQL_USERNAME              "root"
 #define MYSQL_PASSWORD              ""
 #define MYSQL_DATABASE              "samp-novateproject"
 
-/*      [ АВТОРИЗАЦИЯ/РЕГИСТРАЦИЯ ]      */
+/*      [ РђР’РўРћР РР—РђР¦РРЇ/Р Р•Р“РРЎРўР РђР¦РРЇ ]      */
 /*      [ AUTHORIZATION/REGISTRATION ]      */
-#define MAX_AUTHORIZATION_TIME      (120) // Максимальное время авторизации (в секундах) | Maximum authorization time (in seconds)
-#define MAX_REGISTRATION_TIME       (180) // Максимальное время регистрации (в секундах) | Maximum registration time (in seconds)
-#define AUTHORIZATION_COUNT_TRY     (3) // Максимальное количество попыток входа | Maximum number of login attempts
+#define MAX_AUTHORIZATION_TIME      (120) // РњР°РєСЃРёРјР°Р»СЊРЅРѕРµ РІСЂРµРјСЏ Р°РІС‚РѕСЂРёР·Р°С†РёРё (РІ СЃРµРєСѓРЅРґР°С…) | Maximum authorization time (in seconds)
+#define MAX_REGISTRATION_TIME       (180) // РњР°РєСЃРёРјР°Р»СЊРЅРѕРµ РІСЂРµРјСЏ СЂРµРіРёСЃС‚СЂР°С†РёРё (РІ СЃРµРєСѓРЅРґР°С…) | Maximum registration time (in seconds)
+#define AUTHORIZATION_COUNT_TRY     (3) // РњР°РєСЃРёРјР°Р»СЊРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ РїРѕРїС‹С‚РѕРє РІС…РѕРґР° | Maximum number of login attempts
 
-#define MAX_PASSWORD_LEN            (32) // Максимальная длина пароля | Maximum password length
-#define MIN_PASSWORD_LEN            (4) // Минимальная длина пароля | Minimum password length
+#define MAX_PASSWORD_LEN            (32) // РњР°РєСЃРёРјР°Р»СЊРЅР°СЏ РґР»РёРЅР° РїР°СЂРѕР»СЏ | Maximum password length
+#define MIN_PASSWORD_LEN            (4) // РњРёРЅРёРјР°Р»СЊРЅР°СЏ РґР»РёРЅР° РїР°СЂРѕР»СЏ | Minimum password length
 
-#define MAX_EMAIL_LEN               (64) // Максимальная длина почты | Maximum mail length
-#define MIN_EMAIL_LEN               (1) // Минимальная длина почты | Minimum mail length
+#define MAX_EMAIL_LEN               (64) // РњР°РєСЃРёРјР°Р»СЊРЅР°СЏ РґР»РёРЅР° РїРѕС‡С‚С‹ | Maximum mail length
+#define MIN_EMAIL_LEN               (1) // РњРёРЅРёРјР°Р»СЊРЅР°СЏ РґР»РёРЅР° РїРѕС‡С‚С‹ | Minimum mail length
 
-#define MAX_POSITIONS_SPAWN         (1) // Максимальное количество позиций для спавна | Maximum number of spawn positions
+#define MAX_POSITIONS_SPAWN         (1) // РњР°РєСЃРёРјР°Р»СЊРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ РїРѕР·РёС†РёР№ РґР»СЏ СЃРїР°РІРЅР° | Maximum number of spawn positions
 
-/*      [ ПЕРСОНАЖ ]      */
+/*      [ РџР•Р РЎРћРќРђР– ]      */
 /*      [ CHARACTER ]      */
-#define MAX_CHARACTERS              (3) // Максимальное количество персонажей | Maximum number of characters
+#define MAX_CHARACTERS              (3) // РњР°РєСЃРёРјР°Р»СЊРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ РїРµСЂСЃРѕРЅР°Р¶РµР№ | Maximum number of characters
 
-#define MAX_CHARACTER_AGE           (60) // Максимальный возраст персонажа | Maximum age of the character
-#define MIN_CHARACTER_AGE           (18) // Минимальный возраст персонажа | Minimum age of the character
+#define MAX_CHARACTER_AGE           (60) // РњР°РєСЃРёРјР°Р»СЊРЅС‹Р№ РІРѕР·СЂР°СЃС‚ РїРµСЂСЃРѕРЅР°Р¶Р° | Maximum age of the character
+#define MIN_CHARACTER_AGE           (18) // РњРёРЅРёРјР°Р»СЊРЅС‹Р№ РІРѕР·СЂР°СЃС‚ РїРµСЂСЃРѕРЅР°Р¶Р° | Minimum age of the character

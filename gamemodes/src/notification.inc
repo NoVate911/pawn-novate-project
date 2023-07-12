@@ -1,5 +1,5 @@
-/*      [ ЎјЅЋќЌ “Ё√ј ”¬≈ƒќћЋ≈Ќ»… ]      */
+/*      [ –®–Р–С–Ы–Ю–Э –Ґ–≠–У–Р –£–Т–Х–Ф–Ю–Ь–Ы–Х–Э–Ш–Щ ]      */
 /*      [ NOTIFICATION TAG TEMPLATES ]      */
-#define NOTIF_ERROR                 ""C_RED"[ќшибка]"
-#define NOTIF_WARNING               ""C_YELLOW"[¬нимание]"
-#define NOTIF_SUCCESS               ""C_GREEN"[”спешно]"
+#define NOTIF_ERROR                 ""C_RED"[–Ю—И–Є–±–Ї–∞]"
+#define NOTIF_WARNING               ""C_YELLOW"[–Т–љ–Є–Љ–∞–љ–Є–µ]"
+#define NOTIF_SUCCESS               ""C_GREEN"[–£—Б–њ–µ—И–љ–Њ]"

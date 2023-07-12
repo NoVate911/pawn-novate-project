@@ -1,4 +1,4 @@
-/*      [ рюилеп мю ондйкчвемхе ]      */
+/*      [ п╒п░п≥п°п∙п═ п²п░ п÷п·п■п п⌡п╝п╖п∙п²п≤п∙ ]      */
 /*      [ CONNECTION TIMER ]      */
 function Timer_OnPlayerConnect(playerid)
 {

@@ -1,4 +1,4 @@
-/*      [ ÷¬≈“¿ ]      */
+/*      [ –¶–í–ï–¢–ê ]      */
 /*      [ COLORS ]      */
 #define C_F_WHITE                   0xFFFFFFFF
 #define C_WHITE                     "{FFFFFF}"

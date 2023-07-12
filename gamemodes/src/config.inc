@@ -1,24 +1,24 @@
-/*      [ сярюмнбйю мнбшу гмювемхи ]      */
+/*      [ пёп║п╒п░п²п·п▓п п░ п²п·п▓п╚п╔ п≈п²п░п╖п∙п²п≤п≥ ]      */
 /*      [ SETTING NEW VALUES ]      */
 #undef MAX_PLAYER_NAME
     #define MAX_PLAYER_NAME         (24)
 #undef MAX_PLAYERS
     #define MAX_PLAYERS             (50)
 
-/*      [ хмтнплюжхъ н яепбепе ]      */
+/*      [ п≤п²п╓п·п═п°п░п╕п≤п╞ п· п║п∙п═п▓п∙п═п∙ ]      */
 /*      [ SERVER INFORMATION ]      */
 #define SERVER_NAME                 "NoVate Project"
 #define SERVER_AUTHOR               "NoVate Source"
 #define SERVER_VERSION              "build 1001"
 #define SERVER_TYPE                 "RolePlay"
 
-/*      [ ьюакнм дкъ бшбндю ]      */
+/*      [ п╗п░п▒п⌡п·п² п■п⌡п╞ п▓п╚п▓п·п■п░ ]      */
 /*      [ TEMPLATES FOR OUTPUT ]      */
 #define DEBUG_MYSQL                 "[MySQL] |"
 #define DEBUG_LOAD                  "[LOAD] |"
 #define DEBUG_INFO                  "[INFO] |"
 
-/*      [ оепелеммше тсмйжхи ]      */
+/*      [ п÷п∙п═п∙п°п∙п²п²п╚п∙ п╓пёп²п п╕п≤п≥ ]      */
 /*      [ FUNCTION VARIABLES ]      */
 #define function%0(%1)              forward%0(%1); public%0(%1)
 #define dCreate:%0(%1)              DialogCreate:%0(%1)

@@ -1,4 +1,4 @@
-/*      [ Œ¡Õ”Àﬂ≈Ã »Õ‘Œ–Ã¿÷»ﬁ Œ¡ »√–Œ ≈ ]      */
+/*      [ –û–ë–ù–£–õ–Ø–ï–ú –ò–ù–§–û–†–ú–ê–¶–ò–Æ –û–ë –ò–ì–†–û–ö–ï ]      */
 /*      [ WE RESET THE INFORMATION ABOUT THE PLAYER ]      */
 stock Data_Clear_PlayerInfo(playerid)
 {
@@ -21,7 +21,7 @@ stock Data_Clear_PlayerInfo(playerid)
     return 1;
 }
 
-/*      [ Œ¡Õ”Àﬂ≈Ã »Õ‘Œ–Ã¿÷»ﬁ Œ “¿…Ã≈–¿’ »√–Œ ¿ ]      */
+/*      [ –û–ë–ù–£–õ–Ø–ï–ú –ò–ù–§–û–†–ú–ê–¶–ò–Æ –û –¢–ê–ô–ú–ï–†–ê–• –ò–ì–†–û–ö–ê ]      */
 /*      [ WE RESET THE INFORMATION ABOUT THE TIMERS OF THE PLAYER ]      */
 stock Data_Clear_PlayerTimerInfo(playerid)
 {
@@ -29,7 +29,7 @@ stock Data_Clear_PlayerTimerInfo(playerid)
     return 1;
 }
 
-/*      [ Œ¡Õ”Àﬂ≈Ã »Õ‘Œ–Ã¿÷»ﬁ Œ  » ≈ »√–Œ ¿ ]      */
+/*      [ –û–ë–ù–£–õ–Ø–ï–ú –ò–ù–§–û–†–ú–ê–¶–ò–Æ –û –ö–ò–ö–ï –ò–ì–†–û–ö–ê ]      */
 /*      [ WE RESET THE INFORMATION ABOUT THE PLAYER'S KICK ]      */
 stock Data_Clear_PlayerKickInfo(playerid)
 {
@@ -38,7 +38,7 @@ stock Data_Clear_PlayerKickInfo(playerid)
     return 1;
 }
 
-/*      [ Œ¡Õ”Àﬂ≈Ã »Õ‘Œ–Ã¿÷»ﬁ Œ  » ≈ »√–Œ ¿ ]      */
+/*      [ –û–ë–ù–£–õ–Ø–ï–ú –ò–ù–§–û–†–ú–ê–¶–ò–Æ –û –ö–ò–ö–ï –ò–ì–†–û–ö–ê ]      */
 stock Data_Clear_CharacterInfo(playerid)
 {
     for(new i = 0; i < PInfo[playerid][CharactersCount]; i++)
@@ -70,7 +70,7 @@ stock Data_Clear_CharacterInfo(playerid)
     return 1;
 }
 
-/*      [ œŒÀ”◊¿≈Ã ƒ¿ÕÕ€≈ »√–Œ ¿ »« ¡¿«€ ƒ¿ÕÕ€’ ]      */
+/*      [ –ü–û–õ–£–ß–ê–ï–ú –î–ê–ù–ù–´–ï –ò–ì–†–û–ö–ê –ò–ó –ë–ê–ó–´ –î–ê–ù–ù–´–• ]      */
 /*      [ GETTING PLAYER DATA FROM THE DATABASE ]      */
 stock Data_Get_PlayerInfo(playerid)
 {
@@ -88,7 +88,7 @@ stock Data_Get_PlayerInfo(playerid)
     return 1;
 }
 
-/*      [ œŒÀ”◊¿≈Ã ƒ¿ÕÕ€≈ œ≈–—ŒÕ¿∆¿ »« ¡¿«€ ƒ¿ÕÕ€’ ]      */
+/*      [ –ü–û–õ–£–ß–ê–ï–ú –î–ê–ù–ù–´–ï –ü–ï–†–°–û–ù–ê–ñ–ê –ò–ó –ë–ê–ó–´ –î–ê–ù–ù–´–• ]      */
 /*      [ GETTING CHARACTER DATA FROM THE DATABASE ]      */
 stock Data_Get_CharacterInfo(playerid)
 {
@@ -120,7 +120,7 @@ stock Data_Get_CharacterInfo(playerid)
     return 1;
 }
 
-/*      [ «¿œ»—€¬¿≈Ã ƒ¿ÕÕ€≈ œ≈–—ŒÕ¿∆¿ ¬ ¡¿«” ƒ¿ÕÕ€’ ]      */
+/*      [ –ó–ê–ü–ò–°–´–í–ê–ï–ú –î–ê–ù–ù–´–ï –ü–ï–†–°–û–ù–ê–ñ–ê –í –ë–ê–ó–£ –î–ê–ù–ù–´–• ]      */
 /*      [ WE WRITE THE CHARACTER'S DATA TO THE DATABASE ]      */
 stock Data_Set_CharacterInfo(playerid)
 {
