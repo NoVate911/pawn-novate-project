@@ -19,6 +19,7 @@ enum PlayerInfo
     Nick[MAX_PLAYER_NAME],
     Password[MAX_PASSWORD_LEN],
     Email[MAX_EMAIL_LEN],
+    Donate,
     RegIP[16],
     LastIP[16],
     RegDate[22],
@@ -74,6 +75,9 @@ enum CharacterInfo
     Interior,
     VirtualWorld,
     Float:Health,
-    Float:Armour
+    Float:Armour,
+    AdminLevel,
+    AdminPassword,
+    bool:IsAdmin
 }
 new CInfo[MAX_PLAYERS][MAX_CHARACTERS][CharacterInfo];

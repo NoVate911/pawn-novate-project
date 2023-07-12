@@ -1,8 +1,8 @@
 -- --------------------------------------------------------
--- Хост:                         127.0.0.1
--- Версия сервера:               10.4.27-MariaDB - mariadb.org binary distribution
--- Операционная система:         Win64
--- HeidiSQL Версия:              12.5.0.6677
+-- РҐРѕСЃС‚:                         127.0.0.1
+-- Р’РµСЂСЃРёСЏ СЃРµСЂРІРµСЂР°:               10.4.27-MariaDB - mariadb.org binary distribution
+-- РћРїРµСЂР°С†РёРѕРЅРЅР°СЏ СЃРёСЃС‚РµРјР°:         Win64
+-- HeidiSQL Р’РµСЂСЃРёСЏ:              12.5.0.6677
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -15,16 +15,17 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 
--- Дамп структуры базы данных samp-novateproject
+-- Р”Р°РјРї СЃС‚СЂСѓРєС‚СѓСЂС‹ Р±Р°Р·С‹ РґР°РЅРЅС‹С… samp-novateproject
 CREATE DATABASE IF NOT EXISTS `samp-novateproject` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci */;
 USE `samp-novateproject`;
 
--- Дамп структуры для таблица samp-novateproject.accounts
+-- Р”Р°РјРї СЃС‚СЂСѓРєС‚СѓСЂС‹ РґР»СЏ С‚Р°Р±Р»РёС†Р° samp-novateproject.accounts
 CREATE TABLE IF NOT EXISTS `accounts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nick` varchar(24) DEFAULT 'NoVate',
   `password` varchar(32) DEFAULT NULL,
   `email` varchar(64) DEFAULT 'admin@yandex.ru',
+  `donate` int(11) DEFAULT 0,
   `regIP` varchar(15) DEFAULT '0.0.0.0',
   `lastIP` varchar(15) DEFAULT '0.0.0.0',
   `regDate` varchar(21) DEFAULT '1999.01.01 / 00:00:00',
@@ -32,9 +33,9 @@ CREATE TABLE IF NOT EXISTS `accounts` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- Экспортируемые данные не выделены.
+-- Р­РєСЃРїРѕСЂС‚РёСЂСѓРµРјС‹Рµ РґР°РЅРЅС‹Рµ РЅРµ РІС‹РґРµР»РµРЅС‹.
 
--- Дамп структуры для таблица samp-novateproject.characters
+-- Р”Р°РјРї СЃС‚СЂСѓРєС‚СѓСЂС‹ РґР»СЏ С‚Р°Р±Р»РёС†Р° samp-novateproject.characters
 CREATE TABLE IF NOT EXISTS `characters` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `login` varchar(24) DEFAULT 'NoVate',
@@ -54,6 +55,8 @@ CREATE TABLE IF NOT EXISTS `characters` (
   `vw` int(10) DEFAULT 0,
   `health` float DEFAULT 100,
   `armour` float DEFAULT 0,
+  `adminLevel` int(2) DEFAULT 0,
+  `adminPassword` int(4) DEFAULT NULL,
   `regIP` varchar(15) DEFAULT '0.0.0.0',
   `lastIP` varchar(15) DEFAULT '0.0.0.0',
   `regDate` varchar(21) DEFAULT '1999.01.01 / 00:00:00',
@@ -61,7 +64,7 @@ CREATE TABLE IF NOT EXISTS `characters` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- Экспортируемые данные не выделены.
+-- Р­РєСЃРїРѕСЂС‚РёСЂСѓРµРјС‹Рµ РґР°РЅРЅС‹Рµ РЅРµ РІС‹РґРµР»РµРЅС‹.
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

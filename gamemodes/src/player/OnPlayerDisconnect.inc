@@ -5,6 +5,7 @@ public OnPlayerDisconnect(playerid, reason)
 
     if(PInfo[playerid][IsLogged])
     {
+        Data_Set_PlayerInfo(playerid);
         Data_Set_CharacterInfo(playerid);
         printf("%s %s %s(%d) [%s] [%s] отключился от сервера.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, PInfo[playerid][Nick], PInfo[playerid][LastIP]);
     }

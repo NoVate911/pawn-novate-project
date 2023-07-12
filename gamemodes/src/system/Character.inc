@@ -30,7 +30,7 @@ new const Skins_Female[9][2] = { // Женские | Female
 /*      [ DISPLAYS THE CHARACTER SELECTION ]      */
 stock Player_CharacterShow(playerid)
 {
-    static const query[] = "SELECT id,login,firstname,lastname,age,sex,race,skin,level,exp,positionX,positionY,positionZ,rotation,interior,vw,health,armour,regIP,lastIP,regDate,lastDate FROM characters WHERE login = '%s' LIMIT %d";
+    static const query[] = "SELECT id,login,firstname,lastname,age,sex,race,skin,level,exp,positionX,positionY,positionZ,rotation,interior,vw,health,armour,adminLevel,adminPassword,regIP,lastIP,regDate,lastDate FROM characters WHERE login = '%s' LIMIT %d";
     new mysql[sizeof(query)+(-2+MAX_PLAYER_NAME)+(-2+1)];
     mysql_format(SInfo[MySQL], mysql, sizeof(mysql), query, PInfo[playerid][Nick], MAX_CHARACTERS);
     new Cache:cache = mysql_query(SInfo[MySQL], mysql, true);
@@ -107,13 +107,13 @@ dResponse:Dlg_Char_CreateFirstName(playerid)
     {
         if(!strlen(inputtext))
         {
-            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Все поля должны быть заполнены.");
+            SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Все поля должны быть заполнены.");
             return Dialog_Show(playerid, Dialog:Dlg_Char_CreateFirstName);
         }
 
         if(!(3 < strlen(inputtext) < MAX_PLAYER_NAME))
         {
-            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Имя слишком короткое или слишком длинное.");
+            SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Имя слишком короткое или слишком длинное.");
             return Dialog_Show(playerid, Dialog:Dlg_Char_CreateFirstName);
         }
 
@@ -125,7 +125,7 @@ dResponse:Dlg_Char_CreateFirstName(playerid)
         }
         else
         {
-            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Имя может содержать только латинские символы.");
+            SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Имя может содержать только латинские символы.");
             return Dialog_Show(playerid, Dialog:Dlg_Char_CreateFirstName);
         }
         Regex_Delete(regex_firstname_check);
@@ -147,13 +147,13 @@ dResponse:Dlg_Char_CreateLastName(playerid)
     {
         if(!strlen(inputtext))
         {
-            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Все поля должны быть заполнены.");
+            SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Все поля должны быть заполнены.");
             return Dialog_Show(playerid, Dialog:Dlg_Char_CreateLastName);
         }
 
         if(!(3 < strlen(inputtext) < MAX_PLAYER_NAME))
         {
-            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Фамилия слишком короткая или слишком длинная.");
+            SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Фамилия слишком короткая или слишком длинная.");
             return Dialog_Show(playerid, Dialog:Dlg_Char_CreateLastName);
         }
 
@@ -165,7 +165,7 @@ dResponse:Dlg_Char_CreateLastName(playerid)
         }
         else
         {
-            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Фамилия может содержать только латинские символы.");
+            SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Фамилия может содержать только латинские символы.");
             return Dialog_Show(playerid, Dialog:Dlg_Char_CreateLastName);
         }
         Regex_Delete(regex_lastname_check);
@@ -187,13 +187,13 @@ dResponse:Dlg_Char_CreateAge(playerid)
     {
         if(!strval(inputtext))
         {
-            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Все поля должны быть заполнены.");
+            SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Все поля должны быть заполнены.");
             return Dialog_Show(playerid, Dialog:Dlg_Char_CreateAge);
         }
 
         if(!(MIN_CHARACTER_AGE < strval(inputtext) < MAX_CHARACTER_AGE))
         {
-            SCMf(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Возраст персонажа может быть от %d до %d лет.", MIN_CHARACTER_AGE, MAX_CHARACTER_AGE);
+            SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Возраст персонажа может быть от %d до %d лет.", MIN_CHARACTER_AGE, MAX_CHARACTER_AGE);
             return Dialog_Show(playerid, Dialog:Dlg_Char_CreateAge);
         }
 
@@ -271,7 +271,7 @@ dResponse:Dlg_Char_CreateRace(playerid)
             Player_CharacterShow(playerid);
         else
         {
-            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"При создании персонажа произошла ошибка. Обратитесь к Администрации!");
+            SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"При создании персонажа произошла ошибка. Обратитесь к Администрации!");
             Player_Kick(playerid, _, "Ошибка");
         }
         cache_delete(cache);

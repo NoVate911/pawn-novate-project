@@ -49,13 +49,13 @@ dResponse:Dlg_Auth_Log_Password(playerid)
     {
         if(!strlen(inputtext))
         {
-            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Все поля должны быть заполнены.");
+            SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Все поля должны быть заполнены.");
             return Dialog_Show(playerid, Dialog:Dlg_Auth_Log_Password);
         }
 
         if(!(MIN_PASSWORD_LEN < strlen(inputtext) < MAX_PASSWORD_LEN))
         {
-            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Пароль слишком длинный или короткий.");
+            SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Пароль слишком длинный или короткий.");
             return Dialog_Show(playerid, Dialog:Dlg_Auth_Log_Password);
         }
 
@@ -72,7 +72,7 @@ dResponse:Dlg_Auth_Log_Password(playerid)
             {
                 Data_Get_PlayerInfo(playerid);
                 Player_CharacterShow(playerid);
-                SCM(playerid, C_F_WHITE, ""NOTIF_SUCCESS" "C_WHITE"Вы авторизовались на сервере.");
+                SCM(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы авторизовались на сервере.");
                 printf("%s Игрок %s(%d) [%s] авторизовался на сервере.", DEBUG_INFO, PInfo[playerid][Nick], playerid, PInfo[playerid][LastIP]);
 
                 static const query_update[] = "UPDATE accounts SET lastIP = '%s', lastDate = '%s' WHERE nick = '%s' LIMIT 1";
@@ -90,7 +90,7 @@ dResponse:Dlg_Auth_Log_Password(playerid)
                 }
                 else
                 {
-                    SCMf(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Пароль введён неверно. Осталось "C_EMERALD"%d "C_WHITE"попыток.", PInfo[playerid][AuthorizationCountTry]);
+                    SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Пароль введён неверно. Осталось "C_EMERALD"%d "C_WHITE"попыток.", PInfo[playerid][AuthorizationCountTry]);
                     Dialog_Show(playerid, Dialog:Dlg_Auth_Log_Password);
                 }
             }
@@ -98,7 +98,7 @@ dResponse:Dlg_Auth_Log_Password(playerid)
         }
         else
         {
-            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Пароль может состоять из цифр/чисел и латинских символов.");
+            SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Пароль может состоять из цифр/чисел и латинских символов.");
             Dialog_Show(playerid, Dialog:Dlg_Auth_Log_Password);
         }
         Regex_Delete(regex_password_check);
@@ -125,13 +125,13 @@ dResponse:Dlg_Auth_Reg_Password(playerid)
     {
         if(!strlen(inputtext))
         {
-            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Все поля должны быть заполнены.");
+            SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Все поля должны быть заполнены.");
             return Dialog_Show(playerid, Dialog:Dlg_Auth_Reg_Password);
         }
 
         if(!(MIN_PASSWORD_LEN < strlen(inputtext) < MAX_PASSWORD_LEN))
         {
-            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Пароль слишком длинный или короткий.");
+            SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Пароль слишком длинный или короткий.");
             return Dialog_Show(playerid, Dialog:Dlg_Auth_Reg_Password);
         }
 
@@ -143,7 +143,7 @@ dResponse:Dlg_Auth_Reg_Password(playerid)
         }
         else
         {
-            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Пароль может состоять из цифр/чисел и латинских символов.");
+            SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Пароль может состоять из цифр/чисел и латинских символов.");
             Dialog_Show(playerid, Dialog:Dlg_Auth_Reg_Password);
         }
         Regex_Delete(regex_password_check);
@@ -169,13 +169,13 @@ dResponse:Dlg_Auth_Reg_Email(playerid)
     {
         if(!strlen(inputtext))
         {
-            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Все поля должны быть заполнены.");
+            SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Все поля должны быть заполнены.");
             return Dialog_Show(playerid, Dialog:Dlg_Auth_Reg_Email);
         }
 
         if(!(MIN_EMAIL_LEN < strlen(inputtext) < MAX_EMAIL_LEN))
         {
-            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Адрес электронной почты слишком длинный или короткий.");
+            SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Адрес электронной почты слишком длинный или короткий.");
             return Dialog_Show(playerid, Dialog:Dlg_Auth_Reg_Email);
         }
 
@@ -200,14 +200,14 @@ dResponse:Dlg_Auth_Reg_Email(playerid)
             if(cache_num_results())
             {
                 Player_CharacterShow(playerid);
-                SCM(playerid, C_F_WHITE, ""NOTIF_SUCCESS" "C_WHITE"Вы зарегистрировались на сервере.");
+                SCM(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы зарегистрировались на сервере.");
                 printf("%s Игрок %s(%d) [%s] зарегистрировался на сервере.", DEBUG_INFO, PInfo[playerid][Nick], playerid, PInfo[playerid][RegIP]);
             }
             cache_delete(cache);
         }
         else
         {
-            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Неверный адрес электронной почты.");
+            SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Неверный адрес электронной почты.");
             Dialog_Show(playerid, Dialog:Dlg_Auth_Reg_Email);
         }
         Regex_Delete(regex_email_check);

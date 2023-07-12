@@ -25,3 +25,12 @@
 
 #define MAX_CHARACTER_AGE           (60) // Максимальный возраст персонажа | Maximum age of the character
 #define MIN_CHARACTER_AGE           (18) // Минимальный возраст персонажа | Minimum age of the character
+
+/*      [ АДМИНИСТРИРОВАНИЕ ]      */
+/*      [ ADMINISTRATION ]      */
+#define MAX_ADMIN_LEVEL             (10) // Максимальный уровень Администратора | Maximum Administrator Level
+#define MIN_ADMIN_LEVEL             (1) // Минимальный уровень Администратора | Minimum Administrator Level
+
+/*      [ ЧАТ ]      */
+/*      [ CHAT ]      */
+#define MAX_DISTANCE_CHAT           (10.0) // Максимальная дистанция отправки сообщений | Maximum distance for sending messages

@@ -33,6 +33,7 @@ main(){}
 #include "../include/streamer.inc"
 #include "../include/YSF.inc"
 #include "../include/mdialog.inc"
+#include "../include/foreach.inc"
 
 /*    [ КОНФИГИ ]    */
 /*    [ CONFIGS ]    */
@@ -40,6 +41,7 @@ main(){}
 #include "./src/notification.inc"
 #include "./src/colors.inc"
 #include "./src/define.inc"
+#include "./src/string.inc"
 #include "./src/enum.inc"
 #include "./src/utils.inc"
 
@@ -63,3 +65,9 @@ main(){}
 #include "./src/player/OnPlayerConnect.inc"
 #include "./src/player/OnPlayerDisconnect.inc"
 #include "./src/player/OnPlayerText.inc"
+#include "./src/player/OnPlayerClickMap.inc"
+
+/*    [ КОМАНДЫ ]    */
+/*    [ COMMANDS ]    */
+#include "./src/commands/player.inc"
+#include "./src/commands/admin.inc"

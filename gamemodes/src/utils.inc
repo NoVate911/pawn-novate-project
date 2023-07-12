@@ -11,6 +11,7 @@ stock Data_Clear_PlayerInfo(playerid)
     PInfo[playerid][Nick] = EOS;
     PInfo[playerid][Password] = EOS;
     PInfo[playerid][Email] = EOS;
+    PInfo[playerid][Donate] = 0;
     PInfo[playerid][RegIP] = EOS;
     PInfo[playerid][LastIP] = EOS;
     PInfo[playerid][RegDate] = EOS;
@@ -39,6 +40,7 @@ stock Data_Clear_PlayerKickInfo(playerid)
 }
 
 /*      [ ОБНУЛЯЕМ ИНФОРМАЦИЮ О КИКЕ ИГРОКА ]      */
+/*      [ WE RESET THE INFORMATION ABOUT THE PLAYER'S KICK ]      */
 stock Data_Clear_CharacterInfo(playerid)
 {
     for(new i = 0; i < PInfo[playerid][CharactersCount]; i++)
@@ -66,6 +68,9 @@ stock Data_Clear_CharacterInfo(playerid)
         CInfo[playerid][i][VirtualWorld] = 0;
         CInfo[playerid][i][Health] = 0.0;
         CInfo[playerid][i][Armour] = 0.0;
+        CInfo[playerid][i][AdminLevel] = 0;
+        CInfo[playerid][i][AdminPassword] = 0;
+        CInfo[playerid][i][IsAdmin] = false;
     }
     return 1;
 }
@@ -76,6 +81,7 @@ stock Data_Get_PlayerInfo(playerid)
 {
     cache_get_value_name_int(0, "id", PInfo[playerid][ID]);
     cache_get_value_name(0, "email", PInfo[playerid][Email], MAX_EMAIL_LEN);
+    cache_get_value_name_int(0, "donate", PInfo[playerid][Donate]);
     cache_get_value_name(0, "regIP", PInfo[playerid][RegIP], 16);
     GetPlayerIp(playerid, PInfo[playerid][LastIP], 16);
     cache_get_value_name(0, "regDate", PInfo[playerid][RegDate], 22);
@@ -112,11 +118,24 @@ stock Data_Get_CharacterInfo(playerid)
         cache_get_value_name_int(i, "vw", CInfo[playerid][i][VirtualWorld]);
         cache_get_value_name_float(i, "health", CInfo[playerid][i][Health]);
         cache_get_value_name_float(i, "armour", CInfo[playerid][i][Armour]);
+        cache_get_value_name_int(i, "adminLevel", CInfo[playerid][i][AdminLevel]);
+        cache_get_value_name_int(i, "adminPassword", CInfo[playerid][i][AdminPassword]);
         cache_get_value_name(i, "regIP", CInfo[playerid][i][RegIP], 15);
         cache_get_value_name(i, "lastIP", CInfo[playerid][i][LastIP], 15);
         cache_get_value_name(i, "regDate", CInfo[playerid][i][RegDate], 14);
         cache_get_value_name(i, "lastDate", CInfo[playerid][i][LastDate], 14);
     }
+    return 1;
+}
+
+/*      [ ЗАПИСЫВАЕМ ДАННЫЕ АККАУНТА В БАЗУ ДАННЫХ ]      */
+/*      [ WE RECORD THE ACCOUNT DATA IN THE DATABASE ]      */
+stock Data_Set_PlayerInfo(playerid)
+{
+    static const query[] = "UPDATE accounts SET donate = '%d' WHERE nick = '%s' LIMIT 1";
+    new mysql[sizeof(query)+(-2+11)+(-2+MAX_PLAYER_NAME)];
+    mysql_format(SInfo[MySQL], mysql, sizeof(mysql), query, PInfo[playerid][Donate], PInfo[playerid][Nick]);
+    mysql_query(SInfo[MySQL], mysql, false);
     return 1;
 }
 
@@ -131,9 +150,9 @@ stock Data_Set_CharacterInfo(playerid)
     GetPlayerHealth(playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Health]);
     GetPlayerArmour(playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Armour]);
 
-    static const query[] = "UPDATE characters SET level = '%d', exp = '%d', positionX = '%f', positionY = '%f', positionZ = '%f', rotation = '%f', interior = '%d', vw = '%d', health = '%f', armour = '%f' WHERE login = '%s' LIMIT 1";
-    new mysql[sizeof(query)+(-2+3)+(-2+3)+(-2+8)+(-2+8)+(-2+8)+(-2+8)+(-2+3)+(-2+10)+(-2+3)+(-2+3)+(-2+MAX_PLAYER_NAME)];
-    mysql_format(SInfo[MySQL], mysql, sizeof(mysql), query, CInfo[playerid][PInfo[playerid][CharacterSelect]][Level], CInfo[playerid][PInfo[playerid][CharacterSelect]][Exp], CInfo[playerid][PInfo[playerid][CharacterSelect]][Position][0], CInfo[playerid][PInfo[playerid][CharacterSelect]][Position][1], CInfo[playerid][PInfo[playerid][CharacterSelect]][Position][2], CInfo[playerid][PInfo[playerid][CharacterSelect]][Rotation], CInfo[playerid][PInfo[playerid][CharacterSelect]][Interior], CInfo[playerid][PInfo[playerid][CharacterSelect]][VirtualWorld], CInfo[playerid][PInfo[playerid][CharacterSelect]][Health], CInfo[playerid][PInfo[playerid][CharacterSelect]][Armour], CInfo[playerid][PInfo[playerid][CharacterSelect]][Login]);
+    static const query[] = "UPDATE characters SET level = '%d', exp = '%d', positionX = '%f', positionY = '%f', positionZ = '%f', rotation = '%f', interior = '%d', vw = '%d', health = '%f', armour = '%f', adminLevel = '%d', adminPassword = '%d' WHERE login = '%s' LIMIT 1";
+    new mysql[sizeof(query)+(-2+3)+(-2+3)+(-2+8)+(-2+8)+(-2+8)+(-2+8)+(-2+3)+(-2+10)+(-2+3)+(-2+3)+(-2+2)+(-2+4)+(-2+MAX_PLAYER_NAME)];
+    mysql_format(SInfo[MySQL], mysql, sizeof(mysql), query, CInfo[playerid][PInfo[playerid][CharacterSelect]][Level], CInfo[playerid][PInfo[playerid][CharacterSelect]][Exp], CInfo[playerid][PInfo[playerid][CharacterSelect]][Position][0], CInfo[playerid][PInfo[playerid][CharacterSelect]][Position][1], CInfo[playerid][PInfo[playerid][CharacterSelect]][Position][2], CInfo[playerid][PInfo[playerid][CharacterSelect]][Rotation], CInfo[playerid][PInfo[playerid][CharacterSelect]][Interior], CInfo[playerid][PInfo[playerid][CharacterSelect]][VirtualWorld], CInfo[playerid][PInfo[playerid][CharacterSelect]][Health], CInfo[playerid][PInfo[playerid][CharacterSelect]][Armour], CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel], CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminPassword], CInfo[playerid][PInfo[playerid][CharacterSelect]][Login]);
     mysql_query(SInfo[MySQL], mysql, false);
     return 1;
 }
