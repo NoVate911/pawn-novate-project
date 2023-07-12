@@ -1,3 +1,54 @@
+/*      [ СКИНЫ ПЕРСОНАЖЕЙ ]      */
+/*      [ CHARACTER SKINS ]      */
+new const Skins_Male[9][4] = { // Мужские | Male
+    {18,21,22,28},
+    {18,21,22,28},
+    {18,21,22,28},
+    {18,21,22,28},
+    {18,21,22,28},
+    {18,21,22,28},
+    {18,21,22,28},
+    {18,21,22,28},
+    {18,21,22,28}
+};
+
+new const Skins_Female[9][2] = { // Женские | Female
+    {13,69},
+    {13,69},
+    {13,69},
+    {13,69},
+    {13,69},
+    {13,69},
+    {13,69},
+    {13,69},
+    {13,69}
+};
+
+/*      [ ========== ========== ========== ========== ========== ]      */
+
+/*      [ ОТОБРАЖАЕТ ВЫБОР ПЕРСОНАЖА ]      */
+/*      [ DISPLAYS THE CHARACTER SELECTION ]      */
+stock Player_CharacterShow(playerid)
+{
+    static const query[] = "SELECT id,login,firstname,lastname,age,sex,race,skin,level,exp,positionX,positionY,positionZ,rotation,interior,vw,health,armour,regIP,lastIP,regDate,lastDate FROM characters WHERE login = '%s' LIMIT %d";
+    new mysql[sizeof(query)+(-2+MAX_PLAYER_NAME)+(-2+1)];
+    mysql_format(SInfo[MySQL], mysql, sizeof(mysql), query, PInfo[playerid][Nick], MAX_CHARACTERS);
+    new Cache:cache = mysql_query(SInfo[MySQL], mysql, true);
+    cache_get_row_count(PInfo[playerid][CharactersCount]);
+    if(PInfo[playerid][CharactersCount])
+    {
+        Data_Get_CharacterInfo(playerid);
+        Dialog_Show(playerid, Dialog:Dlg_Char_List);
+    }
+    else
+        Dialog_Show(playerid, Dialog:Dlg_Char_CreateFirstName);
+    return cache_delete(cache);
+}
+
+/*      [ ========== ========== ========== ========== ========== ]      */
+
+/*      [ ДИАЛОГОВЫЕ ОКНА ]      */
+/*      [ DIALOG BOXES ]      */
 dCreate:Dlg_Char_List(playerid)
 {
     new temp[55+(-2+1)+(-2+MAX_PLAYER_NAME)+(-2+MAX_PLAYER_NAME)+(-2+3)];
@@ -5,12 +56,12 @@ dCreate:Dlg_Char_List(playerid)
     for(new i = 0; i < MAX_CHARACTERS; i++)
     {
         if(CInfo[playerid][i][ID] == 0)
-            format(temp, sizeof(temp), ""C_GRAY"[%d] "C_WHITE"РЎРѕР·РґР°С‚СЊ РїРµСЂСЃРѕРЅР°Р¶Р°\n", i+1);
+            format(temp, sizeof(temp), ""C_GRAY"[%d] "C_WHITE"Создать персонажа\n", i+1);
         else
             format(temp, sizeof(temp), ""C_GRAY"[%d] "C_WHITE"%s %s "C_GRAY"(%d LVL / %d EXP)\n", i+1, CInfo[playerid][i][FirstName], CInfo[playerid][i][LastName], CInfo[playerid][i][Level], CInfo[playerid][i][Exp]);
         strcat(string, temp, sizeof(string));
     }
-    return Dialog_Open(playerid, Dialog:Dlg_Char_List, DIALOG_STYLE_LIST, ""C_WHITE"Р’С‹Р±РѕСЂ РїРµСЂСЃРѕРЅР°Р¶Р°", string, "Р’С‹Р±РѕСЂ", "Р’С‹С…РѕРґ");
+    return Dialog_Open(playerid, Dialog:Dlg_Char_List, DIALOG_STYLE_LIST, ""C_WHITE"Выбор персонажа", string, "Выбор", "Выход");
 }
 
 dResponse:Dlg_Char_List(playerid)
@@ -38,16 +89,16 @@ dResponse:Dlg_Char_List(playerid)
         }
     }
     else
-        Player_Kick(playerid, _, "Р’С‹С…РѕРґ");
+        Player_Kick(playerid, _, "Выход");
     return 1;
 }
 
 dCreate:Dlg_Char_CreateFirstName(playerid)
 {
     static const message[] = "\
-    "C_WHITE"\n\\cР’РІРµРґРёС‚Рµ РёРјСЏ СЃРІРѕРµРіРѕ Р±СѓРґСѓС‰РµРіРѕ РїРµСЂСЃРѕРЅР°Р¶Р°.\n\
-    "C_WHITE"\\cРџРѕСЃР»Рµ РІРІРѕРґР° РёРјРµРЅРё, РЅР°Р¶РјРёС‚Рµ "C_EMERALD"\"Р”Р°Р»РµРµ\""C_WHITE".\n\n";
-    return Dialog_Open(playerid, Dialog:Dlg_Char_CreateFirstName, DIALOG_STYLE_INPUT, ""C_GRAY"Р РµРіРёСЃС‚СЂР°С†РёСЏ "C_BLACK"| "C_WHITE"РЎРѕР·РґР°РЅРёРµ РїРµСЂСЃРѕРЅР°Р¶Р°", message, "Р”Р°Р»РµРµ", "");
+    "C_WHITE"\n\\cВведите имя своего будущего персонажа.\n\
+    "C_WHITE"\\cПосле ввода имени, нажмите "C_EMERALD"\"Далее\""C_WHITE".\n\n";
+    return Dialog_Open(playerid, Dialog:Dlg_Char_CreateFirstName, DIALOG_STYLE_INPUT, ""C_GRAY"Регистрация "C_BLACK"| "C_WHITE"Создание персонажа", message, "Далее", "");
 }
 
 dResponse:Dlg_Char_CreateFirstName(playerid)
@@ -56,13 +107,13 @@ dResponse:Dlg_Char_CreateFirstName(playerid)
     {
         if(!strlen(inputtext))
         {
-            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Р’СЃРµ РїРѕР»СЏ РґРѕР»Р¶РЅС‹ Р±С‹С‚СЊ Р·Р°РїРѕР»РЅРµРЅС‹.");
+            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Все поля должны быть заполнены.");
             return Dialog_Show(playerid, Dialog:Dlg_Char_CreateFirstName);
         }
 
         if(!(3 < strlen(inputtext) < MAX_PLAYER_NAME))
         {
-            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"РРјСЏ СЃР»РёС€РєРѕРј РєРѕСЂРѕС‚РєРѕРµ РёР»Рё СЃР»РёС€РєРѕРј РґР»РёРЅРЅРѕРµ.");
+            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Имя слишком короткое или слишком длинное.");
             return Dialog_Show(playerid, Dialog:Dlg_Char_CreateFirstName);
         }
 
@@ -74,7 +125,7 @@ dResponse:Dlg_Char_CreateFirstName(playerid)
         }
         else
         {
-            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"РРјСЏ РјРѕР¶РµС‚ СЃРѕРґРµСЂР¶Р°С‚СЊ С‚РѕР»СЊРєРѕ Р»Р°С‚РёРЅСЃРєРёРµ СЃРёРјРІРѕР»С‹.");
+            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Имя может содержать только латинские символы.");
             return Dialog_Show(playerid, Dialog:Dlg_Char_CreateFirstName);
         }
         Regex_Delete(regex_firstname_check);
@@ -85,9 +136,9 @@ dResponse:Dlg_Char_CreateFirstName(playerid)
 dCreate:Dlg_Char_CreateLastName(playerid)
 {
     static const message[] = "\
-    "C_WHITE"\n\\cР’РІРµРґРёС‚Рµ С„Р°РјРёР»РёСЋ СЃРІРѕРµРіРѕ Р±СѓРґСѓС‰РµРіРѕ РїРµСЂСЃРѕРЅР°Р¶Р°.\n\
-    "C_WHITE"\\cРџРѕСЃР»Рµ РІРІРѕРґР° С„Р°РјРёР»РёРё, РЅР°Р¶РјРёС‚Рµ "C_EMERALD"\"Р”Р°Р»РµРµ\""C_WHITE".\n\n";
-    return Dialog_Open(playerid, Dialog:Dlg_Char_CreateLastName, DIALOG_STYLE_INPUT, ""C_GRAY"Р РµРіРёСЃС‚СЂР°С†РёСЏ "C_BLACK"| "C_WHITE"РЎРѕР·РґР°РЅРёРµ РїРµСЂСЃРѕРЅР°Р¶Р°", message, "Р”Р°Р»РµРµ", "");
+    "C_WHITE"\n\\cВведите фамилию своего будущего персонажа.\n\
+    "C_WHITE"\\cПосле ввода фамилии, нажмите "C_EMERALD"\"Далее\""C_WHITE".\n\n";
+    return Dialog_Open(playerid, Dialog:Dlg_Char_CreateLastName, DIALOG_STYLE_INPUT, ""C_GRAY"Регистрация "C_BLACK"| "C_WHITE"Создание персонажа", message, "Далее", "");
 }
 
 dResponse:Dlg_Char_CreateLastName(playerid)
@@ -96,13 +147,13 @@ dResponse:Dlg_Char_CreateLastName(playerid)
     {
         if(!strlen(inputtext))
         {
-            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Р’СЃРµ РїРѕР»СЏ РґРѕР»Р¶РЅС‹ Р±С‹С‚СЊ Р·Р°РїРѕР»РЅРµРЅС‹.");
+            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Все поля должны быть заполнены.");
             return Dialog_Show(playerid, Dialog:Dlg_Char_CreateLastName);
         }
 
         if(!(3 < strlen(inputtext) < MAX_PLAYER_NAME))
         {
-            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Р¤Р°РјРёР»РёСЏ СЃР»РёС€РєРѕРј РєРѕСЂРѕС‚РєР°СЏ РёР»Рё СЃР»РёС€РєРѕРј РґР»РёРЅРЅР°СЏ.");
+            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Фамилия слишком короткая или слишком длинная.");
             return Dialog_Show(playerid, Dialog:Dlg_Char_CreateLastName);
         }
 
@@ -114,7 +165,7 @@ dResponse:Dlg_Char_CreateLastName(playerid)
         }
         else
         {
-            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Р¤Р°РјРёР»РёСЏ РјРѕР¶РµС‚ СЃРѕРґРµСЂР¶Р°С‚СЊ С‚РѕР»СЊРєРѕ Р»Р°С‚РёРЅСЃРєРёРµ СЃРёРјРІРѕР»С‹.");
+            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Фамилия может содержать только латинские символы.");
             return Dialog_Show(playerid, Dialog:Dlg_Char_CreateLastName);
         }
         Regex_Delete(regex_lastname_check);
@@ -125,9 +176,9 @@ dResponse:Dlg_Char_CreateLastName(playerid)
 dCreate:Dlg_Char_CreateAge(playerid)
 {
     static const message[] = "\
-    "C_WHITE"\n\\cР’РІРµРґРёС‚Рµ РІРѕР·СЂР°СЃС‚ СЃРІРѕРµРіРѕ Р±СѓРґСѓС‰РµРіРѕ РїРµСЂСЃРѕРЅР°Р¶Р°.\n\
-    "C_WHITE"\\cРџРѕСЃР»Рµ РІРІРѕРґР° РІРѕР·СЂР°СЃС‚Р°, РЅР°Р¶РјРёС‚Рµ "C_EMERALD"\"Р”Р°Р»РµРµ\""C_WHITE".\n\n";
-    return Dialog_Open(playerid, Dialog:Dlg_Char_CreateAge, DIALOG_STYLE_INPUT, ""C_GRAY"Р РµРіРёСЃС‚СЂР°С†РёСЏ "C_BLACK"| "C_WHITE"РЎРѕР·РґР°РЅРёРµ РїРµСЂСЃРѕРЅР°Р¶Р°", message, "Р”Р°Р»РµРµ", "");
+    "C_WHITE"\n\\cВведите возраст своего будущего персонажа.\n\
+    "C_WHITE"\\cПосле ввода возраста, нажмите "C_EMERALD"\"Далее\""C_WHITE".\n\n";
+    return Dialog_Open(playerid, Dialog:Dlg_Char_CreateAge, DIALOG_STYLE_INPUT, ""C_GRAY"Регистрация "C_BLACK"| "C_WHITE"Создание персонажа", message, "Далее", "");
 }
 
 dResponse:Dlg_Char_CreateAge(playerid)
@@ -136,13 +187,13 @@ dResponse:Dlg_Char_CreateAge(playerid)
     {
         if(!strval(inputtext))
         {
-            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Р’СЃРµ РїРѕР»СЏ РґРѕР»Р¶РЅС‹ Р±С‹С‚СЊ Р·Р°РїРѕР»РЅРµРЅС‹.");
+            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Все поля должны быть заполнены.");
             return Dialog_Show(playerid, Dialog:Dlg_Char_CreateAge);
         }
 
         if(!(MIN_CHARACTER_AGE < strval(inputtext) < MAX_CHARACTER_AGE))
         {
-            SCMf(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Р’РѕР·СЂР°СЃС‚ РїРµСЂСЃРѕРЅР°Р¶Р° РјРѕР¶РµС‚ Р±С‹С‚СЊ РѕС‚ %d РґРѕ %d Р»РµС‚.", MIN_CHARACTER_AGE, MAX_CHARACTER_AGE);
+            SCMf(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Возраст персонажа может быть от %d до %d лет.", MIN_CHARACTER_AGE, MAX_CHARACTER_AGE);
             return Dialog_Show(playerid, Dialog:Dlg_Char_CreateAge);
         }
 
@@ -155,8 +206,8 @@ dResponse:Dlg_Char_CreateAge(playerid)
 dCreate:Dlg_Char_CreateSex(playerid)
 {
     static const message[] = "\
-    "C_WHITE"\n\\cР’С‹Р±РµСЂРёС‚Рµ РїРѕР» Р±СѓРґСѓС‰РµРіРѕ РїРµСЂСЃРѕРЅР°Р¶Р°.\n\n";
-    return Dialog_Open(playerid, Dialog:Dlg_Char_CreateSex, DIALOG_STYLE_MSGBOX, ""C_GRAY"Р РµРіРёСЃС‚СЂР°С†РёСЏ "C_BLACK"| "C_WHITE"РЎРѕР·РґР°РЅРёРµ РїРµСЂСЃРѕРЅР°Р¶Р°", message, "РњСѓР¶СЃРєРѕР№", "Р–РµРЅСЃРєРёР№");
+    "C_WHITE"\n\\cВыберите пол будущего персонажа.\n\n";
+    return Dialog_Open(playerid, Dialog:Dlg_Char_CreateSex, DIALOG_STYLE_MSGBOX, ""C_GRAY"Регистрация "C_BLACK"| "C_WHITE"Создание персонажа", message, "Мужской", "Женский");
 }
 
 dResponse:Dlg_Char_CreateSex(playerid)
@@ -171,10 +222,10 @@ dResponse:Dlg_Char_CreateSex(playerid)
 dCreate:Dlg_Char_CreateRace(playerid)
 {
     static const message[] = "\
-    "C_WHITE"Р•РІСЂРѕРїРµРѕРёРґРЅР°СЏ\n\
-    "C_WHITE"РќРµРіСЂРѕРёРґРЅР°СЏ\n\
-    "C_WHITE"РњРѕРЅРіРѕР»РѕРёРґРЅР°СЏ";
-    return Dialog_Open(playerid, Dialog:Dlg_Char_CreateRace, DIALOG_STYLE_LIST, ""C_GRAY"Р РµРіРёСЃС‚СЂР°С†РёСЏ "C_BLACK"| "C_WHITE"РЎРѕР·РґР°РЅРёРµ РїРµСЂСЃРѕРЅР°Р¶Р°", message, "РЎРѕР·РґР°С‚СЊ", "");
+    "C_WHITE"Европеоидная\n\
+    "C_WHITE"Негроидная\n\
+    "C_WHITE"Монголоидная";
+    return Dialog_Open(playerid, Dialog:Dlg_Char_CreateRace, DIALOG_STYLE_LIST, ""C_GRAY"Регистрация "C_BLACK"| "C_WHITE"Создание персонажа", message, "Создать", "");
 }
 
 dResponse:Dlg_Char_CreateRace(playerid)
@@ -192,6 +243,8 @@ dResponse:Dlg_Char_CreateRace(playerid)
         GetPlayerIp(playerid, CInfo[playerid][0][RegIP], 16);
         GetPlayerIp(playerid, CInfo[playerid][0][LastIP], 16);
 
+        // Выбор рандомного скина исходя из возраста и расы персонажа
+        // Choosing a random skin based on the age and race of the character
         new skinID = 0;
         switch(CInfo[playerid][0][Age])
         {
@@ -218,8 +271,8 @@ dResponse:Dlg_Char_CreateRace(playerid)
             Player_CharacterShow(playerid);
         else
         {
-            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"РџСЂРё СЃРѕР·РґР°РЅРёРё РїРµСЂСЃРѕРЅР°Р¶Р° РїСЂРѕРёР·РѕС€Р»Р° РѕС€РёР±РєР°. РћР±СЂР°С‚РёС‚РµСЃСЊ Рє РђРґРјРёРЅРёСЃС‚СЂР°С†РёРё!");
-            Player_Kick(playerid, _, "РћС€РёР±РєР°");
+            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"При создании персонажа произошла ошибка. Обратитесь к Администрации!");
+            Player_Kick(playerid, _, "Ошибка");
         }
         cache_delete(cache);
     }

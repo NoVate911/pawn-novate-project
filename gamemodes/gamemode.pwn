@@ -1,15 +1,15 @@
 /*
 
 [ ============================== ]
-   РџР РћР§РўРРўР• РџР•Р Р•Р” Р—РђРџРЈРЎРљРћРњ РњРћР”Рђ
+   ПРОЧТИТЕ ПЕРЕД ЗАПУСКОМ МОДА
   READ BEFORE LAUNCHING THE MOD
 [ ============================== ]
 
 -- [ RUS ] --
-Р”Р°РЅРЅР°СЏ СЃР±РѕСЂРєР° Р±С‹Р»Р° РЅР°РїРёСЃР°РЅР° СЂСѓСЃСЃРєРёРј СЂР°Р·СЂР°Р±РѕС‚С‡РёРєРѕРј.
-РќРµРєРѕС‚РѕСЂС‹Р№ РїРµСЂРµРІРµРґС‘РЅРЅС‹Р№ С‚РµРєСЃС‚ РјРѕР¶РµС‚ РѕС‚РѕР±СЂР°Р¶Р°С‚СЊСЃСЏ СЃ РѕС€РёР±РєР°РјРё РёР»Рё Р¶Рµ РІРѕРІСЃРµ РЅРµ Р±СѓРґРµС‚ РїРµСЂРµРІРµРґС‘РЅ.
+Данная сборка была написана русским разработчиком.
+Некоторый переведённый текст может отображаться с ошибками или же вовсе не будет переведён.
 
-Р•СЃР»Рё РїРѕСЏРІРёР»РёСЃСЊ РЅРµРёР·РІРµСЃС‚РЅС‹Рµ СЃРёРјРІРѕР»С‹, С‚Рѕ РѕС‚РєСЂРѕР№С‚Рµ РїСЂРѕРµРєС‚ СЃ РєРѕРґРёСЂРѕРІРєРѕР№ "Windows 1251 (cp1251)".
+Если появились неизвестные символы, то откройте проект с кодировкой "Windows 1251 (cp1251)".
 
 -- [ ENG ] --
 This build was written by a Russian developer.
@@ -21,42 +21,45 @@ If unknown characters appear, then open the project with the encoding "Windows 1
 
 main(){}
 
-/*    [ РџРћР”РљР›Р®Р§Р•РќРР• Р‘РР‘Р›РРћРўР•Рљ(РРќРљР›РЈР”РћР’) ]   */
+/*    [ ПОДКЛЮЧЕНИЕ БИБЛИОТЕК(ИНКЛУДОВ) ]   */
 /*    [ CONNECTING LIBRARIES (INCLUDS) ]    */
 #include <a_samp>
 #include "../include/a_mysql.inc"
 #include "../include/md5.inc"
 #include "../include/sscanf2.inc"
+#include "../include/crashdetect.inc"
 #include "../include/Pawn.CMD.inc"
 #include "../include/Pawn.Regex.inc"
 #include "../include/streamer.inc"
 #include "../include/YSF.inc"
 #include "../include/mdialog.inc"
 
-/*    [ Р”РћРџРћР›РќРРўР•Р›Р¬РќР«Р• Р¤РЈРќРљР¦РР Р РљРћРќР¤РР“Р ]    */
-/*    [ ADDITIONAL FUNCTIONS AND CONFIGS ]    */
+/*    [ КОНФИГИ ]    */
+/*    [ CONFIGS ]    */
+#include "./src/config.inc"
+#include "./src/notification.inc"
+#include "./src/colors.inc"
 #include "./src/define.inc"
 #include "./src/enum.inc"
-#include "./src/config.inc"
 #include "./src/utils.inc"
 
-/*    [ Р”РРђР›РћР“РћР’Р«Р• РћРљРќРђ ]   */
-/*    [ DIALOG BOXES ]    */
-#include "./src/dialogs/Character.inc"
-#include "./src/dialogs/Kick.inc"
+/*    [ СИСТЕМЫ ]    */
+/*    [ SYSTEMS ]    */
+#include "./src/system/Database.inc"
+#include "./src/system/Authorization.inc"
+#include "./src/system/Character.inc"
+#include "./src/system/Kick.inc"
+#include "./src/system/Chat.inc"
 
-/*    [ РЎР•Р Р’Р•Р РќРђРЇ РЎРўРћР РћРќРђ ]   */
+/*    [ СЕРВЕРНАЯ СТОРОНА ]   */
 /*    [ SERVER SIDE ]   */
 #include "./src/server/OnGameModeInit.inc"
 #include "./src/server/OnGameModeExit.inc"
 
-/*    [ РљР›РР•РќРўРЎРљРђРЇ РЎРўРћР РћРќРђ ]    */
+/*    [ КЛИЕНТСКАЯ СТОРОНА ]    */
 /*    [ CLIENT SIDE ]   */
+#include "./src/player/timers/OnPlayerConnect.inc"
 #include "./src/player/timers/OnPlayerSecond.inc"
 #include "./src/player/OnPlayerConnect.inc"
 #include "./src/player/OnPlayerDisconnect.inc"
 #include "./src/player/OnPlayerText.inc"
-
-/*    [ РЎРРЎРўР•РњР« ]    */
-/*    [ SYSTEMS ]    */
-#include "./src/system/Authorization.inc"

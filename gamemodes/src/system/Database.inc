@@ -1,11 +1,4 @@
-/*      [ РќРђРЎРўР РћР™РљРђ Р‘РђР—Р« Р”РђРќРќР«РҐ ]      */
-/*      [ DATABASE SETTINGS ]      */
-#define MYSQL_HOSTNAME              "localhost"
-#define MYSQL_USERNAME              "root"
-#define MYSQL_PASSWORD              ""
-#define MYSQL_DATABASE              "samp-novateproject"
-
-/*      [ РџРћР”РљР›Р®Р§Р•РќРР• Рљ Р‘РђР—Р• Р”РђРќРќР«РҐ ]      */
+/*      [ ПОДКЛЮЧЕНИЕ К БАЗЕ ДАННЫХ ]      */
 /*      [ CONNECTING TO THE DATABASE ]      */
 stock MySQL_ConnectionDatabase(hostname[], username[], password[], database[])
 {
@@ -14,15 +7,15 @@ stock MySQL_ConnectionDatabase(hostname[], username[], password[], database[])
     mysql_set_charset("cp1251", SInfo[MySQL]);
     switch(mysql_errno(SInfo[MySQL]))
     {
-        case 2005: return printf("%s РќРµ СѓРґР°Р»РѕСЃСЊ РїРѕРґРєР»СЋС‡РёС‚СЊСЃСЏ Рє Р±Р°Р·Рµ РґР°РЅРЅС‹С…. РќРµРІРµСЂРЅРѕРµ РёРјСЏ С…РѕСЃС‚Р°. (РљРѕРґ РѕС€РёР±РєРё: %d)", DEBUG_MYSQL, mysql_errno(SInfo[MySQL]));
-        case 1045: return printf("%s РќРµ СѓРґР°Р»РѕСЃСЊ РїРѕРґРєР»СЋС‡РёС‚СЊСЃСЏ Рє Р±Р°Р·Рµ РґР°РЅРЅС‹С…. РќРµРІРµСЂРЅРѕРµ РёРјСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ. (РљРѕРґ РѕС€РёР±РєРё: %d)", DEBUG_MYSQL, mysql_errno(SInfo[MySQL]));
-        case 1049: return printf("%s РќРµ СѓРґР°Р»РѕСЃСЊ РїРѕРґРєР»СЋС‡РёС‚СЊСЃСЏ Рє Р±Р°Р·Рµ РґР°РЅРЅС‹С…. РќРµРІРµСЂРЅРѕРµ РёРјСЏ Р±Р°Р·С‹ РґР°РЅРЅС‹С…. (РљРѕРґ РѕС€РёР±РєРё: %d)", DEBUG_MYSQL, mysql_errno(SInfo[MySQL]));
-        default: printf("%s Р‘Р°Р·Р° РґР°РЅРЅС‹С… РїРѕРґРєР»СЋС‡РµРЅР° Рё РіРѕС‚РѕРІР° Рє СЂР°Р±РѕС‚Рµ.", DEBUG_MYSQL);
+        case 2005: return printf("%s Не удалось подключиться к базе данных. Неверное имя хоста. (Код ошибки: %d)", DEBUG_MYSQL, mysql_errno(SInfo[MySQL]));
+        case 1045: return printf("%s Не удалось подключиться к базе данных. Неверное имя пользователя. (Код ошибки: %d)", DEBUG_MYSQL, mysql_errno(SInfo[MySQL]));
+        case 1049: return printf("%s Не удалось подключиться к базе данных. Неверное имя базы данных. (Код ошибки: %d)", DEBUG_MYSQL, mysql_errno(SInfo[MySQL]));
+        default: printf("%s База данных подключена и готова к работе.", DEBUG_MYSQL);
     }
     return 1;
 }
 
-/*      [ Р—РђРљР Р«РўРР• РџРћР”РљР›Р®Р§Р•РќРРЇ Рљ Р‘РђР—Р• Р”РђРќРќР«РҐ ]      */
+/*      [ ЗАКРЫТИЕ ПОДКЛЮЧЕНИЯ К БАЗЕ ДАННЫХ ]      */
 /*      [ CLOSING THE DATABASE CONNECTION ]     */
 stock MySQL_CloseConnectionDatabase()
 {

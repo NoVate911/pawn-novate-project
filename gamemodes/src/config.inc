@@ -1,31 +1,31 @@
-/*      [ –°–ö–ò–ù–´ –ü–ï–†–°–û–ù–ê–ñ–ï–ô ]      */
-/*      [ CHARACTER SKINS ]      */
-new const Skins_Male[9][4] = {
-    {18,21,22,28},
-    {18,21,22,28},
-    {18,21,22,28},
-    {18,21,22,28},
-    {18,21,22,28},
-    {18,21,22,28},
-    {18,21,22,28},
-    {18,21,22,28},
-    {18,21,22,28}
-};
+/*      [ ”—“¿ÕŒ¬ ¿ ÕŒ¬€’ «Õ¿◊≈Õ»… ]      */
+/*      [ SETTING NEW VALUES ]      */
+#undef MAX_PLAYER_NAME
+    #define MAX_PLAYER_NAME         (24)
+#undef MAX_PLAYERS
+    #define MAX_PLAYERS             (50)
 
-new const Skins_Female[9][2] = {
-    {13,69},
-    {13,69},
-    {13,69},
-    {13,69},
-    {13,69},
-    {13,69},
-    {13,69},
-    {13,69},
-    {13,69}
-};
+/*      [ »Õ‘Œ–Ã¿÷»ﬂ Œ —≈–¬≈–≈ ]      */
+/*      [ SERVER INFORMATION ]      */
+#define SERVER_NAME                 "NoVate Project"
+#define SERVER_AUTHOR               "NoVate Source"
+#define SERVER_VERSION              "build 1001"
+#define SERVER_TYPE                 "RolePlay"
 
-/*      [ –ü–û–ó–ò–¶–ò–ò –ü–û–Ø–í–õ–ï–ù–ò–Ø (–ü–†–ò –°–ü–ê–í–ù–ï / –°–ü–ê–í–ù –ù–ï –ù–ê–ô–î–ï–ù) ]      */
-/*      [ SPAWN POSITIONS (AT SPAWN / SPAWN NOT FOUND) ]      */
-new const Float:Positions_Spawn[MAX_POSITIONS_SPAWN][4] = { // X, Y, Z, Rotation
-    {0.0, 0.0, 3.0, 0.0} // Default
-};
+/*      [ ÿ¿¡ÀŒÕ ƒÀﬂ ¬€¬Œƒ¿ ]      */
+/*      [ TEMPLATES FOR OUTPUT ]      */
+#define DEBUG_MYSQL                 "[MySQL] |"
+#define DEBUG_LOAD                  "[LOAD] |"
+#define DEBUG_INFO                  "[INFO] |"
+
+/*      [ œ≈–≈Ã≈ÕÕ€≈ ‘”Õ ÷»… ]      */
+/*      [ FUNCTION VARIABLES ]      */
+#define function%0(%1)              forward%0(%1); public%0(%1)
+#define dCreate:%0(%1)              DialogCreate:%0(%1)
+#define dResponse:%0(%1)            DialogResponse:%0(%1, response, listitem, inputtext[])
+#define randomEx(%1, %2)            (random(%2 - %1) + %1)
+#define SCM                         SendClientMessage
+#define SCMTA                       SendClientMessageToAll
+#define SPD                         ShowPlayerDialog
+#define SCMf                        SendClientMessagef
+#define SCMTAf                      SendClientMessageToAllf

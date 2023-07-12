@@ -4,3 +4,4 @@ gamemodes/gamemode.amx
 logs
 
 server_log.txt
+crashinfo.txt

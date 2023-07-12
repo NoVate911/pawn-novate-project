@@ -1,41 +1,46 @@
-/*      [ РўРђР™РњР•Р  ]      */
-/*      [ TIMER ]      */
-function Timer_OnPlayerConnect(playerid)
-{
-    KillTimer(PTimerInfo[playerid][Authorization]);
-    Chat_Clear_Player(playerid);
-    TogglePlayerSpectating(playerid, true);
-    SetPlayerVirtualWorld(playerid, playerid + 1000);
-    PInfo[playerid][IsConnection] = true;
+/*      [ ПОЗИЦИИ ПОЯВЛЕНИЯ (ПРИ СПАВНЕ / СПАВН НЕ НАЙДЕН) ]      */
+/*      [ SPAWN POSITIONS (AT SPAWN / SPAWN NOT FOUND) ]      */
+new const Float:Positions_Spawn[MAX_POSITIONS_SPAWN][4] = { // X, Y, Z, Rotation
+    {0.0, 0.0, 3.0, 0.0} // Default
+};
 
-    static const query[] = "SELECT nick FROM accounts WHERE nick = '%s' LIMIT 1";
-    new mysql[sizeof(query)+(-2+MAX_PLAYER_NAME)];
-    mysql_format(SInfo[MySQL], mysql, sizeof(mysql), query, PInfo[playerid][Nick]);
-    new Cache:cache = mysql_query(SInfo[MySQL], mysql, true);
-    if(cache_num_rows())
-    {
-        PInfo[playerid][AuthorizationTime] = MAX_AUTHORIZATION_TIME;
-        PInfo[playerid][AuthorizationCountTry] = AUTHORIZATION_COUNT_TRY;
-        Dialog_Show(playerid, Dialog:Dlg_Auth_Log_Password);
-    }
+/*      [ ========== ========== ========== ========== ========== ]      */
+
+/*      [ ПОЯВЛЕНИЕ ИГРОКА ПОСЛЕ АУТЕНТИФИКАЦИИ ]      */
+/*      [ THE APPEARANCE OF THE PLAYER AFTER AUTHENTICATION ]      */
+stock Player_SpawnAfterAuthorization(playerid)
+{
+    TogglePlayerSpectating(playerid, false);
+    if(CInfo[playerid][PInfo[playerid][CharacterSelect]][Position][0] == 0.0 && CInfo[playerid][PInfo[playerid][CharacterSelect]][Position][1] == 0.0 && CInfo[playerid][PInfo[playerid][CharacterSelect]][Position][2] == 0.0)
+        SetSpawnInfo(playerid, 0, CInfo[playerid][PInfo[playerid][CharacterSelect]][Skin], Positions_Spawn[random(MAX_POSITIONS_SPAWN)][0], Positions_Spawn[random(MAX_POSITIONS_SPAWN)][1], Positions_Spawn[random(MAX_POSITIONS_SPAWN)][2], Positions_Spawn[random(MAX_POSITIONS_SPAWN)][3], 0, 0, 0, 0, 0, 0);
     else
-    {
-        PInfo[playerid][AuthorizationTime] = MAX_REGISTRATION_TIME;
-        Dialog_Show(playerid, Dialog:Dlg_Auth_Reg_Password);
-    }
-    cache_delete(cache);
-    return PTimerInfo[playerid][Second] = SetTimerEx("Timer_OnPlayerSecond", 1000, true, "i", playerid);
+        SetSpawnInfo(playerid, 0, CInfo[playerid][PInfo[playerid][CharacterSelect]][Skin], CInfo[playerid][PInfo[playerid][CharacterSelect]][Position][0], CInfo[playerid][PInfo[playerid][CharacterSelect]][Position][1], CInfo[playerid][PInfo[playerid][CharacterSelect]][Position][2], CInfo[playerid][PInfo[playerid][CharacterSelect]][Rotation], 0, 0, 0, 0, 0, 0);
+    SpawnPlayer(playerid);
+    SetCameraBehindPlayer(playerid);
+    SetPlayerVirtualWorld(playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][VirtualWorld]);
+    SetPlayerInterior(playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Interior]);
+    SetPlayerHealth(playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Health]);
+    SetPlayerArmour(playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Armour]);
+    PInfo[playerid][IsLogged] = true;
+    CInfo[playerid][PInfo[playerid][CharacterSelect]][IsSpawning] = true;
+    new name[MAX_PLAYER_NAME];
+    format(name, sizeof(name), "%s_%s", CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName]);
+    SetPlayerName(playerid, name);
+    printf("%s %s(%d) [%s] был заспавнен под персонажем %s %s", DEBUG_INFO, PInfo[playerid][Nick], playerid, PInfo[playerid][LastIP], CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName]);
+    return 1;
 }
 
-/*      [ Р”РРђР›РћР“РћР’Р«Р• РћРљРќРђ ]      */
+/*      [ ========== ========== ========== ========== ========== ]      */
+
+/*      [ ДИАЛОГОВЫЕ ОКНА ]      */
 /*      [ DIALOG BOXES ]      */
 dCreate:Dlg_Auth_Log_Password(playerid)
 {
     static const message[] = "\
-    "C_WHITE"\n\\cРЎ РІРѕР·РІСЂР°С‰РµРЅРёРµРј РЅР° СЃРµСЂРІРµСЂ "C_EMERALD""SERVER_NAME" "C_WHITE"| "C_EMERALD""SERVER_TYPE""C_WHITE".\n\
-    "C_WHITE"\\cР”Р»СЏ РІС…РѕРґР° РёСЃРїРѕР»СЊР·СѓР№С‚Рµ СЃРІРѕР№ РїР°СЂРѕР»СЊ.\n\
-    "C_WHITE"\\cР’РІРµРґРёС‚Рµ СЃРІРѕР№ РїР°СЂРѕР»СЊ РІ РїРѕР»Рµ РІРІРѕРґР° Рё РЅР°Р¶РјРёС‚Рµ \"РРіСЂР°С‚СЊ\"\n\n";
-    return Dialog_Open(playerid, Dialog:Dlg_Auth_Log_Password, DIALOG_STYLE_PASSWORD, ""C_GRAY"РђСѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ "C_BLACK"| "C_WHITE"РђРІС‚РѕСЂРёР·Р°С†РёСЏ", message, "РРіСЂР°С‚СЊ", "Р’С‹С…РѕРґ");
+    "C_WHITE"\n\\cС возвращением на сервер "C_EMERALD""SERVER_NAME" "C_WHITE"| "C_EMERALD""SERVER_TYPE""C_WHITE".\n\
+    "C_WHITE"\\cДля входа используйте свой пароль.\n\
+    "C_WHITE"\\cВведите свой пароль в поле ввода и нажмите \"Играть\"\n\n";
+    return Dialog_Open(playerid, Dialog:Dlg_Auth_Log_Password, DIALOG_STYLE_PASSWORD, ""C_GRAY"Аутентификация "C_BLACK"| "C_WHITE"Авторизация", message, "Играть", "Выход");
 }
 
 dResponse:Dlg_Auth_Log_Password(playerid)
@@ -44,13 +49,13 @@ dResponse:Dlg_Auth_Log_Password(playerid)
     {
         if(!strlen(inputtext))
         {
-            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Р’СЃРµ РїРѕР»СЏ РґРѕР»Р¶РЅС‹ Р±С‹С‚СЊ Р·Р°РїРѕР»РЅРµРЅС‹.");
+            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Все поля должны быть заполнены.");
             return Dialog_Show(playerid, Dialog:Dlg_Auth_Log_Password);
         }
 
         if(!(MIN_PASSWORD_LEN < strlen(inputtext) < MAX_PASSWORD_LEN))
         {
-            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"РџР°СЂРѕР»СЊ СЃР»РёС€РєРѕРј РґР»РёРЅРЅС‹Р№ РёР»Рё РєРѕСЂРѕС‚РєРёР№.");
+            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Пароль слишком длинный или короткий.");
             return Dialog_Show(playerid, Dialog:Dlg_Auth_Log_Password);
         }
 
@@ -67,8 +72,8 @@ dResponse:Dlg_Auth_Log_Password(playerid)
             {
                 Data_Get_PlayerInfo(playerid);
                 Player_CharacterShow(playerid);
-                SCM(playerid, C_F_WHITE, ""NOTIF_SUCCESS" "C_WHITE"Р’С‹ Р°РІС‚РѕСЂРёР·РѕРІР°Р»РёСЃСЊ РЅР° СЃРµСЂРІРµСЂРµ.");
-                printf("%s РРіСЂРѕРє %s(%d) [%s] Р°РІС‚РѕСЂРёР·РѕРІР°Р»СЃСЏ РЅР° СЃРµСЂРІРµСЂРµ.", DEBUG_INFO, PInfo[playerid][Nick], playerid, PInfo[playerid][LastIP]);
+                SCM(playerid, C_F_WHITE, ""NOTIF_SUCCESS" "C_WHITE"Вы авторизовались на сервере.");
+                printf("%s Игрок %s(%d) [%s] авторизовался на сервере.", DEBUG_INFO, PInfo[playerid][Nick], playerid, PInfo[playerid][LastIP]);
 
                 static const query_update[] = "UPDATE accounts SET lastIP = '%s', lastDate = '%s' WHERE nick = '%s' LIMIT 1";
                 new mysql_update[sizeof(query_update)+(-2+15)+(-2+12)+(-2+MAX_PLAYER_NAME)];
@@ -81,11 +86,11 @@ dResponse:Dlg_Auth_Log_Password(playerid)
                 
                 if(PInfo[playerid][AuthorizationCountTry] < 0)
                 {
-                    Player_Kick(playerid, _, "РњРЅРѕРіРѕ РїРѕРїС‹С‚РѕРє РІС…РѕРґР°");
+                    Player_Kick(playerid, _, "Много попыток входа");
                 }
                 else
                 {
-                    SCMf(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"РџР°СЂРѕР»СЊ РІРІРµРґС‘РЅ РЅРµРІРµСЂРЅРѕ. РћСЃС‚Р°Р»РѕСЃСЊ "C_EMERALD"%d "C_WHITE"РїРѕРїС‹С‚РѕРє.", PInfo[playerid][AuthorizationCountTry]);
+                    SCMf(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Пароль введён неверно. Осталось "C_EMERALD"%d "C_WHITE"попыток.", PInfo[playerid][AuthorizationCountTry]);
                     Dialog_Show(playerid, Dialog:Dlg_Auth_Log_Password);
                 }
             }
@@ -93,14 +98,14 @@ dResponse:Dlg_Auth_Log_Password(playerid)
         }
         else
         {
-            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"РџР°СЂРѕР»СЊ РјРѕР¶РµС‚ СЃРѕСЃС‚РѕСЏС‚СЊ РёР· С†РёС„СЂ/С‡РёСЃРµР» Рё Р»Р°С‚РёРЅСЃРєРёС… СЃРёРјРІРѕР»РѕРІ.");
+            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Пароль может состоять из цифр/чисел и латинских символов.");
             Dialog_Show(playerid, Dialog:Dlg_Auth_Log_Password);
         }
         Regex_Delete(regex_password_check);
     }
     else
     {
-        Player_Kick(playerid, "РЎРµСЂРІРµСЂ", "Р’С‹С…РѕРґ");
+        Player_Kick(playerid, "Сервер", "Выход");
     }
     return 1;
 }
@@ -108,10 +113,10 @@ dResponse:Dlg_Auth_Log_Password(playerid)
 dCreate:Dlg_Auth_Reg_Password(playerid)
 {
     static const message[] = "\
-    "C_WHITE"\n\\cР”РѕР±СЂРѕ РїРѕР¶Р°Р»РѕРІР°С‚СЊ РЅР° СЃРµСЂРІРµСЂ "C_EMERALD""SERVER_NAME" "C_WHITE"| "C_EMERALD""SERVER_TYPE""C_WHITE".\n\
-    "C_WHITE"\\cРќР° РґР°РЅРЅС‹Р№ Р»РѕРіРёРЅ РЅРµ Р·Р°СЂРµРіРёСЃС‚СЂРёСЂРѕРІР°РЅРѕ РЅРё РѕРґРЅРѕРіРѕ Р°РєРєР°СѓРЅС‚Р°.\n\
-    "C_WHITE"\\cР”Р»СЏ СЂРµРіРёСЃС‚СЂР°С†РёРё, РІРІРµРґРёС‚Рµ РїР°СЂРѕР»СЊ РІ РїРѕР»Рµ РІРІРѕРґР° Рё РЅР°Р¶РјРёС‚Рµ "C_EMERALD"\"Р”Р°Р»РµРµ\""C_WHITE".\n\n";
-    return Dialog_Open(playerid, Dialog:Dlg_Auth_Reg_Password, DIALOG_STYLE_INPUT, ""C_GRAY"РђСѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ "C_BLACK"| "C_WHITE"Р РµРіРёСЃС‚СЂР°С†РёСЏ", message, "Р”Р°Р»РµРµ", "Р’С‹С…РѕРґ");
+    "C_WHITE"\n\\cДобро пожаловать на сервер "C_EMERALD""SERVER_NAME" "C_WHITE"| "C_EMERALD""SERVER_TYPE""C_WHITE".\n\
+    "C_WHITE"\\cНа данный логин не зарегистрировано ни одного аккаунта.\n\
+    "C_WHITE"\\cДля регистрации, введите пароль в поле ввода и нажмите "C_EMERALD"\"Далее\""C_WHITE".\n\n";
+    return Dialog_Open(playerid, Dialog:Dlg_Auth_Reg_Password, DIALOG_STYLE_INPUT, ""C_GRAY"Аутентификация "C_BLACK"| "C_WHITE"Регистрация", message, "Далее", "Выход");
 }
 
 dResponse:Dlg_Auth_Reg_Password(playerid)
@@ -120,13 +125,13 @@ dResponse:Dlg_Auth_Reg_Password(playerid)
     {
         if(!strlen(inputtext))
         {
-            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Р’СЃРµ РїРѕР»СЏ РґРѕР»Р¶РЅС‹ Р±С‹С‚СЊ Р·Р°РїРѕР»РЅРµРЅС‹.");
+            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Все поля должны быть заполнены.");
             return Dialog_Show(playerid, Dialog:Dlg_Auth_Reg_Password);
         }
 
         if(!(MIN_PASSWORD_LEN < strlen(inputtext) < MAX_PASSWORD_LEN))
         {
-            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"РџР°СЂРѕР»СЊ СЃР»РёС€РєРѕРј РґР»РёРЅРЅС‹Р№ РёР»Рё РєРѕСЂРѕС‚РєРёР№.");
+            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Пароль слишком длинный или короткий.");
             return Dialog_Show(playerid, Dialog:Dlg_Auth_Reg_Password);
         }
 
@@ -138,14 +143,14 @@ dResponse:Dlg_Auth_Reg_Password(playerid)
         }
         else
         {
-            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"РџР°СЂРѕР»СЊ РјРѕР¶РµС‚ СЃРѕСЃС‚РѕСЏС‚СЊ РёР· С†РёС„СЂ/С‡РёСЃРµР» Рё Р»Р°С‚РёРЅСЃРєРёС… СЃРёРјРІРѕР»РѕРІ.");
+            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Пароль может состоять из цифр/чисел и латинских символов.");
             Dialog_Show(playerid, Dialog:Dlg_Auth_Reg_Password);
         }
         Regex_Delete(regex_password_check);
     }
     else
     {
-        Player_Kick(playerid, "РЎРµСЂРІРµСЂ", "Р’С‹С…РѕРґ");
+        Player_Kick(playerid, "Сервер", "Выход");
     }
     return 1;
 }
@@ -153,9 +158,9 @@ dResponse:Dlg_Auth_Reg_Password(playerid)
 dCreate:Dlg_Auth_Reg_Email(playerid)
 {
     static const message[] = "\
-    "C_WHITE"\n\\cРўРµРїРµСЂСЊ РїСЂРѕР№РґС‘Рј РїРѕ Р±РµР·РѕРїР°СЃРЅРѕСЃС‚Рё.\n\
-    "C_WHITE"\\cР’РІРµРґРёС‚Рµ СЃРІРѕСЋ СЌР»РµРєС‚СЂРѕРЅРЅСѓСЋ РїРѕС‡С‚Сѓ РІ РїРѕР»Рµ РІРІРѕРґР° Рё РЅР°Р¶РјРёС‚Рµ "C_EMERALD"\"Р”Р°Р»РµРµ\""C_WHITE".\n\n";
-    return Dialog_Open(playerid, Dialog:Dlg_Auth_Reg_Email, DIALOG_STYLE_INPUT, ""C_GRAY"РђСѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ "C_BLACK"| "C_WHITE"Р РµРіРёСЃС‚СЂР°С†РёСЏ", message, "Р”Р°Р»РµРµ", "");
+    "C_WHITE"\n\\cТеперь пройдём по безопасности.\n\
+    "C_WHITE"\\cВведите свою электронную почту в поле ввода и нажмите "C_EMERALD"\"Далее\""C_WHITE".\n\n";
+    return Dialog_Open(playerid, Dialog:Dlg_Auth_Reg_Email, DIALOG_STYLE_INPUT, ""C_GRAY"Аутентификация "C_BLACK"| "C_WHITE"Регистрация", message, "Далее", "");
 }
 
 dResponse:Dlg_Auth_Reg_Email(playerid)
@@ -164,13 +169,13 @@ dResponse:Dlg_Auth_Reg_Email(playerid)
     {
         if(!strlen(inputtext))
         {
-            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Р’СЃРµ РїРѕР»СЏ РґРѕР»Р¶РЅС‹ Р±С‹С‚СЊ Р·Р°РїРѕР»РЅРµРЅС‹.");
+            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Все поля должны быть заполнены.");
             return Dialog_Show(playerid, Dialog:Dlg_Auth_Reg_Email);
         }
 
         if(!(MIN_EMAIL_LEN < strlen(inputtext) < MAX_EMAIL_LEN))
         {
-            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"РђРґСЂРµСЃ СЌР»РµРєС‚СЂРѕРЅРЅРѕР№ РїРѕС‡С‚С‹ СЃР»РёС€РєРѕРј РґР»РёРЅРЅС‹Р№ РёР»Рё РєРѕСЂРѕС‚РєРёР№.");
+            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Адрес электронной почты слишком длинный или короткий.");
             return Dialog_Show(playerid, Dialog:Dlg_Auth_Reg_Email);
         }
 
@@ -195,14 +200,14 @@ dResponse:Dlg_Auth_Reg_Email(playerid)
             if(cache_num_results())
             {
                 Player_CharacterShow(playerid);
-                SCM(playerid, C_F_WHITE, ""NOTIF_SUCCESS" "C_WHITE"Р’С‹ Р·Р°СЂРµРіРёСЃС‚СЂРёСЂРѕРІР°Р»РёСЃСЊ РЅР° СЃРµСЂРІРµСЂРµ.");
-                printf("%s РРіСЂРѕРє %s(%d) [%s] Р·Р°СЂРµРіРёСЃС‚СЂРёСЂРѕРІР°Р»СЃСЏ РЅР° СЃРµСЂРІРµСЂРµ.", DEBUG_INFO, PInfo[playerid][Nick], playerid, PInfo[playerid][RegIP]);
+                SCM(playerid, C_F_WHITE, ""NOTIF_SUCCESS" "C_WHITE"Вы зарегистрировались на сервере.");
+                printf("%s Игрок %s(%d) [%s] зарегистрировался на сервере.", DEBUG_INFO, PInfo[playerid][Nick], playerid, PInfo[playerid][RegIP]);
             }
             cache_delete(cache);
         }
         else
         {
-            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"РќРµРІРµСЂРЅС‹Р№ Р°РґСЂРµСЃ СЌР»РµРєС‚СЂРѕРЅРЅРѕР№ РїРѕС‡С‚С‹.");
+            SCM(playerid, C_F_WHITE, ""NOTIF_ERROR" "C_WHITE"Неверный адрес электронной почты.");
             Dialog_Show(playerid, Dialog:Dlg_Auth_Reg_Email);
         }
         Regex_Delete(regex_email_check);
