@@ -7,12 +7,12 @@ public OnPlayerDisconnect(playerid, reason)
     {
         Data_Set_PlayerInfo(playerid);
         Data_Set_CharacterInfo(playerid);
-        printf("%s %s %s(%d) [%s] [%s] отключился от сервера.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, PInfo[playerid][Nick], PInfo[playerid][LastIP]);
+        printf("%s %s %s(%d) [%s:%s] отключился от сервера.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, PInfo[playerid][Nick], PInfo[playerid][LastIP]);
     }
 
+    Data_Clear_CharacterInfo(playerid);
     Data_Clear_PlayerInfo(playerid);
     Data_Clear_PlayerTimerInfo(playerid);
     Data_Clear_PlayerKickInfo(playerid);
-    Data_Clear_CharacterInfo(playerid);
     return 1;
 }

@@ -81,3 +81,19 @@ enum CharacterInfo
     bool:IsAdmin
 }
 new CInfo[MAX_PLAYERS][MAX_CHARACTERS][CharacterInfo];
+
+/*      [ ПЕРЕМЕННЫЕ ТРАНСПОРТА ]      */
+/*      [ TRANSPORT VARIABLES ]      */
+enum VehicleInfo
+{
+    ID,
+    Model,
+    Float:Position[3],
+    Float:Rotation,
+    Color1,
+    Color2,
+    Float:Fuel,
+    Text3D:Description
+}
+new VInfo[MAX_VEHICLES][VehicleInfo];
+new Vehicle_Count; // Количество созданного транспорта | Number of vehicles created

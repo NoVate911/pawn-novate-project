@@ -52,6 +52,7 @@ main(){}
 #include "./src/system/Character.inc"
 #include "./src/system/Kick.inc"
 #include "./src/system/Chat.inc"
+#include "./src/system/Vehicle.inc"
 
 /*    [ СЕРВЕРНАЯ СТОРОНА ]   */
 /*    [ SERVER SIDE ]   */
