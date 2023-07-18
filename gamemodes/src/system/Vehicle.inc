@@ -82,7 +82,7 @@ stock Vehicle_PrintAllInfo(playerid)
     if(Vehicle_Count > 0)
     {
         printf("%s %s %s(%d) [%s:%s] запросил информацию о транспорте на сервере.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP]);
-        Chat_Clear_Player(playerid, 1);
+        Chat_Clear(playerid, _, 1);
         for(new v = 0; v < MAX_VEHICLES; v++)
         {
             if(VInfo[v][ID] != 0)

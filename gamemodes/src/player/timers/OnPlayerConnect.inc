@@ -3,7 +3,7 @@
 function Timer_OnPlayerConnect(playerid)
 {
     KillTimer(PTimerInfo[playerid][Authorization]);
-    Chat_Clear_Player(playerid);
+    Chat_Clear(playerid);
     TogglePlayerSpectating(playerid, true);
     SetPlayerVirtualWorld(playerid, playerid + 1000);
     PInfo[playerid][IsConnection] = true;

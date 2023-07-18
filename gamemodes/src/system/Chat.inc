@@ -1,24 +1,20 @@
-/*      [ ОЧИСТКА ГЛОБАЛЬНОГО ЧАТА ]      */
-/*      [ CLEARING THE GLOBAL CHAT ]      */
-stock Chat_Clear_All()
-{
-    return 1;
-}
-
-/*      [ ОЧИСТКА ПЕРСОНАЛЬНОГО ЧАТА ]      */
-/*      [ CLEARING A PERSONAL CHAT ]      */
-stock Chat_Clear_Player(playerid, count = 50)
+/*      [ ОЧИСТКА ЧАТА ]      */
+/*      [ CLEARING THE CHAT ]      */
+stock Chat_Clear(playerid, bool:global = false, count = 50)
 {
     for(new i = 0; i < count; i++)
     {
-        SCM(playerid, C_F_WHITE, " ");
+        if(global)
+            SCMTA(C_F_WHITE, " ");
+        else
+            SCM(playerid, C_F_WHITE, " ");
     }
     return 1;
 }
 
 /*      [ ОТПРАВКА СООБЩЕНИЙ В ЧАТ ]      */
 /*      [ SENDING MESSAGES TO THE CHAT ]      */
-stock ProxDetector(playerid, Float:max_range, color, string[], Float:max_ratio = 1.6)
+stock Chat_SendMessage(playerid, Float:max_range, color, string[], Float:max_ratio = 1.6)
 {
     new Float:pos_x, Float:pos_y, Float:pos_z, Float:range, Float:range_ratio, Float:range_with_ratio, clr_r, clr_g, clr_b, Float:color_r, Float:color_g, Float:color_b;
 

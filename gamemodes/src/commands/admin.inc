@@ -213,3 +213,46 @@ cmd:vehiclegethere(playerid, params[]) // Переместить транспо�
     return 1;
 }
 alias:vehiclegethere("vehgethere")
+
+cmd:clearchat(playerid)
+{
+    if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
+    {
+        if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] < 5)
+            return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У Вас недостаточно прав для выполнения данной команды.");
+
+        Chat_Clear(playerid, true);
+        SCMTA(-1, ""NOTIF_WARNING" "C_WHITE"Чат был очищен Администратором. Приятной игры!");
+        printf("%s %s %s(%d) [%s:%s] очистил глобальный чат.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP]);
+    }
+    return 1;
+}
+
+cmd:setadmin(playerid, params[]) // Выдать игроку права Администратора | Grant the player Administrator rights
+{
+    if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
+    {
+        if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] < 9)
+            return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У Вас недостаточно прав для выполнения данной команды.");
+
+        if(sscanf(params, "d", params[0]))
+            return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE""COMMAND_INVALID"", "setadmin [ID]");
+
+        if(!PInfo[params[0]][IsLogged])
+            return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_FOUND"");
+
+        if(CInfo[params[0]][PInfo[params[0]][CharacterSelect]][AdminLevel] == 0)
+        {
+            CInfo[params[0]][PInfo[params[0]][CharacterSelect]][AdminLevel] = 1;
+            SCMf(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы выдали %s %s(%d) права Администратора.", CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0]);
+            SCM(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вам были выданы права Администратора.");
+            printf("%s %s %s(%d) [%s:%s] выдал %s %s(%d) [%s:%s] права Администратора.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][Login], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP]);
+        }
+        else
+        {
+            SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У данного игрока уже есть права Администратора.");
+            printf("%s %s %s(%d) [%s:%s] попытался выдать %s %s(%d) [%s:%s] права Администратора.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][Login], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP]);
+        }
+    }
+    return 1;
+}
