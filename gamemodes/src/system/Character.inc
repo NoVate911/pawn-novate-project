@@ -157,7 +157,7 @@ dResponse:Dlg_Char_CreateLastName(playerid)
             return Dialog_Show(playerid, Dialog:Dlg_Char_CreateLastName);
         }
 
-        if(strlen(inputtext) > ((MAX_PLAYER_NAME - 1) - (strlen(CInfo[playerid][0][FirstName]) - 1)))
+        if(strlen(inputtext) > ((MAX_PLAYER_NAME - 2) - strlen(CInfo[playerid][0][FirstName])))
         {
             SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Фамилия слишком длинная.");
             return Dialog_Show(playerid, Dialog:Dlg_Char_CreateLastName);
@@ -167,7 +167,19 @@ dResponse:Dlg_Char_CreateLastName(playerid)
         if(Regex_Check(inputtext, regex_lastname_check))
         {
             strmid(CInfo[playerid][0][LastName], inputtext, 0, strlen(inputtext), MAX_PLAYER_NAME);
-            Dialog_Show(playerid, Dialog:Dlg_Char_CreateAge);
+
+            static const query[] = "SELECT firstname,lastname FROM characters WHERE firstname = '%s' AND lastname = '%s' LIMIT 1";
+            new mysql[sizeof(query)+(-2+MAX_PLAYER_NAME)+(-2+MAX_PLAYER_NAME)];
+            mysql_format(SInfo[MySQL], mysql, sizeof(mysql), query, CInfo[playerid][0][FirstName], CInfo[playerid][0][LastName]);
+            new Cache:cache = mysql_query(SInfo[MySQL], mysql, true);
+            if(cache_num_rows())
+            {
+                SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Данные имя и фамилия уже заняты! Попробуйте другие и повторите попытку.");
+                return Dialog_Show(playerid, Dialog:Dlg_Char_CreateFirstName);
+            }
+            else
+                Dialog_Show(playerid, Dialog:Dlg_Char_CreateAge);
+            cache_delete(cache);
         }
         else
         {
