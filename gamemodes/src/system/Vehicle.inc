@@ -8,7 +8,7 @@ stock Vehicle_Init()
 
 /*      [ СОЗДАНИЕ ТРАНСПОРТА ]      */
 /*      [ CREATING A TRANSPORT ]      */
-stock Vehicle_Create(vehicleid, Float:x, Float:y, Float:z, Float:rotation, color1, color2, Float:fuel = 80.0, bool:isAdmin = true)
+stock Vehicle_Create(vehicleid, Float:x, Float:y, Float:z, Float:rotation, color1, color2, Float:fuel = 80.0, bool:isAdmin = false)
 {
     new vehicle = CreateVehicle(vehicleid, x, y, z, rotation, color1, color2, 0);
     if(vehicle != 0)
@@ -55,7 +55,8 @@ stock Vehicle_Destroy(vehicleid)
             VInfo[v][Color1] = 0;
             VInfo[v][Color2] = 0;
             VInfo[v][Fuel] = 0.0;
-            DestroyDynamic3DTextLabel(VInfo[v][Description]);
+            if(IsValidDynamic3DTextLabel(VInfo[v][Description]))
+                DestroyDynamic3DTextLabel(VInfo[v][Description]);
             DestroyVehicle(vehicleid);
             return true;
         }

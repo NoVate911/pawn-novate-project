@@ -5,7 +5,14 @@ public OnPlayerClickMap(playerid, Float:fX, Float:fY, Float:fZ)
 
     if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
     {
-        SetPlayerPosFindZ(playerid, fX, fY, fZ);
+        if(IsPlayerInAnyVehicle(playerid))
+        {
+            if(GetPlayerVehicleSeat(playerid) == 0)
+                SetVehiclePos(GetPlayerVehicleID(playerid), fX, fY, fZ);
+        }
+        else
+            SetPlayerPosFindZ(playerid, fX, fY, fZ);
+            
         SCM(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы были телепортированы на метку.");
         printf("%s %s %s(%d) [%s:%s] телепортировался по метке на карте.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP]);
     }

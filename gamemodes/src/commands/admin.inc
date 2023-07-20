@@ -91,7 +91,7 @@ cmd:createvehicle(playerid, params[]) // Создать транспорт | Cre
         new Float:x, Float:y, Float:z, Float:rotation;
         GetPlayerPos(params[0], x, y, z);
         GetPlayerFacingAngle(params[0], rotation);
-        new vehicle = Vehicle_Create(params[1], x+1.5, y, z, rotation, random(255), random(255));
+        new vehicle = Vehicle_Create(params[1], x, y+2, z, rotation, random(255), random(255));
         SCMf(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Транспорт был создан (ID: %d).", vehicle);
         printf("%s %s %s(%d) [%s:%s] создал транспорт (ID: %d) для %s %s(%d) [%s:%s].", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], vehicle, CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][Login], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP]);
     }
@@ -250,6 +250,7 @@ cmd:setadmin(playerid, params[]) // Выдать игроку права Адм�
         if(CInfo[params[0]][PInfo[params[0]][CharacterSelect]][AdminLevel] == 0)
         {
             CInfo[params[0]][PInfo[params[0]][CharacterSelect]][AdminLevel] = 1;
+            CInfo[params[0]][PInfo[params[0]][CharacterSelect]][AdminPassword] = 0000;
             SCMf(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы выдали %s %s(%d) права Администратора.", CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0]);
             SCM(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вам были выданы права Администратора.");
             printf("%s %s %s(%d) [%s:%s] выдал %s %s(%d) [%s:%s] права Администратора.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][Login], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP]);

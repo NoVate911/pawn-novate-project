@@ -3,6 +3,5 @@
 function Timer_OnServerMinute()
 {
     Time_Set();
-    Weather_Set();
     return 1;
 }

@@ -1,7 +1,7 @@
 /*      [ ПОЗИЦИИ ПОЯВЛЕНИЯ (ПРИ СПАВНЕ / СПАВН НЕ НАЙДЕН) ]      */
 /*      [ SPAWN POSITIONS (AT SPAWN / SPAWN NOT FOUND) ]      */
 new const Float:Positions_Spawn[MAX_POSITIONS_SPAWN][4] = { // X, Y, Z, Rotation
-    {0.0, 0.0, 3.0, 0.0} // Default
+    {1180.0479, -2036.9869, 69.0078, 270.7819} // LS
 };
 
 /*      [ ========== ========== ========== ========== ========== ]      */
