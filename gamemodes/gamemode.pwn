@@ -48,6 +48,7 @@ main(){}
 /*    [ СИСТЕМЫ ]    */
 /*    [ SYSTEMS ]    */
 #include "./src/system/Database.inc"
+#include "./src/system/Data.inc"
 #include "./src/system/Authorization.inc"
 #include "./src/system/Character.inc"
 #include "./src/system/Kick.inc"
