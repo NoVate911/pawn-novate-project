@@ -12,6 +12,35 @@ stock Chat_Clear(playerid, bool:global = false, count = 50)
     return 1;
 }
 
+/*      [ ОТПРАВКА СООБЩЕНИЙ В ЧАТ АДМИНИСТРАЦИИ ]      */
+/*      [ SENDING MESSAGES TO THE ADMINISTRATION CHAT ]      */
+stock Chat_SendMessageToAdmin(message[], adminLevel = 0, bool:isAdmin = true)
+{
+    foreach(new i : Player)
+    {
+        if(PInfo[i][IsLogged])
+        {
+            if(isAdmin)
+            {
+                if(CInfo[i][PInfo[i][CharacterSelect]][IsAdmin])
+                {
+                    if(CInfo[i][PInfo[i][CharacterSelect]][AdminLevel] > adminLevel)
+                        SCMf(i, -1, ""NOTIF_ADMIN" %s", message);
+                }
+            }
+            else
+            {
+                if(!CInfo[i][PInfo[i][CharacterSelect]][IsAdmin])
+                {
+                    if(CInfo[i][PInfo[i][CharacterSelect]][AdminLevel] > adminLevel)
+                        SCMf(i, -1, ""NOTIF_ADMIN" %s", message);
+                }
+            }
+        }
+    }
+    return 1;
+}
+
 /*      [ ОТПРАВКА СООБЩЕНИЙ В ЧАТ ]      */
 /*      [ SENDING MESSAGES TO THE CHAT ]      */
 stock Chat_SendMessage(playerid, Float:max_range, color, string[], Float:max_ratio = 1.6)

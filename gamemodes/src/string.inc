@@ -5,4 +5,4 @@
 
 /*      [ КОМАНДЫ ]      */
 /*      [ COMMANDS ]      */
-#define COMMAND_INVALID             "Неверный синтаксис. Используйте: /%s"
+#define COMMAND_INVALID             "Неверный синтаксис. Используйте: "C_GRAY"/%s"

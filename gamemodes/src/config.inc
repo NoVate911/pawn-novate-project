@@ -2,6 +2,7 @@
 /*      [ SETTING NEW VALUES ]      */
 #undef MAX_PLAYER_NAME
     #define MAX_PLAYER_NAME         (24)
+    #define MIN_PLAYER_NAME         (2)
 #undef MAX_PLAYERS
     #define MAX_PLAYERS             (50)
 

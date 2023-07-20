@@ -111,7 +111,7 @@ dResponse:Dlg_Char_CreateFirstName(playerid)
             return Dialog_Show(playerid, Dialog:Dlg_Char_CreateFirstName);
         }
 
-        if(!(3 < strlen(inputtext) < MAX_PLAYER_NAME))
+        if(!(MIN_PLAYER_NAME < strlen(inputtext) < MAX_PLAYER_NAME))
         {
             SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Имя слишком короткое или слишком длинное.");
             return Dialog_Show(playerid, Dialog:Dlg_Char_CreateFirstName);
@@ -138,7 +138,7 @@ dCreate:Dlg_Char_CreateLastName(playerid)
     static const message[] = "\
     "C_WHITE"\n\\cВведите фамилию своего будущего персонажа.\n\
     "C_WHITE"\\cПосле ввода фамилии, нажмите "C_EMERALD"\"Далее\""C_WHITE".\n\n";
-    return Dialog_Open(playerid, Dialog:Dlg_Char_CreateLastName, DIALOG_STYLE_INPUT, ""C_GRAY"Регистрация "C_BLACK"| "C_WHITE"Создание персонажа", message, "Далее", "");
+    return Dialog_Open(playerid, Dialog:Dlg_Char_CreateLastName, DIALOG_STYLE_INPUT, ""C_GRAY"Регистрация "C_BLACK"| "C_WHITE"Создание персонажа", message, "Далее", "Обратно");
 }
 
 dResponse:Dlg_Char_CreateLastName(playerid)
@@ -151,9 +151,15 @@ dResponse:Dlg_Char_CreateLastName(playerid)
             return Dialog_Show(playerid, Dialog:Dlg_Char_CreateLastName);
         }
 
-        if(!(3 < strlen(inputtext) < MAX_PLAYER_NAME))
+        if(!(MIN_PLAYER_NAME < strlen(inputtext) < MAX_PLAYER_NAME))
         {
             SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Фамилия слишком короткая или слишком длинная.");
+            return Dialog_Show(playerid, Dialog:Dlg_Char_CreateLastName);
+        }
+
+        if(strlen(inputtext) > ((MAX_PLAYER_NAME - 1) - (strlen(CInfo[playerid][0][FirstName]) - 1)))
+        {
+            SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Фамилия слишком длинная.");
             return Dialog_Show(playerid, Dialog:Dlg_Char_CreateLastName);
         }
 
@@ -170,6 +176,8 @@ dResponse:Dlg_Char_CreateLastName(playerid)
         }
         Regex_Delete(regex_lastname_check);
     }
+    else
+        Dialog_Show(playerid, Dialog:Dlg_Char_CreateFirstName);
     return 1;
 }
 

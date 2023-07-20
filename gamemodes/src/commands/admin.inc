@@ -33,11 +33,17 @@ cmd:alogin(playerid, params[]) // Войти под Администраторо
             {
                 CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin] = true;
                 SCMf(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы авторизовались, как %s.", Admin_Level[CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel]-1]);
+                new message_admin[41+(-2+MAX_PLAYER_NAME)+(-2+MAX_PLAYER_NAME)+(-2+4)+(-2+MAX_PLAYER_NAME)];
+                format(message_admin, sizeof(message_admin), ""C_WHITE"%s %s(%d) авторизовался, как %s.", CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, Admin_Level[CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel]-1]);
+                Chat_SendMessageToAdmin(message_admin);
                 printf("%s %s %s(%d) [%s:%s] авторизовался под: %s.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], Admin_Level[CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel]-1]);
             }
             else
             {
                 SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Пароль неверный! Попробуйте ещё раз.");
+                new message_admin[52+(-2+MAX_PLAYER_NAME)+(-2+MAX_PLAYER_NAME)+(-2+4)+(-2+MAX_PLAYER_NAME)];
+                format(message_admin, sizeof(message_admin), ""C_WHITE"%s %s(%d) попытался авторизоваться, как %s.", CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, Admin_Level[CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel]-1]);
+                Chat_SendMessageToAdmin(message_admin);
                 printf("%s %s %s(%d) [%s:%s] попытался авторизоваться под: %s.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], Admin_Level[CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel]-1]);
             }
         }
