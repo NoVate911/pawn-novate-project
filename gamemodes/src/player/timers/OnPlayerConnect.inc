@@ -3,10 +3,12 @@
 function Timer_OnPlayerConnect(playerid)
 {
     KillTimer(PTimerInfo[playerid][Authorization]);
+    PInfo[playerid][IsConnection] = true;
+    Time_SetPlayer(playerid);
+    Weather_SetPlayer(playerid);
     Chat_Clear(playerid);
     TogglePlayerSpectating(playerid, true);
     SetPlayerVirtualWorld(playerid, playerid + 1000);
-    PInfo[playerid][IsConnection] = true;
 
     static const query[] = "SELECT nick FROM accounts WHERE nick = '%s' LIMIT 1";
     new mysql[sizeof(query)+(-2+MAX_PLAYER_NAME)];

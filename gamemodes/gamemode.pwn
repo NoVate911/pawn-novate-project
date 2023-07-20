@@ -53,9 +53,12 @@ main(){}
 #include "./src/system/Kick.inc"
 #include "./src/system/Chat.inc"
 #include "./src/system/Vehicle.inc"
+#include "./src/system/Time.inc"
+#include "./src/system/Weather.inc"
 
 /*    [ СЕРВЕРНАЯ СТОРОНА ]   */
 /*    [ SERVER SIDE ]   */
+#include "./src/server/timers/OnServerMinute.inc"
 #include "./src/server/OnGameModeInit.inc"
 #include "./src/server/OnGameModeExit.inc"
 

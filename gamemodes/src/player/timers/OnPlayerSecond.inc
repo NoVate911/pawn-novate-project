@@ -1,3 +1,5 @@
+/*      [ СЕКУНДНЫЙ ТАЙМЕР ДЛЯ ИГРОКА ]      */
+/*      [ SECOND TIMER FOR THE PLAYER ]      */
 function Timer_OnPlayerSecond(playerid)
 {
     if(!PInfo[playerid][IsConnection])

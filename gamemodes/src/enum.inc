@@ -2,9 +2,16 @@
 /*      [ SERVER VARIABLES ]      */
 enum ServerInfo
 {
-    MySQL:MySQL
+    MySQL:MySQL,
+    Weather
 }
 new SInfo[ServerInfo];
+
+enum ServerTimerInfo
+{
+    Minute
+}
+new STimerInfo[ServerTimerInfo];
 
 /*      [ ПЕРЕМЕННЫЕ ДЛЯ ИГРОКА ]      */
 /*      [ PLAYER INFORMATION ]      */
