@@ -12,6 +12,7 @@ public OnGameModeInit()
     EnableStuntBonusForAll(false);
     LimitGlobalChatRadius(0.0);
     LimitPlayerMarkerRadius(0.0);
+    ManualVehicleEngineAndLights();
     
     return printf("%s Мод загружен за %dms.", DEBUG_LOAD, GetTickCount() - tickCount);
 }

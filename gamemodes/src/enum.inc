@@ -100,7 +100,12 @@ enum VehicleInfo
     Color1,
     Color2,
     Float:Fuel,
-    Text3D:Description
+    Float:Health,
+    Text3D:Description,
+    
+    bool:IsEngine,
+    bool:IsLights,
+    bool:IsDoorsClosed
 }
 new VInfo[MAX_VEHICLES][VehicleInfo];
 new Vehicle_Count; // Количество созданного транспорта | Number of vehicles created

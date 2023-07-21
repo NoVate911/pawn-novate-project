@@ -141,6 +141,124 @@ cmd:removevehicle(playerid, params[]) // Удалить транспорт | Del
 }
 alias:removevehicle("removeveh", "rvehicle", "rveh")
 
+cmd:fixvehicle(playerid, params[]) // Починить транспорт | Repair the transport
+{
+    if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
+    {
+        if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] < 3)
+            return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У Вас недостаточно прав для выполнения данной команды.");
+
+        new vehicle = 0;
+        if(sscanf(params, "d", params[0]))
+        {
+            if(!IsPlayerInAnyVehicle(playerid))
+                return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Вы не находитесь в транспорте.");
+            
+            new seat = GetPlayerVehicleSeat(playerid);
+            if(seat != 0)
+                return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Для починки транспорта нужно находится на водительском месте.");
+            
+            vehicle = GetPlayerVehicleID(playerid);
+        }
+        else
+        {
+            if(!Vehicle_FindID(params[0]))
+                return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Транспорт с данным ID не найден.");
+            
+            vehicle = params[0];
+        }
+
+        if(Vehicle_Repair(vehicle))
+        {
+            SCMf(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Транспорт был починен (ID: %d).", vehicle);
+            printf("%s %s %s(%d) [%s:%s] починил транспорт (ID: %d).", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], vehicle);
+        }
+        else
+        {
+            SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"При починки транспорта произошла ошибка.");
+            printf("%s %s %s(%d) [%s:%s] попытался починить транспорт.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP]);
+        }
+    }
+    return 1;
+}
+alias:fixvehicle("fveh")
+
+cmd:vehiclelock(playerid, params[]) // Управление замком транспорта | Transport lock management
+{
+    if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
+    {
+        if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] < 3)
+            return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У Вас недостаточно прав для выполнения данной команды.");
+
+        new vehicle = 0;
+        if(sscanf(params, "d", params[0]))
+        {
+            if(!IsPlayerInAnyVehicle(playerid))
+                return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Вы не находитесь в транспорте.");
+            
+            new seat = GetPlayerVehicleSeat(playerid);
+            if(seat != 0)
+                return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Для управления дверьми транспорта нужно находится на водительском месте.");
+            
+            vehicle = GetPlayerVehicleID(playerid);
+        }
+        else
+        {
+            if(!Vehicle_FindID(params[0]))
+                return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Транспорт с данным ID не найден.");
+            
+            vehicle = params[0];
+        }
+
+        if(Vehicle_DoorManagement(vehicle))
+        {
+            SCMf(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Транспорт был открыт/закрыт (ID: %d).", vehicle);
+            printf("%s %s %s(%d) [%s:%s] открыл/закрыл транспорт (ID: %d).", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], vehicle);
+        }
+        else
+        {
+            SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"При управлением дверьми транспорта произошла ошибка.");
+            printf("%s %s %s(%d) [%s:%s] попытался открыть/закрыть транспорт.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP]);
+        }
+    }
+    return 1;
+}
+alias:vehiclelock("vehlock","vlock")
+
+cmd:vehiclecolor(playerid, params[]) // Смена цвета транспорта | Changing the color of transport
+{
+    if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
+    {
+        if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] < 3)
+            return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У Вас недостаточно прав для выполнения данной команды.");
+
+        if(sscanf(params, "ddd", params[0], params[1], params[2]))
+            return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE""COMMAND_INVALID"", "vehiclecolor [ID транспорта] [ID цвета] [ID цвета]");
+
+        if(!(0 <= params[1] <= 255) || !(0 <= params[2] <= 255))
+            return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Неверный ID цвета. Диапазон: от 0 до 255.");
+
+        new vehicle = params[0];
+        if(Vehicle_FindID(vehicle))
+        {
+            if(Vehicle_SetColor(vehicle, params[1], params[2]))
+            {
+                SCMf(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Транспорт был перекрашен (ID: %d).", vehicle);
+                printf("%s %s %s(%d) [%s:%s] перекрасил транспорт (ID: %d).", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], vehicle);
+            }
+            else
+            {
+                SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"При перекраске транспорта произошла ошибка.");
+                printf("%s %s %s(%d) [%s:%s] попытался перекрасить транспорт.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP]);
+            }
+        }
+        else
+            SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Транспорт с данным ID не найден.");
+    }
+    return 1;
+}
+alias:vehiclecolor("vehcolor", "vcolor")
+
 cmd:vehiclelist(playerid) // Вывести весь созданный транспорт в чат | Output all the created transport to the chat
 {
     if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
@@ -284,6 +402,49 @@ cmd:armour(playerid, params[]) // Выдать игроку броню | Give th
         SCMf(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы установили %s %s(%d) броню на %d единиц.", CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], params[1]);
         SCMf(params[0], -1, ""NOTIF_SUCCESS" "C_WHITE"Администратор установил уровень брони на %d единиц.", params[1]);
         printf("%s %s %s(%d) [%s:%s] установил %d единиц брони для %s %s(%d) [%s:%s].", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], params[1], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][Login], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP]);
+    }
+    return 1;
+}
+
+cmd:settime(playerid, params[])
+{
+    if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
+    {
+        if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] < 5)
+            return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У Вас недостаточно прав для выполнения данной команды.");
+
+        if(sscanf(params, "dd", params[0], params[1]))
+            return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE""COMMAND_INVALID"", "settime [Час] [Минута]");
+
+        if(!(0 <= params[0] <= 23))
+            return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Неверно указаны часы. Диапазон: от 0 до 23.");
+
+        if(!(0 <= params[1] <= 59))
+            return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Неверно указаны минуты. Диапазон: от 0 до 59.");
+    
+        Time_Set(true, params[0], params[1]);
+        new message_admin[62+(-2+MAX_PLAYER_NAME)+(-2+MAX_PLAYER_NAME)+(-2+4)+(-2+2)+(-2+2)];
+        format(message_admin, sizeof(message_admin), ""C_WHITE"Администратор %s %s(%d) изменил время суток на %d:%d.", CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, params[0], params[1]);
+        Chat_SendMessageToAdmin(message_admin);
+        SCMf(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы изменили время суток на %d:%d", params[0], params[1]);
+        printf("%s %s %s(%d) [%s:%s] изменил время суток на %d:%d", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], params[0], params[1]);
+    }
+    return 1;
+}
+
+cmd:resettime(playerid)
+{
+    if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
+    {
+        if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] < 5)
+            return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У Вас недостаточно прав для выполнения данной команды.");
+    
+        Time_Set();
+        new message_admin[57+(-2+MAX_PLAYER_NAME)+(-2+MAX_PLAYER_NAME)+(-2+4)];
+        format(message_admin, sizeof(message_admin), ""C_WHITE"Администратор %s %s(%d) восстановил время суток.", CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid);
+        Chat_SendMessageToAdmin(message_admin);
+        SCM(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы восстановили время суток.");
+        printf("%s %s %s(%d) [%s:%s] восстановил время суток.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP]);
     }
     return 1;
 }
