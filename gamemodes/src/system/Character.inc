@@ -111,7 +111,7 @@ dResponse:Dlg_Char_CreateFirstName(playerid)
             return Dialog_Show(playerid, Dialog:Dlg_Char_CreateFirstName);
         }
 
-        if(!(MIN_PLAYER_NAME < strlen(inputtext) < MAX_PLAYER_NAME))
+        if(!(MIN_PLAYER_NAME <= strlen(inputtext) <= MAX_PLAYER_NAME))
         {
             SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Имя слишком короткое или слишком длинное.");
             return Dialog_Show(playerid, Dialog:Dlg_Char_CreateFirstName);
@@ -151,7 +151,7 @@ dResponse:Dlg_Char_CreateLastName(playerid)
             return Dialog_Show(playerid, Dialog:Dlg_Char_CreateLastName);
         }
 
-        if(!(MIN_PLAYER_NAME < strlen(inputtext) < MAX_PLAYER_NAME))
+        if(!(MIN_PLAYER_NAME <= strlen(inputtext) <= MAX_PLAYER_NAME))
         {
             SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Фамилия слишком короткая или слишком длинная.");
             return Dialog_Show(playerid, Dialog:Dlg_Char_CreateLastName);
