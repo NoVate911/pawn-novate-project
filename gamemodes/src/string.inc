@@ -1,8 +1,8 @@
-/*      [ РР“Р РћРљ ]      */
+/*      [ ИГРОК ]      */
 /*      [ PLAYER ]      */
-#define PLAYER_NOT_FOUND            "РРіСЂРѕРє РЅРµ РІ СЃРµС‚Рё."
-#define PLAYER_ISVEHICLE            "РРіСЂРѕРє РЅР°С…РѕРґРёС‚СЃСЏ РІ С‚СЂР°РЅСЃРїРѕСЂС‚Рµ."
+#define PLAYER_NOT_FOUND            "Игрок не в сети."
+#define PLAYER_ISVEHICLE            "Игрок находится в транспорте."
 
-/*      [ РљРћРњРђРќР”Р« ]      */
+/*      [ КОМАНДЫ ]      */
 /*      [ COMMANDS ]      */
-#define COMMAND_INVALID             "РќРµРІРµСЂРЅС‹Р№ СЃРёРЅС‚Р°РєСЃРёСЃ. РСЃРїРѕР»СЊР·СѓР№С‚Рµ: "C_GRAY"/%s"
+#define COMMAND_INVALID             "Неверный синтаксис. Используйте: /%s"

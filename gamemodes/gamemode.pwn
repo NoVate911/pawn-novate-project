@@ -71,6 +71,7 @@ main(){}
 #include "./src/player/OnPlayerDisconnect.inc"
 #include "./src/player/OnPlayerText.inc"
 #include "./src/player/OnPlayerClickMap.inc"
+#include "./src/player/OnPlayerCommandPerformed.inc"
 
 /*    [ КОМАНДЫ ]    */
 /*    [ COMMANDS ]    */
