@@ -4,6 +4,6 @@ public OnPlayerCommandPerformed(playerid, cmd[], params[], result, flags)
         return 1;
 
     if(result == -1)
-        return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Команда введена неверно или не найдена.", cmd);
+        return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"РљРѕРјР°РЅРґР° РІРІРµРґРµРЅР° РЅРµРІРµСЂРЅРѕ РёР»Рё РЅРµ РЅР°Р№РґРµРЅР°.", cmd);
     return 1;
 }
