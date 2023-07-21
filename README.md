@@ -85,7 +85,13 @@
   <br/>
 
   ```
-  start.bat
+  Write "samp-novateproject.sql" and import the database (before that, run XAMPP)
+  ```
+
+  <br/>
+
+  ```
+  After successfully importing the database, we write "samp-server.exe " and we are waiting for the end of the server launch
   ```
   
 </details>
@@ -158,7 +164,13 @@
   <br/>
 
   ```
-  start.bat
+  Пишем "samp-novateproject.sql" и импортируем базу данных (перед этим запустите XAMPP)
+  ```
+
+  <br/>
+
+  ```
+  После успешного импортирования базы данных, пишем "samp-server.exe" и ждём окончания запуска сервера
   ```
     
 </details>
