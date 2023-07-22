@@ -19,6 +19,7 @@ function Timer_OnPlayerConnect(playerid)
     Chat_Clear(playerid);
     TogglePlayerSpectating(playerid, true);
     SetPlayerVirtualWorld(playerid, playerid + 1000);
+    Animation_PreloadAnimations(playerid);
 
     InterpolateCameraPos(playerid, Positions_Camera[0][0], Positions_Camera[0][1], Positions_Camera[0][2], Positions_Camera[1][0], Positions_Camera[1][1], Positions_Camera[1][2], 120000);
     InterpolateCameraLookAt(playerid, Positions_Camera[2][0], Positions_Camera[2][1], Positions_Camera[2][2], Positions_Camera[2][0], Positions_Camera[2][1], Positions_Camera[2][2], 120000);

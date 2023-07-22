@@ -43,6 +43,7 @@ enum PlayerTimerInfo
 {
     Authorization,
     Kicks,
+    AnimationChat,
 
     Second
 }
