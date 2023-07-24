@@ -36,7 +36,7 @@
 
   ---
 
-  ## :: WORK PROGRESS
+  ## :anchor: WORK PROGRESS
 
   Progress of the work done (on systems), which are updated as development progresses.
   Edits and updates in systems are possible!
@@ -140,7 +140,7 @@
 
   ---
 
-  ## :: ПРОГРЕСС РАБОТЫ
+  ## :anchor: ПРОГРЕСС РАБОТЫ
 
   Прогресс проделанной работы (по системам), которые обновляется по мере разработки.
   Возможны правки и обновления в системах!
