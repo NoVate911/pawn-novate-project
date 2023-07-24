@@ -1,1 +1,2 @@
 *.* working-tree-encoding=CP1251 eol=CRLF
+README.md working-tree-encoding=UTF-8 eol=CRLF
