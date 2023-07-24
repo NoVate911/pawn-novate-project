@@ -36,6 +36,31 @@
 
   ---
 
+  ## :: WORK PROGRESS
+
+  Progress of the work done (on systems), which are updated as development progresses.
+  Edits and updates in systems are possible!
+
+  - [x] Authentication (authorization/account registration)
+  - [x] Character system (creation and management)
+  - [x] Saving information (about accounts, characters, and so on)
+  - [ ] Menu system
+    - [ ] Statistics
+    - [ ] Settings
+      - [ ] Security
+  - [ ] System of works
+    - [ ] Initial works
+      - [ ] Loader
+      - [ ] Farmer
+      - [ ] Builder
+    - [ ] Main works
+      - [ ] Cabbie
+      - [ ] Bus driver
+      - [ ] Pizza Delivery
+      - [ ] Trucker
+
+  ---
+
   ## :keyboard: TECHNICAL PART
 
   ### COMPILATION
@@ -112,6 +137,31 @@
   ## :desktop_computer: ОПИСАНИЕ
 
   Давно хотели создать свой собственный сервер в SA:MP, но не знали с чего начать? Вашему вниманию **NoVate Project**. Сборка включает в себя набор основных инструментов для хорошего старта разработки сервера SA:MP.
+
+  ---
+
+  ## :: ПРОГРЕСС РАБОТЫ
+
+  Прогресс проделанной работы (по системам), которые обновляется по мере разработки.
+  Возможны правки и обновления в системах!
+
+  - [x] Аутентификация (авторизация/регистрация аккаунта)
+  - [x] Система персонажей (создание и управлением ими)
+  - [x] Сохранение информации (об аккаунтах, персонажах и так далее)
+  - [ ] Система меню
+    - [ ] Статистика
+    - [ ] Настройки
+      - [ ] Безопасность
+  - [ ] Система работ
+    - [ ] Начальные работы
+      - [ ] Грузчик
+      - [ ] Фермер
+      - [ ] Строитель
+    - [ ] Основные работы
+      - [ ] Таксист
+      - [ ] Водитель автобуса
+      - [ ] Развозчик пиццы
+      - [ ] Дальнобойщик
 
   ---
 
