@@ -12,7 +12,7 @@ stock Level_Check(playerid)
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][Exp] >= Level_Need_Exp(playerid, PInfo[playerid][CharacterSelect]))
         {
             if(CInfo[playerid][PInfo[playerid][CharacterSelect]][Level] >= MAX_LEVEL)
-                SCM(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Ваш текущий уровень достиг максимального лимита.");
+                SCM(playerid, -1, ""NOTIF_WARNING" "C_WHITE"У вас уже максимальный уровень.");
             else
                 Level_Update(playerid);
         }
@@ -26,8 +26,11 @@ stock Level_Update(playerid)
 {
     CInfo[playerid][PInfo[playerid][CharacterSelect]][Level]++;
     CInfo[playerid][PInfo[playerid][CharacterSelect]][Exp] = 0;
+    
     Chat_Clear(playerid, _, 1);
-    SCMf(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Уровень повышен на %d.", CInfo[playerid][PInfo[playerid][CharacterSelect]][Level]);
+    SCM(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Поздравляем! Ваш уровень повышен.");
+    SCMf(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"У вас %d уровень.", CInfo[playerid][PInfo[playerid][CharacterSelect]][Level]);
+    Chat_Clear(playerid, _, 1);
     return 1;
 }
 

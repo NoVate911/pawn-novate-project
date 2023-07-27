@@ -30,7 +30,7 @@ new const Skins_Female[9][2] = { // Женские | Female
 /*      [ DISPLAYS THE CHARACTER SELECTION ]      */
 stock Player_CharacterShow(playerid)
 {
-    static const query[] = "SELECT id,login,firstname,lastname,age,sex,race,skin,level,exp,expTime,positionX,positionY,positionZ,rotation,interior,vw,health,armour,adminLevel,adminPassword,regIP,lastIP,regDate,lastDate FROM characters WHERE login = '%s' LIMIT %d";
+    static const query[] = "SELECT id,login,firstName,lastName,age,sex,race,skin,level,exp,expTime,positionX,positionY,positionZ,rotation,interior,vw,health,armour,adminLevel,adminPassword,regIP,lastIP,regDate,lastDate FROM characters WHERE login = '%s' LIMIT %d";
     new mysql[sizeof(query)+(-2+MAX_PLAYER_NAME)+(-2+1)];
     mysql_format(SInfo[MySQL], mysql, sizeof(mysql), query, PInfo[playerid][Nick], MAX_CHARACTERS);
     new Cache:cache = mysql_query(SInfo[MySQL], mysql, true);
@@ -58,7 +58,7 @@ dCreate:Dlg_Char_List(playerid)
         if(CInfo[playerid][i][ID] == 0)
             format(temp, sizeof(temp), ""C_GRAY"[%d] "C_WHITE"Создать персонажа\n", i+1);
         else
-            format(temp, sizeof(temp), ""C_GRAY"[%d] "C_WHITE"%s %s "C_GRAY"(%d LVL / %d/%d EXP)\n", i+1, CInfo[playerid][i][FirstName], CInfo[playerid][i][LastName], CInfo[playerid][i][Level], CInfo[playerid][i][Exp], Level_Need_Exp(playerid, i));
+            format(temp, sizeof(temp), ""C_GRAY"[%d] "C_WHITE"%s %s "C_GRAY"[%d LVL | %d/%d EXP]\n", i+1, CInfo[playerid][i][FirstName], CInfo[playerid][i][LastName], CInfo[playerid][i][Level], CInfo[playerid][i][Exp], Level_Need_Exp(playerid, i));
         strcat(string, temp, sizeof(string));
     }
     return Dialog_Open(playerid, Dialog:Dlg_Char_List, DIALOG_STYLE_LIST, ""C_WHITE"Выбор персонажа", string, "Выбор", "Выход");
@@ -89,7 +89,7 @@ dResponse:Dlg_Char_List(playerid)
         }
     }
     else
-        Player_Kick(playerid, _, "Выход");
+        Kick_Player(playerid, _, "Выход");
     return 1;
 }
 
@@ -111,7 +111,7 @@ dResponse:Dlg_Char_CreateFirstName(playerid)
             return Dialog_Show(playerid, Dialog:Dlg_Char_CreateFirstName);
         }
 
-        if(!(MIN_PLAYER_NAME <= strlen(inputtext) <= MAX_PLAYER_NAME))
+        if(!(MIN_PLAYER_NAME <= strlen(inputtext) <= 20))
         {
             SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Имя слишком короткое или слишком длинное.");
             return Dialog_Show(playerid, Dialog:Dlg_Char_CreateFirstName);
@@ -157,7 +157,7 @@ dResponse:Dlg_Char_CreateLastName(playerid)
             return Dialog_Show(playerid, Dialog:Dlg_Char_CreateLastName);
         }
 
-        if(strlen(inputtext) > ((MAX_PLAYER_NAME - 2) - strlen(CInfo[playerid][0][FirstName])))
+        if(strlen(inputtext) > (20 - strlen(CInfo[playerid][0][FirstName])))
         {
             SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Фамилия слишком длинная.");
             return Dialog_Show(playerid, Dialog:Dlg_Char_CreateLastName);
@@ -283,7 +283,7 @@ dResponse:Dlg_Char_CreateRace(playerid)
         else if(CInfo[playerid][0][Sex] == 1)
             CInfo[playerid][0][Skin] = Skins_Female[skinID][random(2)];
 
-        static const query[] = "INSERT INTO characters (login,firstname,lastname,age,sex,race,skin,regIP,lastIP,regDate,lastDate) VALUES ('%s','%s','%s','%d','%d','%d','%d','%s','%s','%s','%s')";
+        static const query[] = "INSERT INTO characters (login,firstName,lastName,age,sex,race,skin,regIP,lastIP,regDate,lastDate) VALUES ('%s','%s','%s','%d','%d','%d','%d','%s','%s','%s','%s')";
         new mysql[sizeof(query)+(-2+MAX_PLAYER_NAME)+(-2+MAX_PLAYER_NAME)+(-2+MAX_PLAYER_NAME)+(-2+2)+(-2+1)+(-2+1)+(-2+3)+(-2+16)+(-2+16)+(-2+22)+(-2+22)];
         mysql_format(SInfo[MySQL], mysql, sizeof(mysql), query, PInfo[playerid][Nick], CInfo[playerid][0][FirstName], CInfo[playerid][0][LastName], CInfo[playerid][0][Age], CInfo[playerid][0][Sex], CInfo[playerid][0][Race], CInfo[playerid][0][Skin], CInfo[playerid][0][RegIP], CInfo[playerid][0][LastIP], CInfo[playerid][0][RegDate], CInfo[playerid][0][LastDate]);
         new Cache:cache = mysql_query(SInfo[MySQL], mysql, true);
@@ -292,7 +292,7 @@ dResponse:Dlg_Char_CreateRace(playerid)
         else
         {
             SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"При создании персонажа произошла ошибка. Обратитесь к Администрации!");
-            Player_Kick(playerid, _, "Ошибка");
+            Kick_Player(playerid, _, "Ошибка");
         }
         cache_delete(cache);
     }

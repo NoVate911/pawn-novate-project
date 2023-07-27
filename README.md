@@ -44,6 +44,12 @@
   - [x] Authentication (authorization/account registration)
   - [x] Character system (creation and management)
   - [x] Saving information (about accounts, characters, and so on)
+  - [x] AFK system
+  - [x] Level and experience system
+  - [x] Salary system (PayDay)
+  - [x] Chat system
+  - [x] Animation system
+    - [ ] Animation Menu
   - [ ] Menu system
     - [ ] Statistics
     - [ ] Settings
@@ -148,6 +154,12 @@
   - [x] Аутентификация (авторизация/регистрация аккаунта)
   - [x] Система персонажей (создание и управлением ими)
   - [x] Сохранение информации (об аккаунтах, персонажах и так далее)
+  - [x] Система AFK
+  - [x] Система уровней и опыта
+  - [x] Система зарплаты (PayDay)
+  - [x] Система чата
+  - [x] Система анимаций
+    - [ ] Меню анимаций
   - [ ] Система меню
     - [ ] Статистика
     - [ ] Настройки

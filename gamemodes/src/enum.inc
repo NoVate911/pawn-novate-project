@@ -73,7 +73,7 @@ new PTimerInfo[MAX_PLAYERS][PlayerTimerInfo];
 /*      [ KICK VARIABLES FOR THE PLAYER ]      */
 enum PlayerKickInfo
 {
-    Nick[MAX_PLAYER_NAME],
+    Author[MAX_PLAYER_NAME],
     Reason[MAX_PLAYER_NAME*2]
 }
 new PKickInfo[MAX_PLAYERS][PlayerKickInfo];
@@ -98,6 +98,7 @@ enum CharacterInfo
     Login[MAX_PLAYER_NAME],
     FirstName[MAX_PLAYER_NAME],
     LastName[MAX_PLAYER_NAME],
+    FullName[MAX_PLAYER_NAME],
     Age,
     Sex,
     Race,

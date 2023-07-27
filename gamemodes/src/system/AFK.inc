@@ -36,13 +36,13 @@ stock AFK_Check(playerid)
             switch(time)
             {
                 case (MAX_AFK_TIME_WARNING * 3): // Первое предупреждение | First warning
-                    SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE"1 | Вы будете кикнуты за AFK через %d секунд.", (MAX_AFK_TIME_WARNING * 6) - (MAX_AFK_TIME_WARNING * 3));
+                    SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Вы будете кикнуты за AFK через %d секунд.", (MAX_AFK_TIME_WARNING * 6) - (MAX_AFK_TIME_WARNING * 3));
 
                 case (MAX_AFK_TIME_WARNING * 5): // Первое предупреждение | First warning
-                    SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE"2 | Вы будете кикнуты за AFK через %d секунд.", (MAX_AFK_TIME_WARNING * 6) - (MAX_AFK_TIME_WARNING * 5));
+                    SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Вы будете кикнуты за AFK через %d секунд.", (MAX_AFK_TIME_WARNING * 6) - (MAX_AFK_TIME_WARNING * 5));
 
                 case (MAX_AFK_TIME_WARNING * 6): // Первое предупреждение | First warning
-                    Player_Kick(playerid, _, "Долгое AFK");
+                    Kick_Player(playerid, _, "Долгое AFK");
             }
         }
     }

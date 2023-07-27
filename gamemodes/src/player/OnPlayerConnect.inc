@@ -14,7 +14,7 @@ public OnPlayerConnect(playerid)
         return 1;
 
     if(PInfo[playerid][IsConnection])
-        return Player_Kick(playerid, _, "Игрок на сервере");
+        return Kick_Player(playerid, _, "Игрок на сервере");
 
     GetPlayerName(playerid, PInfo[playerid][Nick], MAX_PLAYER_NAME);
     return PTimerInfo[playerid][Authorization] = SetTimerEx("Timer_OnPlayerConnect", 200, false, "i", playerid);

@@ -23,10 +23,9 @@ stock Player_SpawnAfterAuthorization(playerid)
     SetPlayerArmour(playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Armour]);
     PInfo[playerid][IsLogged] = true;
     CInfo[playerid][PInfo[playerid][CharacterSelect]][IsSpawning] = true;
-    new name[MAX_PLAYER_NAME];
-    format(name, sizeof(name), "%s_%s", CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName]);
-    SetPlayerName(playerid, name);
-    printf("%s %s(%d) [%s] был заспавнен под персонажем %s %s", DEBUG_INFO, PInfo[playerid][Nick], playerid, PInfo[playerid][LastIP], CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName]);
+    format(CInfo[playerid][PInfo[playerid][CharacterSelect]][FullName], MAX_PLAYER_NAME, "%s_%s", CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName]);
+    SetPlayerName(playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][FullName]);
+    printf("%s Игрок %s(%d) [%s] был заспавнен под персонажем %s %s", DEBUG_INFO, PInfo[playerid][Nick], playerid, PInfo[playerid][LastIP], CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName]);
     return 1;
 }
 
@@ -85,10 +84,10 @@ dResponse:Dlg_Auth_Log_Password(playerid)
                 PInfo[playerid][AuthorizationCountTry]--;
                 
                 if(PInfo[playerid][AuthorizationCountTry] < 0)
-                    Player_Kick(playerid, _, "Много попыток входа");
+                    Kick_Player(playerid, _, "Много попыток входа");
                 else
                 {
-                    SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Пароль введён неверно. Осталось "C_EMERALD"%d "C_WHITE"попыток.", PInfo[playerid][AuthorizationCountTry]);
+                    SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Пароль введён неверно. Осталось %d попыток.", PInfo[playerid][AuthorizationCountTry]);
                     Dialog_Show(playerid, Dialog:Dlg_Auth_Log_Password);
                 }
             }
@@ -103,7 +102,7 @@ dResponse:Dlg_Auth_Log_Password(playerid)
     }
     else
     {
-        Player_Kick(playerid, "Сервер", "Выход");
+        Kick_Player(playerid, "Сервер", "Выход");
     }
     return 1;
 }
@@ -148,7 +147,7 @@ dResponse:Dlg_Auth_Reg_Password(playerid)
     }
     else
     {
-        Player_Kick(playerid, "Сервер", "Выход");
+        Kick_Player(playerid, "Сервер", "Выход");
     }
     return 1;
 }

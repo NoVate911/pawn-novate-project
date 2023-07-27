@@ -13,7 +13,7 @@ function Timer_OnPlayerSecond(playerid)
             PInfo[playerid][AuthorizationTime]--;
             
             if(PInfo[playerid][AuthorizationTime] <= 0)
-                Player_Kick(playerid, "Сервер", "Время истекло");
+                Kick_Player(playerid, "Сервер", "Время истекло");
         }
         else
         {

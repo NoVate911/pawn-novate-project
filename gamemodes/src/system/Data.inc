@@ -34,7 +34,7 @@ stock Data_Clear_PlayerTimerInfo(playerid)
 /*      [ WE RESET THE INFORMATION ABOUT THE PLAYER'S KICK ]      */
 stock Data_Clear_PlayerKickInfo(playerid)
 {
-    PKickInfo[playerid][Nick] = EOS;
+    PKickInfo[playerid][Author] = EOS;
     PKickInfo[playerid][Reason] = EOS;
     return 1;
 }
@@ -62,6 +62,7 @@ stock Data_Clear_CharacterInfo(playerid)
         CInfo[playerid][i][Login] = EOS;
         CInfo[playerid][i][FirstName] = EOS;
         CInfo[playerid][i][LastName] = EOS;
+        CInfo[playerid][i][FullName] = EOS;
         CInfo[playerid][i][Skin] = 0;
         CInfo[playerid][i][Age] = 0;
         CInfo[playerid][i][Sex] = 0;
@@ -114,8 +115,8 @@ stock Data_Get_CharacterInfo(playerid)
     {
         cache_get_value_name_int(i, "id", CInfo[playerid][i][ID]);
         cache_get_value_name(i, "login", CInfo[playerid][i][Login], MAX_PLAYER_NAME);
-        cache_get_value_name(i, "firstname", CInfo[playerid][i][FirstName], MAX_PLAYER_NAME);
-        cache_get_value_name(i, "lastname", CInfo[playerid][i][LastName], MAX_PLAYER_NAME);
+        cache_get_value_name(i, "firstName", CInfo[playerid][i][FirstName], MAX_PLAYER_NAME);
+        cache_get_value_name(i, "lastName", CInfo[playerid][i][LastName], MAX_PLAYER_NAME);
         cache_get_value_name_int(i, "age", CInfo[playerid][i][Age]);
         cache_get_value_name_int(i, "sex", CInfo[playerid][i][Sex]);
         cache_get_value_name_int(i, "race", CInfo[playerid][i][Race]);
