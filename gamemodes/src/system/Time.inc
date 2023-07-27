@@ -1,6 +1,10 @@
+#define MAX_TIME_UPDATE_TIME        (60) // Время обновления времени суток | Time of day update time
+
+/*      [ ========== ========== ========== ========== ========== ]      */
+
 /*      [ УСТАНОВКА ВРЕМЕНИ НА СЕРВЕРЕ ]      */
 /*      [ SETTING THE TIME ON THE SERVER ]      */
-stock Time_Set(bool:isOwn = false, hour = 0, minute = 0, second = 0)
+stock Time_Set(bool:isOwn = false, hour = 0, minute = 0)
 {
     foreach(new i : Player)
     {
@@ -11,10 +15,7 @@ stock Time_Set(bool:isOwn = false, hour = 0, minute = 0, second = 0)
             if(isOwn) // Да | Yes
                 SetPlayerTime(i, hour, minute);
             else // Нет | No
-            {
-                gettime(hour, minute, second);
-                SetPlayerTime(i, hour, minute);
-            }
+                SetPlayerTime(i, TInfo[Hour], TInfo[Minute]);
         }
     }
     return 1;
@@ -22,7 +23,7 @@ stock Time_Set(bool:isOwn = false, hour = 0, minute = 0, second = 0)
 
 /*      [ УСТАНОВКА ВРЕМЕНИ ДЛЯ ИГРОКА ]      */
 /*      [ SETTING THE TIME FOR THE PLAYER ]      */
-stock Time_SetPlayer(playerid, bool:isOwn = false, hour = 0, minute = 0, second = 0)
+stock Time_SetPlayer(playerid, bool:isOwn = false, hour = 0, minute = 0)
 {
     if(PInfo[playerid][IsConnection])
     {
@@ -31,10 +32,7 @@ stock Time_SetPlayer(playerid, bool:isOwn = false, hour = 0, minute = 0, second 
         if(isOwn) // Да | Yes
             SetPlayerTime(playerid, hour, minute);
         else // Нет | No
-        {
-            gettime(hour, minute, second);
-            SetPlayerTime(playerid, hour, minute);
-        }
+            SetPlayerTime(playerid, TInfo[Hour], TInfo[Minute]);
     }
     return 1;
 }

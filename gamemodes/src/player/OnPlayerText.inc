@@ -34,5 +34,11 @@ public OnPlayerText(playerid, text[])
         PTimerInfo[playerid][AnimationChat] = SetTimerEx("Animation_Stop", 3200, false, "i", playerid);
     }
 
+    if(PAFKInfo[playerid][IsTrue])
+    {
+        if(AFK_Exit(playerid))
+            SCM(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы написали сообщение в чат и автоматически вышли с AFK режима.");
+    }
+
     return 0;
 }

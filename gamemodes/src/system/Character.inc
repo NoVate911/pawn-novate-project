@@ -30,7 +30,7 @@ new const Skins_Female[9][2] = { // Женские | Female
 /*      [ DISPLAYS THE CHARACTER SELECTION ]      */
 stock Player_CharacterShow(playerid)
 {
-    static const query[] = "SELECT id,login,firstname,lastname,age,sex,race,skin,level,exp,positionX,positionY,positionZ,rotation,interior,vw,health,armour,adminLevel,adminPassword,regIP,lastIP,regDate,lastDate FROM characters WHERE login = '%s' LIMIT %d";
+    static const query[] = "SELECT id,login,firstname,lastname,age,sex,race,skin,level,exp,expTime,positionX,positionY,positionZ,rotation,interior,vw,health,armour,adminLevel,adminPassword,regIP,lastIP,regDate,lastDate FROM characters WHERE login = '%s' LIMIT %d";
     new mysql[sizeof(query)+(-2+MAX_PLAYER_NAME)+(-2+1)];
     mysql_format(SInfo[MySQL], mysql, sizeof(mysql), query, PInfo[playerid][Nick], MAX_CHARACTERS);
     new Cache:cache = mysql_query(SInfo[MySQL], mysql, true);
@@ -51,14 +51,14 @@ stock Player_CharacterShow(playerid)
 /*      [ DIALOG BOXES ]      */
 dCreate:Dlg_Char_List(playerid)
 {
-    new temp[55+(-2+1)+(-2+MAX_PLAYER_NAME)+(-2+MAX_PLAYER_NAME)+(-2+3)];
+    new temp[58+(-2+1)+(-2+MAX_PLAYER_NAME)+(-2+MAX_PLAYER_NAME)+(-2+3)+(-2+3)+(-2+3)];
     new string[sizeof(temp)*MAX_CHARACTERS];
     for(new i = 0; i < MAX_CHARACTERS; i++)
     {
         if(CInfo[playerid][i][ID] == 0)
             format(temp, sizeof(temp), ""C_GRAY"[%d] "C_WHITE"Создать персонажа\n", i+1);
         else
-            format(temp, sizeof(temp), ""C_GRAY"[%d] "C_WHITE"%s %s "C_GRAY"(%d LVL / %d EXP)\n", i+1, CInfo[playerid][i][FirstName], CInfo[playerid][i][LastName], CInfo[playerid][i][Level], CInfo[playerid][i][Exp]);
+            format(temp, sizeof(temp), ""C_GRAY"[%d] "C_WHITE"%s %s "C_GRAY"(%d LVL / %d/%d EXP)\n", i+1, CInfo[playerid][i][FirstName], CInfo[playerid][i][LastName], CInfo[playerid][i][Level], CInfo[playerid][i][Exp], Level_Need_Exp(playerid, i));
         strcat(string, temp, sizeof(string));
     }
     return Dialog_Open(playerid, Dialog:Dlg_Char_List, DIALOG_STYLE_LIST, ""C_WHITE"Выбор персонажа", string, "Выбор", "Выход");

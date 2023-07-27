@@ -478,3 +478,20 @@ cmd:setadmin(playerid, params[]) // Выдать игроку права Адм�
     }
     return 1;
 }
+
+cmd:payday(playerid)
+{
+    if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
+    {
+        if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] < 7)
+            return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У Вас недостаточно прав для выполнения данной команды.");
+
+        PayDay_Launch();
+        new message_admin[35+(-2+MAX_PLAYER_NAME)+(-2+MAX_PLAYER_NAME)+(-2+4)];
+        format(message_admin, sizeof(message_admin), ""C_WHITE"%s %s(%d) запустил PayDay.", CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid);
+        Chat_SendMessageToAdmin(message_admin);
+        SCM(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы успешно запустили PayDay.");
+        printf("%s %s %s(%d) [%s:%s] запустил PayDay.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP]);
+    }
+    return 1;
+}

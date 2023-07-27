@@ -7,11 +7,31 @@ enum ServerInfo
 }
 new SInfo[ServerInfo];
 
+/*      [ ПЕРЕМЕННЫЕ ТАЙМЕРА ДЛЯ СЕРВЕРА ]      */
+/*      [ TIMER VARIABLES FOR THE SERVER ]      */
 enum ServerTimerInfo
 {
-    Minute
+    Second
 }
 new STimerInfo[ServerTimerInfo];
+
+enum TimeInfo
+{
+    TimeOfDayTime,
+
+    Hour,
+    Minute,
+    Second
+}
+new TInfo[TimeInfo];
+
+/*      [ ПЕРЕМЕННЫЕ ДЛЯ ЗАРПЛАТЫ ]      */
+/*      [ VARIABLES FOR SALARY ]      */
+enum PayDayInfo
+{
+    bool:IsPassed
+}
+new PDInfo[PayDayInfo];
 
 /*      [ ПЕРЕМЕННЫЕ ДЛЯ ИГРОКА ]      */
 /*      [ PLAYER INFORMATION ]      */
@@ -38,7 +58,7 @@ enum PlayerInfo
 new PInfo[MAX_PLAYERS][PlayerInfo];
 
 /*      [ ПЕРЕМЕННЫЕ ТАЙМЕРА ДЛЯ ИГРОКА ]      */
-/*      [ INFORMATION ABOUT PLAYER TIMERS ]      */
+/*      [ TIMER VARIABLES FOR THE PLAYER ]      */
 enum PlayerTimerInfo
 {
     Authorization,
@@ -50,13 +70,23 @@ enum PlayerTimerInfo
 new PTimerInfo[MAX_PLAYERS][PlayerTimerInfo];
 
 /*      [ ПЕРЕМЕННЫЕ КИКА ДЛЯ ИГРОКА ]      */
-/*      [ INFORMATION ABOUT THE PLAYER'S KICK ]      */
+/*      [ KICK VARIABLES FOR THE PLAYER ]      */
 enum PlayerKickInfo
 {
     Nick[MAX_PLAYER_NAME],
     Reason[MAX_PLAYER_NAME*2]
 }
 new PKickInfo[MAX_PLAYERS][PlayerKickInfo];
+
+/*      [ ПЕРЕМЕННЫЕ С AFK ДЛЯ ИГРОКА ]      */
+/*      [ VARIABLES WITH AFK FOR THE PLAYER ]      */
+enum PlayerAFKInfo
+{
+    bool:IsTrue,
+    Time,
+    Float:Position[3]
+}
+new PAFKInfo[MAX_PLAYERS][PlayerAFKInfo];
 
 /*      [ ПЕРЕМЕННЫЕ ДЛЯ ПЕРСОНАЖА ]      */
 /*      [ VARIABLES FOR THE CHARACTER ]      */
@@ -74,6 +104,7 @@ enum CharacterInfo
     Skin,
     Level,
     Exp,
+    ExpTime,
     RegIP[16],
     LastIP[16],
     RegDate[22],

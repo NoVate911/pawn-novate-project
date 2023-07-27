@@ -34,3 +34,15 @@
 /*      [ ЧАТ ]      */
 /*      [ CHAT ]      */
 #define MAX_DISTANCE_CHAT           (10.0) // Максимальная дистанция отправки сообщений | Maximum distance for sending messages
+
+/*      [ УРОВЕНЬ/ОПЫТ ]      */
+/*      [ LEVEL/EXP ]      */
+#define MAX_LEVEL                   (100) // Максимальное количество уровней | Maximum number of levels
+
+#define MAX_EXP_UPDATE_LEVEL        (2) // Максимальное количество опыта для повышения уровня | Maximum amount of experience to level up
+#define MAX_TIME_UPDATE_LEVEL       (3600) // Время обновления уровня/опыта игрока (в секундах) | Player Level/Experience Update Time (in seconds)
+
+/*      [ AFK ]      */
+/*      [ AFK ]      */
+#define MAX_AFK_TIME_SET            (30) // Время после которого игрок будет входить в AFK (в секундах) | The time after which the player will enter AFK (in seconds)
+#define MAX_AFK_TIME_WARNING        (10) // Время после которого будет выводиться предупреждение (в секундах) | The time after which the warning will be displayed (in seconds)

@@ -14,7 +14,6 @@ stock Animation_PreloadAnimations(playerid)
 stock Animation_PreloadAnimation(playerid, animlib[])
 {
     ApplyAnimation(playerid, animlib, "null", 0.0, 0, 0, 0, 0, 0, 0);
-    SCMf(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Библиотека анимаций \"%s\" была загружена.", animlib);
     return 1;
 }
 

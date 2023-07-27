@@ -85,9 +85,7 @@ dResponse:Dlg_Auth_Log_Password(playerid)
                 PInfo[playerid][AuthorizationCountTry]--;
                 
                 if(PInfo[playerid][AuthorizationCountTry] < 0)
-                {
                     Player_Kick(playerid, _, "Много попыток входа");
-                }
                 else
                 {
                     SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Пароль введён неверно. Осталось "C_EMERALD"%d "C_WHITE"попыток.", PInfo[playerid][AuthorizationCountTry]);

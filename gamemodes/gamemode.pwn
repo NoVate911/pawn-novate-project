@@ -43,7 +43,6 @@ main(){}
 #include "./src/define.inc"
 #include "./src/string.inc"
 #include "./src/enum.inc"
-#include "./src/utils.inc"
 
 /*    [ СИСТЕМЫ ]    */
 /*    [ SYSTEMS ]    */
@@ -57,16 +56,18 @@ main(){}
 #include "./src/system/Vehicle.inc"
 #include "./src/system/Time.inc"
 #include "./src/system/Weather.inc"
+#include "./src/system/PayDay.inc"
+#include "./src/system/Level.inc"
+#include "./src/system/AFK.inc"
 
 /*    [ СЕРВЕРНАЯ СТОРОНА ]   */
 /*    [ SERVER SIDE ]   */
-#include "./src/server/timers/OnServerMinute.inc"
+#include "./src/server/timers/OnServerSecond.inc"
 #include "./src/server/OnGameModeInit.inc"
 #include "./src/server/OnGameModeExit.inc"
 
 /*    [ КЛИЕНТСКАЯ СТОРОНА ]    */
 /*    [ CLIENT SIDE ]   */
-#include "./src/player/timers/OnPlayerConnect.inc"
 #include "./src/player/timers/OnPlayerSecond.inc"
 #include "./src/player/OnPlayerConnect.inc"
 #include "./src/player/OnPlayerDisconnect.inc"
