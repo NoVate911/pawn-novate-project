@@ -57,6 +57,8 @@ dCreate:Dlg_Char_List(playerid)
     {
         if(CInfo[playerid][i][ID] == 0)
             format(temp, sizeof(temp), ""C_GRAY"[%d] "C_WHITE"Создать персонажа\n", i+1);
+        else if(Ban_Character_Find(playerid, i) && Ban_Character_Check(playerid, i))
+            format(temp, sizeof(temp), ""C_GRAY"[%d] "C_WHITE"%s %s "C_RED"[ЗАБЛОКИРОВАН]\n", i+1, CInfo[playerid][i][FirstName], CInfo[playerid][i][LastName]);
         else
             format(temp, sizeof(temp), ""C_GRAY"[%d] "C_WHITE"%s %s "C_GRAY"[%d LVL | %d/%d EXP]\n", i+1, CInfo[playerid][i][FirstName], CInfo[playerid][i][LastName], CInfo[playerid][i][Level], CInfo[playerid][i][Exp], Level_Need_Exp(playerid, i));
         strcat(string, temp, sizeof(string));
@@ -71,6 +73,8 @@ dResponse:Dlg_Char_List(playerid)
         PInfo[playerid][CharacterSelect] = listitem;
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][ID] == 0)
             Dialog_Show(playerid, Dialog:Dlg_Char_CreateFirstName);
+        else if(Ban_Character_Find(playerid) && Ban_Character_Check(playerid))
+            Kick_Player(playerid, _, "Персонаж заблокирован");
         else
         {
             Player_SpawnAfterAuthorization(playerid);

@@ -46,3 +46,7 @@
 /*      [ AFK ]      */
 #define MAX_AFK_TIME_SET            (30) // Время после которого игрок будет входить в AFK (в секундах) | The time after which the player will enter AFK (in seconds)
 #define MAX_AFK_TIME_WARNING        (10) // Время после которого будет выводиться предупреждение (в секундах) | The time after which the warning will be displayed (in seconds)
+
+/*      [  ]      */
+#define MAX_BAN_ACCOUNTS            (100000) // Максимальное количество банов аккаунтов | Maximum number of account bans
+#define MAX_BAN_CHARACTERS          (100000) // Максимальное количество банов персонажей | Maximum number of character bans

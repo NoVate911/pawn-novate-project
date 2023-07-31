@@ -1,14 +1,12 @@
 /*      [ КИКАЕМ ИГРОКА С ДИАЛОГОМ И КАМЕРОЙ ]      */
 /*      [ KICK THE PLAYER WITH DIALOGUE AND CAMERA ]      */
-stock Kick_Player(playerid, author[]="Сервер", reason[]="Неизвестно", type = 0)
+stock Kick_Player(playerid, author[]="Сервер", reason[]="Неизвестно", bool:showDialog = true)
 {
     strmid(PKickInfo[playerid][Author], author, 0, strlen(author), MAX_PLAYER_NAME);
     strmid(PKickInfo[playerid][Reason], reason, 0, strlen(reason), MAX_PLAYER_NAME*2);
 
-    switch(type)
-    {
-        case 0: Dialog_Show(playerid, Dialog:Dlg_Kick);
-    }
+    if(showDialog)
+        Dialog_Show(playerid, Dialog:Dlg_Kick);
     Chat_Clear(playerid);
     SCM(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Для отключения от сервера, используйте "C_EMERALD"/q"C_WHITE".");
     return PTimerInfo[playerid][Kicks] = SetTimerEx("Timer_OnPlayerKick", 200, false, "i", playerid);

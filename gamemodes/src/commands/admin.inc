@@ -508,6 +508,74 @@ cmd:kick(playerid, params[]) // Кикнуть игрока с сервера | 
     return 1;
 }
 
+cmd:banaccount(playerid, params[]) // Блокировка аккаунта | Account blocking
+{
+    if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
+    {
+        if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] < 4)
+            return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У Вас недостаточно прав для выполнения данной команды.");
+
+        if(sscanf(params, "ds[48]", params[0], params[1]))
+            return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE""COMMAND_INVALID"", "banaccount [ID] (причина)");
+
+        if(!PInfo[params[0]][IsLogged])
+            return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_FOUND"");
+
+        // if(params[0] == playerid)
+        //     return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_ME"");
+
+        if(CInfo[params[0]][PInfo[params[0]][CharacterSelect]][AdminLevel] > CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel])
+            return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_VALID"");
+
+        if(Ban_Account_Set(playerid, 1, 0, CInfo[playerid][PInfo[playerid][CharacterSelect]][FullName], params[1]))
+        {
+            SCMf(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы заблокировали аккаунт %s(%d) навсегда за %s", PInfo[params[0]][Nick], params[0], params[1]);
+            printf("%s Администратор %s %s(%d) [%s:%s] заблокировал аккаунт %s(%d) [%s] навсегда за %s", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], PInfo[params[0]][Nick], params[0], PInfo[params[0]][LastIP], params[1]);
+        }
+        else
+        {
+            SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"При попытки блокировки аккаунта %s(%d) произошла ошибка.", PInfo[params[0]][Nick], params[0]);
+            printf("%s Администратор %s %s(%d) [%s:%s] попытался заблокировать аккаунт %s(%d) [%s] навсегда за %s", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], PInfo[params[0]][Nick], params[0], PInfo[params[0]][LastIP], params[1]);
+        }
+    }
+    return 1;
+}
+alias:banaccount("bana")
+
+cmd:bancharacter(playerid, params[]) // Блокировка персонажа | Character blocking
+{
+    if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
+    {
+        if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] < 4)
+            return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У Вас недостаточно прав для выполнения данной команды.");
+
+        if(sscanf(params, "ds[48]", params[0], params[1]))
+            return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE""COMMAND_INVALID"", "bancharacter [ID] (причина)");
+
+        if(!PInfo[params[0]][IsLogged])
+            return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_FOUND"");
+
+        // if(params[0] == playerid)
+        //     return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_ME"");
+
+        if(CInfo[params[0]][PInfo[params[0]][CharacterSelect]][AdminLevel] > CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel])
+            return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_VALID"");
+
+        if(Ban_Character_Set(playerid, 1, 0, CInfo[playerid][PInfo[playerid][CharacterSelect]][FullName], params[1]))
+        {
+            SCMf(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы заблокировали %s %s(%d) навсегда за %s", CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], params[1]);
+            printf("%s Администратор %s %s(%d) [%s:%s] заблокировал %s %s(%d) [%s:%s] навсегда за %s", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][Login], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP], params[1]);
+        }
+        else
+        {
+            SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"При попытки блокировки %s %s(%d) произошла ошибка.", CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0]);
+            printf("%s Администратор %s %s(%d) [%s:%s] попытался заблокировать %s %s(%d) [%s:%s] навсегда за %s", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][Login], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP], params[1]);
+        }
+    }
+    return 1;
+}
+alias:bancharacter("banc")
+
 cmd:payday(playerid) // Запустить зарплату (PayDay) | Launch Salary (PayDay)
 {
     if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])

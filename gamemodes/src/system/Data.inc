@@ -88,6 +88,39 @@ stock Data_Clear_CharacterInfo(playerid)
     return 1;
 }
 
+/*      [ ПОЛУЧАЕМ ДАННЫЕ О БАНЕ АККАУНТОВ ]      */
+/*      [ WE GET DATA ABOUT THE BAN OF ACCOUNTS ]      */
+stock Data_Get_BanAccountInfo()
+{
+    for(new i = 0; i < BAccountCount; i++)
+    {
+        cache_get_value_name_int(i, "id", BAccountInfo[i][ID]);
+        cache_get_value_name(i, "login", BAccountInfo[i][Login], MAX_PLAYER_NAME);
+        cache_get_value_name_int(i, "type", BAccountInfo[i][Type]);
+        cache_get_value_name_int(i, "time", BAccountInfo[i][Time]);
+        cache_get_value_name(i, "author", BAccountInfo[i][Author], MAX_PLAYER_NAME);
+        cache_get_value_name(i, "reason", BAccountInfo[i][Reason], MAX_PLAYER_NAME*2);
+    }
+    return 1;
+}
+
+/*      [ ПОЛУЧАЕМ ДАННЫЕ О БАНЕ ПЕРСОНАЖЕЙ ]      */
+/*      [ WE GET DATA ABOUT THE CHARACTERS BAN ]      */
+stock Data_Get_BanCharacterInfo()
+{
+    for(new i = 0; i < BCharacterCount; i++)
+    {
+        cache_get_value_name_int(i, "id", BCharacterInfo[i][ID]);
+        cache_get_value_name(i, "login", BCharacterInfo[i][Login], MAX_PLAYER_NAME);
+        cache_get_value_name_int(i, "characterID", BCharacterInfo[i][CharacterID]);
+        cache_get_value_name_int(i, "type", BCharacterInfo[i][Type]);
+        cache_get_value_name_int(i, "time", BCharacterInfo[i][Time]);
+        cache_get_value_name(i, "author", BCharacterInfo[i][Author], MAX_PLAYER_NAME);
+        cache_get_value_name(i, "reason", BCharacterInfo[i][Reason], MAX_PLAYER_NAME*2);
+    }
+    return 1;
+}
+
 /*      [ ПОЛУЧАЕМ ДАННЫЕ ИГРОКА ИЗ БАЗЫ ДАННЫХ ]      */
 /*      [ GETTING PLAYER DATA FROM THE DATABASE ]      */
 stock Data_Get_PlayerInfo(playerid)
