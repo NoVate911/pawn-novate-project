@@ -35,12 +35,25 @@ CREATE TABLE IF NOT EXISTS `accounts` (
 
 -- Р­РєСЃРїРѕСЂС‚РёСЂСѓРµРјС‹Рµ РґР°РЅРЅС‹Рµ РЅРµ РІС‹РґРµР»РµРЅС‹.
 
+-- Р”Р°РјРї СЃС‚СЂСѓРєС‚СѓСЂС‹ РґР»СЏ С‚Р°Р±Р»РёС†Р° samp-novateproject.accounts_bans
+CREATE TABLE IF NOT EXISTS `accounts_bans` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `login` varchar(24) DEFAULT 'NoVate',
+  `type` int(1) DEFAULT 0,
+  `time` int(11) DEFAULT 0,
+  `author` varchar(24) DEFAULT 'NoVate',
+  `reason` varchar(48) DEFAULT 'Unknown',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- Р­РєСЃРїРѕСЂС‚РёСЂСѓРµРјС‹Рµ РґР°РЅРЅС‹Рµ РЅРµ РІС‹РґРµР»РµРЅС‹.
+
 -- Р”Р°РјРї СЃС‚СЂСѓРєС‚СѓСЂС‹ РґР»СЏ С‚Р°Р±Р»РёС†Р° samp-novateproject.characters
 CREATE TABLE IF NOT EXISTS `characters` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `login` varchar(24) DEFAULT 'NoVate',
-  `firstname` varchar(24) DEFAULT 'Jony',
-  `lastname` varchar(24) DEFAULT 'Quatro',
+  `firstName` varchar(24) DEFAULT 'Jony',
+  `lastName` varchar(24) DEFAULT 'Quatro',
   `age` int(2) DEFAULT 18,
   `sex` int(1) DEFAULT 0,
   `race` int(1) DEFAULT 0,
@@ -62,6 +75,20 @@ CREATE TABLE IF NOT EXISTS `characters` (
   `lastIP` varchar(15) DEFAULT '0.0.0.0',
   `regDate` varchar(21) DEFAULT '1999.01.01 / 00:00:00',
   `lastDate` varchar(21) DEFAULT '1999.01.01 / 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- Р­РєСЃРїРѕСЂС‚РёСЂСѓРµРјС‹Рµ РґР°РЅРЅС‹Рµ РЅРµ РІС‹РґРµР»РµРЅС‹.
+
+-- Р”Р°РјРї СЃС‚СЂСѓРєС‚СѓСЂС‹ РґР»СЏ С‚Р°Р±Р»РёС†Р° samp-novateproject.characters_bans
+CREATE TABLE IF NOT EXISTS `characters_bans` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `login` varchar(24) DEFAULT 'NoVate',
+  `characterID` int(11) DEFAULT 0,
+  `type` int(1) DEFAULT 0,
+  `time` int(11) DEFAULT 0,
+  `author` varchar(24) DEFAULT 'NoVate',
+  `reason` varchar(48) DEFAULT 'Unknown',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
