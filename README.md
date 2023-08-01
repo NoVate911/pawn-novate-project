@@ -64,6 +64,37 @@
       - [ ] Bus driver
       - [ ] Pizza Delivery
       - [ ] Trucker
+  - [ ] The system of fractions
+    - [ ] State
+      - [ ] Los Santos Police Department
+      - [ ] Las Venturas Police Department
+      - [ ] San Fierro Police Department
+      - [ ] Los Santos Medical Center
+      - [ ] Las Venturas Medical Center
+      - [ ] San Fierro Medical Center
+      - [ ] Government
+      - [ ] Army
+      - [ ] Federal Bureau of Investigation
+    - [ ] Illegal
+      - [ ] Families
+      - [ ] Marabunta Grande
+      - [ ] Bloods
+      - [ ] Ballas
+  - [ ] House system
+    - [ ] Purchase
+    - [ ] Sale
+    - [ ] Broadcast
+  - [ ] Business System
+    - [ ] Purchase
+    - [ ] Sale
+    - [ ] Transmission
+    - [ ] Product
+      - [ ] Purchase
+  - [ ] Inventory system
+    - [ ] Transmission
+    - [ ] Throwing Out
+    - [ ] Using
+    - [ ] Dragging
 
   ---
 
@@ -174,6 +205,37 @@
       - [ ] Водитель автобуса
       - [ ] Развозчик пиццы
       - [ ] Дальнобойщик
+  - [ ] Система фракций
+    - [ ] Государственные
+      - [ ] Полицейский Департамент Лос Сантос
+      - [ ] Полицейский Департамент Лас Вентурас
+      - [ ] Полицейский Департамент Сан Фиерро
+      - [ ] Медицинский Центр Лос Сантос
+      - [ ] Медицинский Центр Лас Вентурас
+      - [ ] Медицинский Центр Сан Фиерро
+      - [ ] Правительство
+      - [ ] Армия
+      - [ ] Федеральное Бюро Расследований
+    - [ ] Нелегальные
+      - [ ] Families
+      - [ ] Marabunta Grande
+      - [ ] Bloods
+      - [ ] Ballas
+  - [ ] Система домов
+    - [ ] Покупка
+    - [ ] Продажа
+    - [ ] Передача
+  - [ ] Система бизнесов
+    - [ ] Покупка
+    - [ ] Продажа
+    - [ ] Передача
+    - [ ] Товар
+      - [ ] Покупка
+  - [ ] Система инвентаря
+    - [ ] Передача
+    - [ ] Выкидывание
+    - [ ] Использование
+    - [ ] Перетаскивание
 
   ---
 
