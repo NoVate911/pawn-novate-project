@@ -7,3 +7,4 @@
 /*      [ КОМАНДЫ ]      */
 /*      [ COMMANDS ]      */
 #define COMMAND_INVALID             "Неверный синтаксис. Используйте: /%s"
+#define COMMAND_NOT_FOUND           "Команда введена неверно или не найдена."

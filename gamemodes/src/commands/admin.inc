@@ -50,6 +50,8 @@ cmd:alogin(playerid, params[]) // Войти под Администраторо
         else
             SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Пароль может состоять из 4-х символов.");
     }
+    else
+        SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""COMMAND_NOT_FOUND"");
     return 1;
 }
 
@@ -66,35 +68,42 @@ cmd:alogout(playerid)
         else
             SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Вы не авторизированы, как Администратор.");
     }
+    else
+        SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""COMMAND_NOT_FOUND"");
     return 1;
 }
 
 cmd:createvehicle(playerid, params[]) // Создать транспорт | Create a transport
 {
-    if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
+    if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
     {
-        if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] < 3)
-            return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У Вас недостаточно прав для выполнения данной команды.");
+        if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
+        {
+            if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] < 3)
+                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У Вас недостаточно прав для выполнения данной команды.");
 
-        if(sscanf(params, "dd", params[0], params[1]))
-            return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE""COMMAND_INVALID"", "createvehicle [ID] [ID модели транспорта]");
+            if(sscanf(params, "dd", params[0], params[1]))
+                return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE""COMMAND_INVALID"", "createvehicle [ID] [ID модели транспорта]");
 
-        if(!PInfo[params[0]][IsLogged])
-            return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_FOUND"");
+            if(!PInfo[params[0]][IsLogged])
+                return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_FOUND"");
 
-        if(!(400 <= params[1] <= 611))
-            return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Неверный ID транспорта. Диапазон: от 400 до 611.");
+            if(!(400 <= params[1] <= 611))
+                return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Неверный ID транспорта. Диапазон: от 400 до 611.");
 
-        if(IsPlayerInAnyVehicle(params[0]))
-            return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Игрок находится в транспорте.");
+            if(IsPlayerInAnyVehicle(params[0]))
+                return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Игрок находится в транспорте.");
 
-        new Float:x, Float:y, Float:z, Float:rotation;
-        GetPlayerPos(params[0], x, y, z);
-        GetPlayerFacingAngle(params[0], rotation);
-        new vehicle = Vehicle_Create(params[1], x, y+2, z, rotation, random(255), random(255));
-        SCMf(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Транспорт был создан (ID: %d).", vehicle);
-        printf("%s Администратор %s %s(%d) [%s:%s] создал транспорт (ID: %d) для %s %s(%d) [%s:%s].", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], vehicle, CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][Login], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP]);
+            new Float:x, Float:y, Float:z, Float:rotation;
+            GetPlayerPos(params[0], x, y, z);
+            GetPlayerFacingAngle(params[0], rotation);
+            new vehicle = Vehicle_Create(params[1], x, y+2, z, rotation, random(255), random(255));
+            SCMf(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Транспорт был создан (ID: %d).", vehicle);
+            printf("%s Администратор %s %s(%d) [%s:%s] создал транспорт (ID: %d) для %s %s(%d) [%s:%s].", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], vehicle, CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][Login], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP]);
+        }
     }
+    else
+        SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""COMMAND_NOT_FOUND"");
     return 1;
 }
 alias:createvehicle("createveh", "cvehicle", "cveh")
