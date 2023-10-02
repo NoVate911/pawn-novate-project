@@ -84,6 +84,8 @@ stock Data_Clear_CharacterInfo(playerid)
         CInfo[playerid][i][AdminLevel] = 0;
         CInfo[playerid][i][AdminPassword] = 0;
         CInfo[playerid][i][IsAdmin] = false;
+        CInfo[playerid][i][Money] = 0;
+        CInfo[playerid][i][MoneyTime] = 0;
     }
     return 1;
 }
@@ -167,6 +169,7 @@ stock Data_Get_CharacterInfo(playerid)
         cache_get_value_name_float(i, "armour", CInfo[playerid][i][Armour]);
         cache_get_value_name_int(i, "adminLevel", CInfo[playerid][i][AdminLevel]);
         cache_get_value_name_int(i, "adminPassword", CInfo[playerid][i][AdminPassword]);
+        cache_get_value_name_int(i, "money", CInfo[playerid][i][Money]);
         cache_get_value_name(i, "regIP", CInfo[playerid][i][RegIP], 15);
         cache_get_value_name(i, "lastIP", CInfo[playerid][i][LastIP], 15);
         cache_get_value_name(i, "regDate", CInfo[playerid][i][RegDate], 14);
@@ -197,9 +200,9 @@ stock Data_Set_CharacterInfo(playerid)
     GetPlayerHealth(playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Health]);
     GetPlayerArmour(playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Armour]);
 
-    static const query[] = "UPDATE characters SET level = '%d', exp = '%d', expTime = '%d', positionX = '%f', positionY = '%f', positionZ = '%f', rotation = '%f', interior = '%d', vw = '%d', health = '%f', armour = '%f', adminLevel = '%d', adminPassword = '%d' WHERE login = '%s' LIMIT 1";
-    new mysql[sizeof(query)+(-2+3)+(-2+3)+(-2+4)+(-2+8)+(-2+8)+(-2+8)+(-2+8)+(-2+3)+(-2+10)+(-2+3)+(-2+3)+(-2+2)+(-2+4)+(-2+MAX_PLAYER_NAME)];
-    mysql_format(SInfo[MySQL], mysql, sizeof(mysql), query, CInfo[playerid][PInfo[playerid][CharacterSelect]][Level], CInfo[playerid][PInfo[playerid][CharacterSelect]][Exp], CInfo[playerid][PInfo[playerid][CharacterSelect]][ExpTime], CInfo[playerid][PInfo[playerid][CharacterSelect]][Position][0], CInfo[playerid][PInfo[playerid][CharacterSelect]][Position][1], CInfo[playerid][PInfo[playerid][CharacterSelect]][Position][2], CInfo[playerid][PInfo[playerid][CharacterSelect]][Rotation], CInfo[playerid][PInfo[playerid][CharacterSelect]][Interior], CInfo[playerid][PInfo[playerid][CharacterSelect]][VirtualWorld], CInfo[playerid][PInfo[playerid][CharacterSelect]][Health], CInfo[playerid][PInfo[playerid][CharacterSelect]][Armour], CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel], CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminPassword], CInfo[playerid][PInfo[playerid][CharacterSelect]][Login]);
+    static const query[] = "UPDATE characters SET level = '%d', exp = '%d', expTime = '%d', positionX = '%f', positionY = '%f', positionZ = '%f', rotation = '%f', interior = '%d', vw = '%d', health = '%f', armour = '%f', adminLevel = '%d', adminPassword = '%d', money = '%d' WHERE login = '%s' LIMIT 1";
+    new mysql[sizeof(query)+(-2+3)+(-2+3)+(-2+4)+(-2+8)+(-2+8)+(-2+8)+(-2+8)+(-2+3)+(-2+10)+(-2+3)+(-2+3)+(-2+2)+(-2+4)+(-2+9)+(-2+MAX_PLAYER_NAME)];
+    mysql_format(SInfo[MySQL], mysql, sizeof(mysql), query, CInfo[playerid][PInfo[playerid][CharacterSelect]][Level], CInfo[playerid][PInfo[playerid][CharacterSelect]][Exp], CInfo[playerid][PInfo[playerid][CharacterSelect]][ExpTime], CInfo[playerid][PInfo[playerid][CharacterSelect]][Position][0], CInfo[playerid][PInfo[playerid][CharacterSelect]][Position][1], CInfo[playerid][PInfo[playerid][CharacterSelect]][Position][2], CInfo[playerid][PInfo[playerid][CharacterSelect]][Rotation], CInfo[playerid][PInfo[playerid][CharacterSelect]][Interior], CInfo[playerid][PInfo[playerid][CharacterSelect]][VirtualWorld], CInfo[playerid][PInfo[playerid][CharacterSelect]][Health], CInfo[playerid][PInfo[playerid][CharacterSelect]][Armour], CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel], CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminPassword], CInfo[playerid][PInfo[playerid][CharacterSelect]][Money], CInfo[playerid][PInfo[playerid][CharacterSelect]][Login]);
     mysql_query(SInfo[MySQL], mysql, false);
     return 1;
 }

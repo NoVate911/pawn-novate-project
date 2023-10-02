@@ -47,6 +47,10 @@
 #define MAX_AFK_TIME_SET            (30) // Время после которого игрок будет входить в AFK (в секундах) | The time after which the player will enter AFK (in seconds)
 #define MAX_AFK_TIME_WARNING        (10) // Время после которого будет выводиться предупреждение (в секундах) | The time after which the warning will be displayed (in seconds)
 
-/*      [  ]      */
-#define MAX_BAN_ACCOUNTS            (100000) // Максимальное количество банов аккаунтов | Maximum number of account bans
-#define MAX_BAN_CHARACTERS          (100000) // Максимальное количество банов персонажей | Maximum number of character bans
+/*      [ ВРЕМЯ ]      */
+/*      [ TIME ]      */
+#define MAX_TIME_UPDATE_TIME        (60) // Время обновления времени суток | Time of day update time
+
+/*      [ ДЕНЬГИ ]      */
+/*      [ MONEY ]      */
+#define MAX_TIME_UPDATE_MONEY       (60) // Время обновления денег у игрока (в секундах) | The player's money update time (in seconds)

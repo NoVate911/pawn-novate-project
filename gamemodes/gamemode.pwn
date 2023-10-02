@@ -59,7 +59,8 @@ main(){}
 #include "./src/system/PayDay.inc"
 #include "./src/system/Level.inc"
 #include "./src/system/AFK.inc"
-#include "./src/system/Ban.inc"
+#include "./src/system/Menu.inc"
+#include "./src/system/Money.inc"
 
 /*    [ СЕРВЕРНАЯ СТОРОНА ]   */
 /*    [ SERVER SIDE ]   */

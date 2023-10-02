@@ -1,7 +1,3 @@
-#define MAX_TIME_UPDATE_TIME        (60) // Время обновления времени суток | Time of day update time
-
-/*      [ ========== ========== ========== ========== ========== ]      */
-
 /*      [ УСТАНОВКА ВРЕМЕНИ НА СЕРВЕРЕ ]      */
 /*      [ SETTING THE TIME ON THE SERVER ]      */
 stock Time_Set(bool:isOwn = false, hour = 0, minute = 0)

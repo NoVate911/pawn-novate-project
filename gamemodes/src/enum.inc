@@ -25,35 +25,6 @@ enum TimeInfo
 }
 new TInfo[TimeInfo];
 
-/*      [ ПЕРЕМЕННЫЕ С БАНАМИ АККАУНТОВ ИГРОКОВ ]      */
-/*      [ VARIABLES WITH PLAYER ACCOUNT BANS ]      */
-enum BanAccountInfo
-{
-    ID,
-    Login[MAX_PLAYER_NAME],
-    Type,
-    Time,
-    Author[MAX_PLAYER_NAME],
-    Reason[MAX_PLAYER_NAME*2]
-}
-new BAccountInfo[MAX_BAN_ACCOUNTS][BanAccountInfo];
-new BAccountCount;
-
-/*      [ ПЕРЕМЕННЫЕ С БАНАМИ ПЕРСОНАЖЕЙ ИГРОКОВ ]      */
-/*      [ VARIABLES WITH PLAYER CHARACTER BANS ]      */
-enum BanCharacterInfo
-{
-    ID,
-    Login[MAX_PLAYER_NAME],
-    CharacterID,
-    Type,
-    Time,
-    Author[MAX_PLAYER_NAME],
-    Reason[MAX_PLAYER_NAME*2]
-}
-new BCharacterInfo[MAX_BAN_CHARACTERS][BanCharacterInfo];
-new BCharacterCount;
-
 /*      [ ПЕРЕМЕННЫЕ ДЛЯ ЗАРПЛАТЫ ]      */
 /*      [ VARIABLES FOR SALARY ]      */
 enum PayDayInfo
@@ -147,7 +118,9 @@ enum CharacterInfo
     Float:Armour,
     AdminLevel,
     AdminPassword,
-    bool:IsAdmin
+    bool:IsAdmin,
+    Money,
+    MoneyTime
 }
 new CInfo[MAX_PLAYERS][MAX_CHARACTERS][CharacterInfo];
 

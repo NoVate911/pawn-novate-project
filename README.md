@@ -50,10 +50,10 @@
   - [x] Chat system
   - [x] Animation system
     - [ ] Animation Menu
-  - [ ] Menu system
-    - [ ] Statistics
-    - [ ] Settings
-      - [ ] Security
+  - [x] Menu system
+    - [x] Statistics
+    - [x] Settings
+      - [x] Security
   - [ ] System of works
     - [ ] Initial works
       - [ ] Loader
@@ -95,6 +95,13 @@
     - [ ] Throwing Out
     - [ ] Using
     - [ ] Dragging
+  - [ ] Wagering commands
+    - [ ] /ame - first person (mini)
+    - [ ] /me - first person
+    - [ ] /do - third person
+    - [ ] /try - successful/unsuccessful
+    - [ ] /todo - with a speech
+    - [ ] /n - OOC information
 
   ---
 
@@ -191,10 +198,10 @@
   - [x] Система чата
   - [x] Система анимаций
     - [ ] Меню анимаций
-  - [ ] Система меню
-    - [ ] Статистика
-    - [ ] Настройки
-      - [ ] Безопасность
+  - [x] Система меню
+    - [x] Статистика
+    - [x] Настройки
+      - [x] Безопасность
   - [ ] Система работ
     - [ ] Начальные работы
       - [ ] Грузчик
@@ -236,6 +243,13 @@
     - [ ] Выкидывание
     - [ ] Использование
     - [ ] Перетаскивание
+  - [ ] Команды для отыгровки
+    - [ ] /ame - от первого лица (мини)
+    - [ ] /me - от первого лица
+    - [ ] /do - от третьего лица
+    - [ ] /try - удачно/неудачно
+    - [ ] /todo - с речью
+    - [ ] /n - OOC информация
 
   ---
 

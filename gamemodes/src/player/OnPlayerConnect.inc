@@ -38,9 +38,6 @@ function Timer_OnPlayerConnect(playerid)
     InterpolateCameraPos(playerid, Positions_Camera_Connect[0][0], Positions_Camera_Connect[0][1], Positions_Camera_Connect[0][2], Positions_Camera_Connect[1][0], Positions_Camera_Connect[1][1], Positions_Camera_Connect[1][2], 120000);
     InterpolateCameraLookAt(playerid, Positions_Camera_Connect[2][0], Positions_Camera_Connect[2][1], Positions_Camera_Connect[2][2], Positions_Camera_Connect[2][0], Positions_Camera_Connect[2][1], Positions_Camera_Connect[2][2], 120000);
 
-    if(Ban_Account_Find(playerid) && Ban_Account_Check(playerid))
-        return Kick_Player(playerid, _, "Аккаунт заблокирован");
-
     static const query[] = "SELECT nick FROM accounts WHERE nick = '%s' LIMIT 1";
     new mysql[sizeof(query)+(-2+MAX_PLAYER_NAME)];
     mysql_format(SInfo[MySQL], mysql, sizeof(mysql), query, PInfo[playerid][Nick]);

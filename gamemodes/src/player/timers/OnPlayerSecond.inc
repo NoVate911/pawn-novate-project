@@ -10,13 +10,19 @@ function Timer_OnPlayerSecond(playerid)
         // Проверка на вход | Check for entry
         if(!PInfo[playerid][IsLogged])
         {
-            PInfo[playerid][AuthorizationTime]--;
-            
             if(PInfo[playerid][AuthorizationTime] <= 0)
                 Kick_Player(playerid, "Сервер", "Время истекло");
+            else
+                PInfo[playerid][AuthorizationTime]--;
         }
         else
         {
+            // Проверка на деньги | Checking for money
+            if(CInfo[playerid][PInfo[playerid][CharacterSelect]][MoneyTime] <= 0)
+                Money_Update(playerid);
+            else
+                CInfo[playerid][PInfo[playerid][CharacterSelect]][MoneyTime]--;
+
             AFK_Check(playerid);
             if(!PAFKInfo[playerid][IsTrue])
             {
