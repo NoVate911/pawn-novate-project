@@ -13,10 +13,16 @@ public OnPlayerConnect(playerid)
     if(IsPlayerNPC(playerid))
         return 1;
 
-    if(PInfo[playerid][IsConnection])
-        return Kick_Player(playerid, _, "Игрок на сервере");
-
     GetPlayerName(playerid, PInfo[playerid][Nick], MAX_PLAYER_NAME);
+    foreach(new p : Player)
+    {
+        if(strcmp(PInfo[p][Nick], PInfo[playerid][Nick]) == 0)
+        {
+            if(PInfo[p][IsConnection])
+                return Kick_Player(playerid, _, "Игрок на сервере");
+        }
+    }
+
     return PTimerInfo[playerid][Authorization] = SetTimerEx("Timer_OnPlayerConnect", 200, false, "i", playerid);
 }
 

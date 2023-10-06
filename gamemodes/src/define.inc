@@ -44,8 +44,8 @@
 
 /*      [ AFK ]      */
 /*      [ AFK ]      */
-#define MAX_AFK_TIME_SET            (30) // Время после которого игрок будет входить в AFK (в секундах) | The time after which the player will enter AFK (in seconds)
-#define MAX_AFK_TIME_WARNING        (10) // Время после которого будет выводиться предупреждение (в секундах) | The time after which the warning will be displayed (in seconds)
+#define MAX_AFK_TIME_SET            (60) // Время после которого игрок будет входить в AFK (в секундах) | The time after which the player will enter AFK (in seconds)
+#define MAX_AFK_TIME_WARNING        (60) // Время после которого будет выводиться предупреждение (в секундах) | The time after which the warning will be displayed (in seconds)
 
 /*      [ ВРЕМЯ ]      */
 /*      [ TIME ]      */

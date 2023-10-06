@@ -116,6 +116,23 @@ stock Vehicle_DoorManagement(vehicleid)
     return false;
 }
 
+/*      [ ПОЛУЧИТЬ ЗНАЧЕНИЕ ДВЕРЕЙ У ТРАНСПОРТА ]      */
+/*      [ GET THE VALUE OF TRANSPORT DOORS ]      */
+stock Vehicle_GetDoorValue(vehicleid)
+{
+    if(Vehicle_FindID(vehicleid))
+    {
+        for(new v = 0; v < MAX_VEHICLES; v++)
+        {
+            if(VInfo[v][ID] == vehicleid)
+            {
+                return VInfo[v][IsDoorsClosed];
+            }
+        }
+    }
+    return false;
+}
+
 /*      [ СМЕНА ЦВЕТА ТРАНСПОРТА ]      */
 /*      [ CHANGING THE COLOR OF TRANSPORT ]      */
 stock Vehicle_SetColor(vehicleid, color1, color2)

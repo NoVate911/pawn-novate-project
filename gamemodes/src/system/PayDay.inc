@@ -18,22 +18,22 @@ stock PayDay_Launch()
 {
     printf("%s Запущенный PayDay прошёл успешно.", DEBUG_INFO);
 
-    Chat_Clear(0, true, 1);
     foreach(new i : Player)
     {
         if(PInfo[i][IsLogged])
         {
             if(!PAFKInfo[i][IsTrue])
             {
+                Chat_Clear(i, false, 1);
                 SCMf(i, -1, "===== ЗАРПЛАТА =====");
                 SCMf(i, -1, "");
                 SCMf(i, -1, "Текущее время: %d:%d", TInfo[Hour], TInfo[Minute]);
                 SCMf(i, -1, "");
                 SCMf(i, -1, "====================");
+                Chat_Clear(i, false, 1);
             }
         }
     }
-    Chat_Clear(0, true, 1);
 
     PDInfo[IsPassed] = true;
     return 1;

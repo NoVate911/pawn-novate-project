@@ -26,22 +26,23 @@ stock AFK_Check(playerid)
         if(PAFKInfo[playerid][Time] == MAX_AFK_TIME_SET)
         {
             if(AFK_Enter(playerid))
-                SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Вы бездействовали %d секунд и встали в AFK режим.", MAX_AFK_TIME_SET);
+                SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Вы бездействовали %d минуту и встали в AFK режим.", MAX_AFK_TIME_SET / 60);
         }
         else
         {
-            new const time = PAFKInfo[playerid][Time] - MAX_AFK_TIME_SET;
-
             // Предупреждения | Warnings
-            switch(time)
+            switch(PAFKInfo[playerid][Time] - MAX_AFK_TIME_SET)
             {
-                case (MAX_AFK_TIME_WARNING * 3): // Первое предупреждение | First warning
-                    SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Вы будете кикнуты за AFK через %d секунд.", (MAX_AFK_TIME_WARNING * 6) - (MAX_AFK_TIME_WARNING * 3));
+                case MAX_AFK_TIME_WARNING: // Первое предупреждение | First warning
+                    SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Вы будете кикнуты за AFK через %d минуты.", ((MAX_AFK_TIME_WARNING * 5) - MAX_AFK_TIME_WARNING) / 60);
 
-                case (MAX_AFK_TIME_WARNING * 5): // Первое предупреждение | First warning
-                    SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Вы будете кикнуты за AFK через %d секунд.", (MAX_AFK_TIME_WARNING * 6) - (MAX_AFK_TIME_WARNING * 5));
+                case MAX_AFK_TIME_WARNING * 3: // Второе предупреждение | Second warning
+                    SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Вы будете кикнуты за AFK через %d минуты.", ((MAX_AFK_TIME_WARNING * 5) - (MAX_AFK_TIME_WARNING * 3)) / 60);
 
-                case (MAX_AFK_TIME_WARNING * 6): // Первое предупреждение | First warning
+                case MAX_AFK_TIME_WARNING * 4: // Третье предупреждение | Third warning
+                    SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Вы будете кикнуты за AFK через %d минуту.", ((MAX_AFK_TIME_WARNING * 5) - (MAX_AFK_TIME_WARNING * 4)) / 60);
+
+                case MAX_AFK_TIME_WARNING * 5: // Четвёртое предупреждение |  warning
                     Kick_Player(playerid, _, "Долгое AFK");
             }
         }
