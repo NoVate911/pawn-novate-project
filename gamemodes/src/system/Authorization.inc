@@ -11,6 +11,8 @@ new const Float:Positions_Spawn[MAX_POSITIONS_SPAWN][4] = { // X, Y, Z, Rotation
 stock Player_SpawnAfterAuthorization(playerid)
 {
     TogglePlayerSpectating(playerid, false);
+    Objects_Remove_For_Player(playerid);
+    Objects_Create_For_Player(playerid);
     if(CInfo[playerid][PInfo[playerid][CharacterSelect]][Position][0] == 0.0 && CInfo[playerid][PInfo[playerid][CharacterSelect]][Position][1] == 0.0 && CInfo[playerid][PInfo[playerid][CharacterSelect]][Position][2] == 0.0)
         SetSpawnInfo(playerid, 0, CInfo[playerid][PInfo[playerid][CharacterSelect]][Skin], Positions_Spawn[random(MAX_POSITIONS_SPAWN)][0], Positions_Spawn[random(MAX_POSITIONS_SPAWN)][1], Positions_Spawn[random(MAX_POSITIONS_SPAWN)][2], Positions_Spawn[random(MAX_POSITIONS_SPAWN)][3], 0, 0, 0, 0, 0, 0);
     else

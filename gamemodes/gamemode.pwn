@@ -46,6 +46,7 @@ main(){}
 
 /*    [ СИСТЕМЫ ]    */
 /*    [ SYSTEMS ]    */
+#include "./src/system/Objects.inc"
 #include "./src/system/Database.inc"
 #include "./src/system/Data.inc"
 #include "./src/system/Animations.inc"
