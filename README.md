@@ -96,12 +96,12 @@
     - [ ] Using
     - [ ] Dragging
   - [ ] Wagering commands
-    - [ ] /ame - first person (mini)
-    - [ ] /me - first person
-    - [ ] /do - third person
+    - [x] /ame - first person (mini)
+    - [x] /me - first person
+    - [x] /do - third person
     - [ ] /try - successful/unsuccessful
     - [ ] /todo - with a speech
-    - [ ] /n - OOC information
+    - [x] /n - OOC information
 
   ---
 
@@ -244,12 +244,12 @@
     - [ ] Использование
     - [ ] Перетаскивание
   - [ ] Команды для отыгровки
-    - [ ] /ame - от первого лица (мини)
-    - [ ] /me - от первого лица
-    - [ ] /do - от третьего лица
+    - [x] /ame - от первого лица (мини)
+    - [x] /me - от первого лица
+    - [x] /do - от третьего лица
     - [ ] /try - удачно/неудачно
     - [ ] /todo - с речью
-    - [ ] /n - OOC информация
+    - [x] /n - OOC информация
 
   ---
 
