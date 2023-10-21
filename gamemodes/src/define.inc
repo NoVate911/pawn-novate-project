@@ -21,7 +21,7 @@
 
 /*      [ ПЕРСОНАЖ ]      */
 /*      [ CHARACTER ]      */
-#define MAX_CHARACTERS              (3) // Максимальное количество персонажей | Maximum number of characters
+#define MAX_CHARACTERS              (1) // Максимальное количество персонажей | Maximum number of characters
 
 #define MAX_CHARACTER_AGE           (60) // Максимальный возраст персонажа | Maximum age of the character
 #define MIN_CHARACTER_AGE           (18) // Минимальный возраст персонажа | Minimum age of the character

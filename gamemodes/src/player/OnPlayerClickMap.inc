@@ -14,7 +14,7 @@ public OnPlayerClickMap(playerid, Float:fX, Float:fY, Float:fZ)
             SetPlayerPosFindZ(playerid, fX, fY, fZ);
             
         SCM(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы были телепортированы на метку.");
-        printf("%s %s %s(%d) [%s:%s] телепортировался по метке на карте.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP]);
+        printf("%s %s %s(%d) [%s:%s] телепортировался по метке на карте [%f, %f, %f].", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], fX, fY, fZ);
     }
     return 1;
 }

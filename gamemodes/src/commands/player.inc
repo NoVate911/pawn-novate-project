@@ -29,3 +29,61 @@ cmd:n(playerid, params[])
     }
     return 1;
 }
+
+cmd:me(playerid, params[])
+{
+    new message[128];
+    if(sscanf(params, "s[128]", message))
+        return 1;
+        
+    if(strlen(params) > 75)
+    {
+        new first[10+(-2+MAX_PLAYER_NAME)+(-2+MAX_PLAYER_NAME)+(-2+76)], second[4+(-2+126)];
+        strmid(message, params, 76, 128, 128);
+        strdel(params, 76, 128);
+        format(first, sizeof(first), "%s %s %s..", CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], params);
+        Chat_SendMessage(playerid, 10.0, C_F_PURPLE, first);
+        format(second, sizeof(second), "..%s", message);
+        Chat_SendMessage(playerid, 10.0, C_F_PURPLE, second);
+    }
+    else
+    {
+        format(message, sizeof(message), "%s %s %s", CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], params);
+        Chat_SendMessage(playerid, 10.0, C_F_PURPLE, message);
+    }
+    return 1;
+}
+
+cmd:ame(playerid, params[])
+{
+    new message[32];
+    if(sscanf(params, "s[32]", message))
+        return 1;
+        
+    SetPlayerChatBubble(playerid, params, C_F_PURPLE, 10.0, 3000);
+    return 1;
+}
+
+cmd:do(playerid, params[])
+{
+    new message[128];
+    if(sscanf(params, "s[128]", message))
+        return 1;
+        
+    if(strlen(params) > 73)
+    {
+        new first[12+(-2+MAX_PLAYER_NAME)+(-2+MAX_PLAYER_NAME)+(-2+74)], second[4+(-2+126)];
+        strmid(message, params, 74, 128, 128);
+        strdel(params, 74, 128);
+        format(first, sizeof(first), "%s.. (%s %s)", params, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName]);
+        Chat_SendMessage(playerid, 10.0, C_F_PURPLE, first);
+        format(second, sizeof(second), "..%s", message);
+        Chat_SendMessage(playerid, 10.0, C_F_PURPLE, second);
+    }
+    else
+    {
+        format(message, sizeof(message), "%s (%s %s)", params, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName]);
+        Chat_SendMessage(playerid, 10.0, C_F_PURPLE, message);
+    }
+    return 1;
+}

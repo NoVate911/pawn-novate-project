@@ -596,7 +596,7 @@ cmd:setskin(playerid, params[])
             if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] < 3)
                 return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У Вас недостаточно прав для выполнения данной команды.");
 
-            if(params, "dd", params[0], params[1])
+            if(sscanf(params, "dd", params[0], params[1]))
                 return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE""COMMAND_INVALID"", "setskin [ID] [ID скина]");
 
             if(!PInfo[params[0]][IsLogged])
@@ -631,7 +631,7 @@ cmd:settempskin(playerid, params[])
             if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] < 3)
                 return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У Вас недостаточно прав для выполнения данной команды.");
 
-            if(params, "dd", params[0], params[1])
+            if(sscanf(params, "dd", params[0], params[1]))
                 return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE""COMMAND_INVALID"", "settempskin [ID] [ID скина]");
 
             if(!PInfo[params[0]][IsLogged])
@@ -677,3 +677,33 @@ cmd:payday(playerid) // Запустить зарплату (PayDay) | Launch Sa
         SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""COMMAND_NOT_FOUND"");
     return 1;
 }
+
+cmd:vehicleput(playerid, params[]) // Посадить игрока в транспорт | 
+{
+    if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
+    {
+        if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
+        {
+            if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] < 3)
+                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У Вас недостаточно прав для выполнения данной команды.");
+
+            if(sscanf(params, "dd", params[0], params[1]))
+                return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE""COMMAND_INVALID"", "vehicleput [ID] [ID транспорта]");
+
+            if(!PInfo[params[0]][IsLogged])
+                return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_FOUND"");
+
+            if(Vehicle_FindID(params[1]))
+            {
+                PutPlayerInVehicle(params[0], params[1], 0);
+                SCMf(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы посадили %s %s(%d) в транспорт (ID: %d).", CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], params[1]);
+            }
+            else
+                SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Транспорт с данным ID не найден.");
+        }
+    }
+    else
+        SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""COMMAND_NOT_FOUND"");
+    return 1;
+}
+alias:vehicleput("vehput")

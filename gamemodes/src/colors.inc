@@ -16,3 +16,5 @@
 #define C_YELLOW                    "{FFCC22}"
 #define C_F_GREEN                   0x33DD00FF
 #define C_GREEN                     "{33DD00}"
+#define C_F_PURPLE                  0x9D3EA6FF
+#define C_PURPLE                    "{9D3EA6}"
