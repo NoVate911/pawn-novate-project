@@ -15,5 +15,6 @@ public OnPlayerDisconnect(playerid, reason)
     Data_Clear_PlayerTimerInfo(playerid);
     Data_Clear_PlayerKickInfo(playerid);
     Data_Clear_PlayerAFKInfo(playerid);
+    Data_Clear_AdminSpectateInfo(playerid);
     return 1;
 }

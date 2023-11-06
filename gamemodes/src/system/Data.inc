@@ -90,36 +90,14 @@ stock Data_Clear_CharacterInfo(playerid)
     return 1;
 }
 
-/*      [ ПОЛУЧАЕМ ДАННЫЕ О БАНЕ АККАУНТОВ ]      */
-/*      [ WE GET DATA ABOUT THE BAN OF ACCOUNTS ]      */
-stock Data_Get_BanAccountInfo()
+/*      [ ОБНУЛЯЕМ ИНФОРМАЦИЮ О НАБЛЮДЕНИИ У АДМИНИСТРАТОРА ]      */
+/*      [ WE RESET THE INFORMATION ABOUT THE OBSERVATION AT THE ADMINISTRATOR ]      */
+stock Data_Clear_AdminSpectateInfo(playerid)
 {
-    for(new i = 0; i < BAccountCount; i++)
-    {
-        cache_get_value_name_int(i, "id", BAccountInfo[i][ID]);
-        cache_get_value_name(i, "login", BAccountInfo[i][Login], MAX_PLAYER_NAME);
-        cache_get_value_name_int(i, "type", BAccountInfo[i][Type]);
-        cache_get_value_name_int(i, "time", BAccountInfo[i][Time]);
-        cache_get_value_name(i, "author", BAccountInfo[i][Author], MAX_PLAYER_NAME);
-        cache_get_value_name(i, "reason", BAccountInfo[i][Reason], MAX_PLAYER_NAME*2);
-    }
-    return 1;
-}
-
-/*      [ ПОЛУЧАЕМ ДАННЫЕ О БАНЕ ПЕРСОНАЖЕЙ ]      */
-/*      [ WE GET DATA ABOUT THE CHARACTERS BAN ]      */
-stock Data_Get_BanCharacterInfo()
-{
-    for(new i = 0; i < BCharacterCount; i++)
-    {
-        cache_get_value_name_int(i, "id", BCharacterInfo[i][ID]);
-        cache_get_value_name(i, "login", BCharacterInfo[i][Login], MAX_PLAYER_NAME);
-        cache_get_value_name_int(i, "characterID", BCharacterInfo[i][CharacterID]);
-        cache_get_value_name_int(i, "type", BCharacterInfo[i][Type]);
-        cache_get_value_name_int(i, "time", BCharacterInfo[i][Time]);
-        cache_get_value_name(i, "author", BCharacterInfo[i][Author], MAX_PLAYER_NAME);
-        cache_get_value_name(i, "reason", BCharacterInfo[i][Reason], MAX_PLAYER_NAME*2);
-    }
+    ASInfo[playerid][Toggle] = false;
+    for(new pos = 0; pos < 3; pos++)
+        ASInfo[playerid][Position][pos] = 0.0;
+    ASInfo[playerid][Rotation] = 0.0;
     return 1;
 }
 

@@ -768,6 +768,65 @@ cmd:gethere(playerid, params[]) // Телепортировать игрока �
     return 1;
 }
 
+cmd:spec(playerid, params[]) // Следить за игроком | Follow the player
+{
+    if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
+    {
+        if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
+        {
+            if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] < 2)
+                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У Вас недостаточно прав для выполнения данной команды.");
+
+            if(sscanf(params, "d", params[0]))
+            {
+                if(ASInfo[playerid][Toggle])
+                {
+                    ASInfo[playerid][Toggle] = false;
+                    TogglePlayerSpectating(playerid, false);
+                    SpawnPlayer(playerid);
+                    SetPlayerPos(playerid, ASInfo[playerid][Position][0], ASInfo[playerid][Position][1], ASInfo[playerid][Position][2]+1.0);
+                    SetPlayerFacingAngle(playerid, ASInfo[playerid][Rotation]);
+                    return SetCameraBehindPlayer(playerid);
+                }
+
+                return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE""COMMAND_INVALID"", "spec [ID]");
+            }
+
+            if(!PInfo[params[0]][IsLogged])
+                return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_FOUND"");
+
+            if(params[0] == playerid)
+                return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_ME"");
+
+            new interior, vw;
+            interior = GetPlayerInterior(params[0]);
+            vw = GetPlayerVirtualWorld(params[0]);
+            if(!ASInfo[playerid][Toggle])
+            {
+                GetPlayerPos(playerid, ASInfo[playerid][Position][0], ASInfo[playerid][Position][1], ASInfo[playerid][Position][2]);
+                GetPlayerFacingAngle(playerid, ASInfo[playerid][Rotation]);
+            }
+            TogglePlayerSpectating(playerid, true);
+            SetPlayerInterior(playerid, interior);
+            SetPlayerVirtualWorld(playerid, vw);
+            if(IsPlayerInAnyVehicle(params[0]))
+            {
+                new vehicle;
+                vehicle = GetPlayerVehicleID(params[0]);
+                if(Vehicle_FindID(vehicle))
+                    PlayerSpectateVehicle(playerid, vehicle);
+            }
+            else
+                PlayerSpectatePlayer(playerid, params[0]);
+            ASInfo[playerid][Toggle] = true;
+        }
+    }
+    else
+        SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""COMMAND_NOT_FOUND"");
+    return 1;
+}
+alias:spec("sp")
+
 cmd:vehicleput(playerid, params[]) // Посадить игрока в транспорт | 
 {
     if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)

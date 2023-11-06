@@ -144,3 +144,13 @@ enum VehicleInfo
 }
 new VInfo[MAX_VEHICLES][VehicleInfo];
 new Vehicle_Count; // Количество созданного транспорта | Number of vehicles created
+
+/*      [ ПЕРЕМЕННЫЕ АДМИНИСТРАТОРА ПРИ НАБЛЮДЕНИИ ]      */
+/*      [ ADMINISTRATOR VARIABLES DURING MONITORING ]      */
+enum AdminSpectateInfo
+{
+    bool:Toggle,
+    Float:Position[3],
+    Float:Rotation,
+}
+new ASInfo[MAX_PLAYERS][AdminSpectateInfo];
