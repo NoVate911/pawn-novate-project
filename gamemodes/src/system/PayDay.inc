@@ -22,16 +22,22 @@ stock PayDay_Launch()
     {
         if(PInfo[i][IsLogged])
         {
+            Chat_Clear(i, false, 1);
+            SCM(i, -1, "===== ЗАРПЛАТА =====");
+            SCM(i, -1, "");
+            SCMf(i, -1, "Текущее время: %d:%d", TInfo[Hour], TInfo[Minute]);
             if(!PAFKInfo[i][IsTrue])
             {
-                Chat_Clear(i, false, 1);
-                SCMf(i, -1, "===== ЗАРПЛАТА =====");
-                SCMf(i, -1, "");
-                SCMf(i, -1, "Текущее время: %d:%d", TInfo[Hour], TInfo[Minute]);
-                SCMf(i, -1, "");
-                SCMf(i, -1, "====================");
-                Chat_Clear(i, false, 1);
+                SCMf(i, -1, "Пособие по безработице: %d$", MAX_PAYDAY_BENEFIT);
+                Money_Give(i, 500);
             }
+            else
+            {
+                SCM(i, -1, "Для получения зарплаты нельзя находиться в AFK");
+            }
+            SCM(i, -1, "");
+            SCM(i, -1, "====================");
+            Chat_Clear(i, false, 1);
         }
     }
 

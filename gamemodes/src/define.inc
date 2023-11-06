@@ -28,7 +28,7 @@
 
 /*      [ АДМИНИСТРИРОВАНИЕ ]      */
 /*      [ ADMINISTRATION ]      */
-#define MAX_ADMIN_LEVEL             (10) // Максимальный уровень Администратора | Maximum Administrator Level
+#define MAX_ADMIN_LEVEL             (6) // Максимальный уровень Администратора | Maximum Administrator Level
 #define MIN_ADMIN_LEVEL             (1) // Минимальный уровень Администратора | Minimum Administrator Level
 
 /*      [ ЧАТ ]      */
@@ -54,3 +54,7 @@
 /*      [ ДЕНЬГИ ]      */
 /*      [ MONEY ]      */
 #define MAX_TIME_UPDATE_MONEY       (60) // Время обновления денег у игрока (в секундах) | The player's money update time (in seconds)
+
+/*      [ ЗАРПЛАТА ]      */
+/*      [ PAYDAY ]      */
+#define MAX_PAYDAY_BENEFIT          (500) // Пособие по безработице | Unemployment benefits

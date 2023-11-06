@@ -10,7 +10,7 @@
 /*      [ SERVER INFORMATION ]      */
 #define SERVER_NAME                 "NoVate Project"
 #define SERVER_AUTHOR               "NoVate Source"
-#define SERVER_VERSION              "build 1001"
+#define SERVER_VERSION              "build 6792"
 #define SERVER_TYPE                 "RolePlay"
 
 /*      [ ШАБЛОН ДЛЯ ВЫВОДА ]      */

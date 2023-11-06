@@ -8,8 +8,8 @@
 #define C_EMERALD                   "{00FFB2}"
 #define C_F_GRAY                    0x666666FF
 #define C_GRAY                      "{666666}"
-#define C_F_LIGHTGRAY               0x888888FF
-#define C_LIGHTGRAY                 "{888888}"
+#define C_F_LIGHTGRAY               0x999999FF
+#define C_LIGHTGRAY                 "{999999}"
 #define C_F_RED                     0xFF2244FF
 #define C_RED                       "{FF2244}"
 #define C_F_YELLOW                  0xFFCC22FF

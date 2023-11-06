@@ -4,4 +4,4 @@
 #define NOTIF_WARNING               ""C_YELLOW"[Внимание]"
 #define NOTIF_SUCCESS               ""C_GREEN"[Успешно]"
 #define NOTIF_INFO                  ""C_YELLOW"[Инфо]"
-#define NOTIF_ADMIN                 ""C_GREEN"[A]"
+#define NOTIF_ADMIN                 ""C_YELLOW"[A]"
