@@ -1,38 +1,3 @@
-/*      [ ПЕРЕМЕННЫЕ ДЛЯ СЕРВЕРА ]      */
-/*      [ SERVER VARIABLES ]      */
-enum ServerInfo
-{
-    MySQL:MySQL,
-    Weather
-}
-new SInfo[ServerInfo];
-
-/*      [ ПЕРЕМЕННЫЕ ТАЙМЕРА ДЛЯ СЕРВЕРА ]      */
-/*      [ TIMER VARIABLES FOR THE SERVER ]      */
-enum ServerTimerInfo
-{
-    Second
-}
-new STimerInfo[ServerTimerInfo];
-
-enum TimeInfo
-{
-    TimeOfDayTime,
-
-    Hour,
-    Minute,
-    Second
-}
-new TInfo[TimeInfo];
-
-/*      [ ПЕРЕМЕННЫЕ ДЛЯ ЗАРПЛАТЫ ]      */
-/*      [ VARIABLES FOR SALARY ]      */
-enum PayDayInfo
-{
-    bool:IsPassed
-}
-new PDInfo[PayDayInfo];
-
 /*      [ ПЕРЕМЕННЫЕ ДЛЯ ИГРОКА ]      */
 /*      [ PLAYER INFORMATION ]      */
 enum PlayerInfo
@@ -123,27 +88,6 @@ enum CharacterInfo
     MoneyTime
 }
 new CInfo[MAX_PLAYERS][MAX_CHARACTERS][CharacterInfo];
-
-/*      [ ПЕРЕМЕННЫЕ ТРАНСПОРТА ]      */
-/*      [ TRANSPORT VARIABLES ]      */
-enum VehicleInfo
-{
-    ID,
-    Model,
-    Float:Position[3],
-    Float:Rotation,
-    Color1,
-    Color2,
-    Float:Fuel,
-    Float:Health,
-    Text3D:Description,
-    
-    bool:IsEngine,
-    bool:IsLights,
-    bool:IsDoorsClosed
-}
-new VInfo[MAX_VEHICLES][VehicleInfo];
-new Vehicle_Count; // Количество созданного транспорта | Number of vehicles created
 
 /*      [ ПЕРЕМЕННЫЕ АДМИНИСТРАТОРА ПРИ НАБЛЮДЕНИИ ]      */
 /*      [ ADMINISTRATOR VARIABLES DURING MONITORING ]      */

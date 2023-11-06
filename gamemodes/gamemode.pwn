@@ -37,15 +37,17 @@ main(){}
 
 /*    [ КОНФИГИ ]    */
 /*    [ CONFIGS ]    */
-#include "./src/config.inc"
-#include "./src/notification.inc"
-#include "./src/colors.inc"
-#include "./src/define.inc"
-#include "./src/string.inc"
-#include "./src/enum.inc"
+#include "./src/Config.inc"
+#include "./src/Notification.inc"
+#include "./src/Colors.inc"
+#include "./src/Define.inc"
+#include "./src/String.inc"
+#include "./src/server/Enum.inc"
+#include "./src/Enum.inc"
 
 /*    [ СИСТЕМЫ ]    */
 /*    [ SYSTEMS ]    */
+#include "./src/system/Enum.inc"
 #include "./src/system/Objects.inc"
 #include "./src/system/Database.inc"
 #include "./src/system/Data.inc"
@@ -62,6 +64,8 @@ main(){}
 #include "./src/system/AFK.inc"
 #include "./src/system/Menu.inc"
 #include "./src/system/Money.inc"
+#include "./src/system/works/Enum.inc"
+#include "./src/system/works/Loader.inc"
 
 /*    [ СЕРВЕРНАЯ СТОРОНА ]   */
 /*    [ SERVER SIDE ]   */
@@ -80,5 +84,5 @@ main(){}
 
 /*    [ КОМАНДЫ ]    */
 /*    [ COMMANDS ]    */
-#include "./src/commands/player.inc"
-#include "./src/commands/admin.inc"
+#include "./src/commands/Player.inc"
+#include "./src/commands/Admin.inc"
