@@ -40,14 +40,17 @@ main(){}
 #include "./src/Config.inc"
 #include "./src/Notification.inc"
 #include "./src/Colors.inc"
-#include "./src/Define.inc"
 #include "./src/String.inc"
+#include "./src/Define.inc"
+#include "./src/system/Define.inc"
+#include "./src/system/works/Define.inc"
 #include "./src/server/Enum.inc"
 #include "./src/Enum.inc"
+#include "./src/system/Enum.inc"
+#include "./src/system/works/Enum.inc"
 
 /*    [ СИСТЕМЫ ]    */
 /*    [ SYSTEMS ]    */
-#include "./src/system/Enum.inc"
 #include "./src/system/Objects.inc"
 #include "./src/system/Database.inc"
 #include "./src/system/Data.inc"
@@ -64,8 +67,8 @@ main(){}
 #include "./src/system/AFK.inc"
 #include "./src/system/Menu.inc"
 #include "./src/system/Money.inc"
-#include "./src/system/works/Enum.inc"
 #include "./src/system/works/Loader.inc"
+#include "./src/system/works/Init.inc"
 
 /*    [ СЕРВЕРНАЯ СТОРОНА ]   */
 /*    [ SERVER SIDE ]   */
@@ -81,6 +84,7 @@ main(){}
 #include "./src/player/OnPlayerText.inc"
 #include "./src/player/OnPlayerClickMap.inc"
 #include "./src/player/OnPlayerCommandPerformed.inc"
+#include "./src/player/OnPlayerKeyStateChange.inc"
 
 /*    [ КОМАНДЫ ]    */
 /*    [ COMMANDS ]    */

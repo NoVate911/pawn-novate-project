@@ -39,6 +39,6 @@ stock Level_Update(playerid)
 stock Level_Need_Exp(playerid, characterid)
 {
     new needExp;
-    needExp = MAX_EXP_UPDATE_LEVEL * CInfo[playerid][characterid][Level];
+    needExp = (MAX_EXP_UPDATE_LEVEL * (CInfo[playerid][characterid][Level] + 1)) * MAX_EXP_UPDATE_LEVEL;
     return needExp;
 }

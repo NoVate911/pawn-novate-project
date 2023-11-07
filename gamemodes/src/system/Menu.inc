@@ -29,6 +29,8 @@ dResponse:Dlg_Player_Menu(playerid)
             default: SCM(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Данный раздел находится в разработке.");
         }
     }
+    else
+        CInfo[playerid][PInfo[playerid][CharacterSelect]][IsDialogActive] = false;
     return 1;
 }
 
@@ -50,5 +52,7 @@ dResponse:Dlg_Menu_Stats(playerid)
 {
     if(response)
         Dialog_Show(playerid, Dialog:Dlg_Player_Menu);
+    else
+        CInfo[playerid][PInfo[playerid][CharacterSelect]][IsDialogActive] = false;
     return 1;
 }

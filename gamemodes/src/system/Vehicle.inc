@@ -185,24 +185,21 @@ stock Vehicle_PrintAllInfo(playerid)
     return 0;
 }
 
-public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
+stock Vehicle_KeyStateChange(playerid, newkeys)
 {
-    if(IsPlayerNPC(playerid))
-        return 1;
-
-    if(PInfo[playerid][IsLogged])
+    if(IsPlayerInAnyVehicle(playerid))
     {
-        if(IsPlayerInAnyVehicle(playerid))
+        new const vehicleid = GetPlayerVehicleID(playerid);
+        new engine = 0, lights = 0, alarm = 0, doors = 0, bonnet = 0, boot = 0, objective = 0;
+        if(GetPlayerVehicleSeat(playerid) == 0) // Водитель | Driver
         {
-            new const vehicleid = GetPlayerVehicleID(playerid);
-            new engine = 0, lights = 0, alarm = 0, doors = 0, bonnet = 0, boot = 0, objective = 0;
-            if(GetPlayerVehicleSeat(playerid) == 0) // Водитель | Driver
+            if(Vehicle_FindID(vehicleid))
             {
-                if(newkeys == KEY_ACTION) // L.CTRL
+                GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
+                switch(newkeys)
                 {
-                    if(Vehicle_FindID(vehicleid))
+                    case KEY_ACTION: // L. ALT
                     {
-                        GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
                         for(new v = 0; v < MAX_VEHICLES; v++)
                         {
                             if(VInfo[v][ID] == vehicleid)
@@ -212,12 +209,9 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                             }
                         }
                     }
-                }
-                else if(newkeys == KEY_FIRE) // L.ALT
-                {
-                    if(Vehicle_FindID(vehicleid))
+                    
+                    case KEY_FIRE: // L. CTRL
                     {
-                        GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
                         for(new v = 0; v < MAX_VEHICLES; v++)
                         {
                             if(VInfo[v][ID] == vehicleid)

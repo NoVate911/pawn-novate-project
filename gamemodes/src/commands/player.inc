@@ -1,5 +1,9 @@
 cmd:menu(playerid)
 {
+    if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsDialogActive])
+        return 1;
+        
+    CInfo[playerid][PInfo[playerid][CharacterSelect]][IsDialogActive] = true;
     return Dialog_Show(playerid, Dialog:Dlg_Player_Menu);
 }
 alias:menu("mn")

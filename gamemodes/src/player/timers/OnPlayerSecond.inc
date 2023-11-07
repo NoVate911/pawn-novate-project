@@ -2,13 +2,11 @@
 /*      [ SECOND TIMER FOR THE PLAYER ]      */
 function Timer_OnPlayerSecond(playerid)
 {
-    // Проверка на подключение | Checking for connection
-    if(!PInfo[playerid][IsConnection])
+    if(!PInfo[playerid][IsConnection]) // Проверка на подключение | Checking for connection
         return 1;
     else
     {
-        // Проверка на вход | Check for entry
-        if(!PInfo[playerid][IsLogged])
+        if(!PInfo[playerid][IsLogged]) // Проверка на вход | Check for entry
         {
             if(PInfo[playerid][AuthorizationTime] <= 0)
                 Kick_Player(playerid, "Сервер", "Время истекло");
@@ -17,8 +15,7 @@ function Timer_OnPlayerSecond(playerid)
         }
         else
         {
-            // Проверка на деньги | Checking for money
-            if(CInfo[playerid][PInfo[playerid][CharacterSelect]][MoneyTime] <= 0)
+            if(CInfo[playerid][PInfo[playerid][CharacterSelect]][MoneyTime] <= 0) // Проверка на деньги | Checking for money
                 Money_Update(playerid);
             else
                 CInfo[playerid][PInfo[playerid][CharacterSelect]][MoneyTime]--;

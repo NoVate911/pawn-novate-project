@@ -58,6 +58,7 @@ new PAFKInfo[MAX_PLAYERS][PlayerAFKInfo];
 enum CharacterInfo
 {
     bool:IsSpawning,
+    bool:IsDialogActive,
 
     ID,
     Login[MAX_PLAYER_NAME],
@@ -85,7 +86,9 @@ enum CharacterInfo
     AdminPassword,
     bool:IsAdmin,
     Money,
-    MoneyTime
+    MoneyTime,
+    bool:Working,
+    WorkingType
 }
 new CInfo[MAX_PLAYERS][MAX_CHARACTERS][CharacterInfo];
 

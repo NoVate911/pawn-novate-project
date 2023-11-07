@@ -57,6 +57,7 @@ stock Data_Clear_CharacterInfo(playerid)
     for(new i = 0; i < PInfo[playerid][CharactersCount]; i++)
     {
         CInfo[playerid][i][IsSpawning] = false;
+        CInfo[playerid][i][IsDialogActive] = false;
 
         CInfo[playerid][i][ID] = 0;
         CInfo[playerid][i][Login] = EOS;
@@ -86,6 +87,8 @@ stock Data_Clear_CharacterInfo(playerid)
         CInfo[playerid][i][IsAdmin] = false;
         CInfo[playerid][i][Money] = 0;
         CInfo[playerid][i][MoneyTime] = 0;
+        CInfo[playerid][i][Working] = false;
+        CInfo[playerid][i][WorkingType] = 0;
     }
     return 1;
 }
@@ -98,6 +101,16 @@ stock Data_Clear_AdminSpectateInfo(playerid)
     for(new pos = 0; pos < 3; pos++)
         ASInfo[playerid][Position][pos] = 0.0;
     ASInfo[playerid][Rotation] = 0.0;
+    return 1;
+}
+
+/*      [ ОБНУЛЯЕМ ИНФОРМАЦИЮ О РАБОТЕ ГРУЗЧИКА У ИГРОКА ]      */
+/*      [ WE RESET THE INFORMATION ABOUT THE WORK OF THE LOADER FROM THE PLAYER ]      */
+stock Data_Clear_PlayerWorkLoaderInfo(playerid)
+{
+    PlayerWLInfo[playerid][MovedBoxCount] = 0;
+    DestroyDynamicCP(PlayerWLInfo[playerid][Checkpoint]);
+    PlayerWLInfo[playerid][IsBoxPickup] = false;
     return 1;
 }
 
