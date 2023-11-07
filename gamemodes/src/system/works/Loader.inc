@@ -62,11 +62,15 @@ public OnPlayerEnterDynamicCP(playerid, checkpointid)
                         PlayerWLInfo[playerid][Checkpoint] = CreateDynamicCP(Work_Loader_Positions_Pickup[random(WORK_LOADER_PICKUP_POINT)][0], Work_Loader_Positions_Pickup[random(WORK_LOADER_PICKUP_POINT)][1], Work_Loader_Positions_Pickup[random(WORK_LOADER_PICKUP_POINT)][2], 2.0, 0, 0, playerid);
                         PlayerWLInfo[playerid][IsBoxPickup] = false;
                         PlayerWLInfo[playerid][MovedBoxCount]++;
+                        SetPlayerSpecialAction(playerid, 0);
+                        RemovePlayerAttachedObject(playerid, 2);
                     }
                     else
                     {
                         PlayerWLInfo[playerid][Checkpoint] = CreateDynamicCP(Work_Loader_Positions_Put[random(WORK_LOADER_PUT_POINT)][0], Work_Loader_Positions_Put[random(WORK_LOADER_PUT_POINT)][1], Work_Loader_Positions_Put[random(WORK_LOADER_PUT_POINT)][2], 2.0, 0, 0, playerid);
                         PlayerWLInfo[playerid][IsBoxPickup] = true;
+                        SetPlayerSpecialAction(playerid, 25);
+                        SetPlayerAttachedObject(playerid, 2, 1279, 5, 0.01, 0.1, 0.2, 100, 10, 85);
                     }
                 }
             }

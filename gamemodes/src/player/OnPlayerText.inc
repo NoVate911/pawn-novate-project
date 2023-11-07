@@ -31,7 +31,7 @@ public OnPlayerText(playerid, text[])
     if(GetPlayerState(playerid) == PLAYER_STATE_ONFOOT)
     {
         ApplyAnimation(playerid, "PED", "IDLE_CHAT", 4.1, 0, 1, 1, 1, 1, 1);
-        PTimerInfo[playerid][AnimationChat] = SetTimerEx("Animation_Stop", 3200, false, "i", playerid);
+        PTimerInfo[playerid][AnimationChat] = SetTimerEx("Timer_Animation_Stop", 3200, false, "i", playerid);
     }
 
     if(PAFKInfo[playerid][IsTrue])
