@@ -54,10 +54,10 @@
     - [x] Statistics
     - [x] Settings
       - [x] Security
-  - [ ] System of works
-    - [ ] Initial works
-      - [ ] Loader
-      - [ ] Farmer
+  - [x] System of works
+    - [x] Initial works
+      - [x] Loader
+      - [x] Farmer
       - [ ] Builder
     - [ ] Main works
       - [ ] Cabbie
@@ -95,7 +95,7 @@
     - [ ] Throwing Out
     - [ ] Using
     - [ ] Dragging
-  - [ ] Wagering commands
+  - [x] Wagering commands
     - [x] /ame - first person (mini)
     - [x] /me - first person
     - [x] /do - third person
@@ -202,10 +202,10 @@
     - [x] Статистика
     - [x] Настройки
       - [x] Безопасность
-  - [ ] Система работ
-    - [ ] Начальные работы
-      - [ ] Грузчик
-      - [ ] Фермер
+  - [x] Система работ
+    - [x] Начальные работы
+      - [x] Грузчик
+      - [x] Фермер
       - [ ] Строитель
     - [ ] Основные работы
       - [ ] Таксист
@@ -243,7 +243,7 @@
     - [ ] Выкидывание
     - [ ] Использование
     - [ ] Перетаскивание
-  - [ ] Команды для отыгровки
+  - [x] Команды для отыгровки
     - [x] /ame - от первого лица (мини)
     - [x] /me - от первого лица
     - [x] /do - от третьего лица

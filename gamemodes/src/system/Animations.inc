@@ -6,7 +6,7 @@ stock Animations_Preload(playerid)
         return 1;
     
     Animation_Preload(playerid, "PED");
-    Animation_Preload(playerid, "FAT");
+    Animation_Preload(playerid, "CARRY");
     return 1;
 }
 
@@ -26,7 +26,7 @@ function Timer_Animation_Stop(playerid)
         return 1;
 
     ApplyAnimation(playerid, "PED", "FACANGER", 4.1, 0, 0, 0, 0, 0, 1);
-    return KillTimer(PTimerInfo[playerid][AnimationChat]);
+    return KillTimer(PTimerInfo[playerid][Animation]);
 }
 
 stock Animation_Stop(playerid)

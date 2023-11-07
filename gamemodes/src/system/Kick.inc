@@ -8,7 +8,7 @@ stock Kick_Player(playerid, author[]="Сервер", reason[]="Неизвест�
     if(showDialog)
         Dialog_Show(playerid, Dialog:Dlg_Kick);
     Chat_Clear(playerid);
-    SCM(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Для отключения от сервера, используйте "C_EMERALD"/q"C_WHITE".");
+    SCM(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Для отключения от сервера, используйте "C_YELLOW"/q"C_WHITE".");
     return PTimerInfo[playerid][Kicks] = SetTimerEx("Timer_OnPlayerKick", 200, false, "i", playerid);
 }
 

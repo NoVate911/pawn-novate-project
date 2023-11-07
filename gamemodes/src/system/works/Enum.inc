@@ -1,18 +1,33 @@
-/*      [ ПЕРЕМЕННЫЕ РАБОТЫ ГРУЗЧИКА (сервер) ]      */
-/*      [ LOADER'S WORK VARIABLES (server) ]      */
-enum WorkLoaderInfo
+/*      [ ГРУЗЧИК (ЛВ) ]      */
+/*      [ LOADER (LV) ]      */
+enum WorkLoaderLVInfo // Сервер | Server
 {
     ActorID,
     STREAMER_TAG_3D_TEXT_LABEL:Actor3DText
 }
-new WLInfo[MAX_INITIAL_WORKS][WorkLoaderInfo];
+new WLLVInfo[MAX_INITIAL_WORKS][WorkLoaderLVInfo];
 
-/*      [ ПЕРЕМЕННЫЕ РАБОТЫ ГРУЗЧИКА (игрок) ]      */
-/*      [ LOADER'S WORK VARIABLES (player) ]      */
-enum PlayerWorkLoaderInfo
+enum PlayerWorkLoaderLVInfo // Игрок | Player
 {
     MovedBoxCount,
     STREAMER_TAG_CP:Checkpoint,
-    bool:IsBoxPickup
+    bool:IsPickup
 }
-new PlayerWLInfo[MAX_PLAYERS][PlayerWorkLoaderInfo];
+new PlayerWLLVInfo[MAX_PLAYERS][PlayerWorkLoaderLVInfo];
+
+/*      [ ФЕРМЕР (ЛВ) ]      */
+/*      [ FARMER (LV) ]      */
+enum WorkFarmerLVInfo // Сервер | Server
+{
+    ActorID,
+    STREAMER_TAG_3D_TEXT_LABEL:Actor3DText
+}
+new WFLVInfo[MAX_INITIAL_WORKS][WorkFarmerLVInfo];
+
+enum PlayerWorkFarmerLVInfo // Игрок | Player
+{
+    MovedHayCount,
+    STREAMER_TAG_CP:Checkpoint,
+    bool:IsPickup
+}
+new PlayerWFLVInfo[MAX_PLAYERS][PlayerWorkFarmerLVInfo];

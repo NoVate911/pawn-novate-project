@@ -68,6 +68,7 @@ main(){}
 #include "./src/system/Menu.inc"
 #include "./src/system/Money.inc"
 #include "./src/system/works/Loader.inc"
+#include "./src/system/works/Farmer.inc"
 #include "./src/system/works/Init.inc"
 
 /*    [ СЕРВЕРНАЯ СТОРОНА ]   */
@@ -85,6 +86,7 @@ main(){}
 #include "./src/player/OnPlayerClickMap.inc"
 #include "./src/player/OnPlayerCommandPerformed.inc"
 #include "./src/player/OnPlayerKeyStateChange.inc"
+#include "./src/player/OnPlayerEnterDynamicCP.inc"
 
 /*    [ КОМАНДЫ ]    */
 /*    [ COMMANDS ]    */

@@ -9,7 +9,7 @@ public OnPlayerDisconnect(playerid, reason)
         {
             switch(CInfo[playerid][PInfo[playerid][CharacterSelect]][WorkingType])
             {
-                case WORK_LOADER_ID: Money_Give(playerid, PlayerWLInfo[playerid][MovedBoxCount] * WORK_LOADER_PRICE_PER_BOX);
+                case WORK_LOADER_LV_ID: Money_Give(playerid, PlayerWLLVInfo[playerid][MovedBoxCount] * WORK_LOADER_LV_PRICE_PER_BOX);
             }
         }
 
@@ -24,6 +24,6 @@ public OnPlayerDisconnect(playerid, reason)
     Data_Clear_PlayerKickInfo(playerid);
     Data_Clear_PlayerAFKInfo(playerid);
     Data_Clear_AdminSpectateInfo(playerid);
-    Data_Clear_PlayerWorkLoaderInfo(playerid);
+    Data_Clear_PlayerWorksInfo(playerid);
     return 1;
 }

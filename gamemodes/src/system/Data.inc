@@ -104,13 +104,13 @@ stock Data_Clear_AdminSpectateInfo(playerid)
     return 1;
 }
 
-/*      [ ОБНУЛЯЕМ ИНФОРМАЦИЮ О РАБОТЕ ГРУЗЧИКА У ИГРОКА ]      */
+/*      [ ОБНУЛЯЕМ ИНФОРМАЦИЮ О НАЧАЛЬНЫХ РАБОТАХ У ИГРОКА ]      */
 /*      [ WE RESET THE INFORMATION ABOUT THE WORK OF THE LOADER FROM THE PLAYER ]      */
-stock Data_Clear_PlayerWorkLoaderInfo(playerid)
+stock Data_Clear_PlayerWorksInfo(playerid)
 {
-    PlayerWLInfo[playerid][MovedBoxCount] = 0;
-    DestroyDynamicCP(PlayerWLInfo[playerid][Checkpoint]);
-    PlayerWLInfo[playerid][IsBoxPickup] = false;
+    PlayerWLLVInfo[playerid][MovedBoxCount] = 0;
+    DestroyDynamicCP(PlayerWLLVInfo[playerid][Checkpoint]);
+    PlayerWLLVInfo[playerid][IsPickup] = false;
     return 1;
 }
 
