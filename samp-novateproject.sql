@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `accounts` (
   `regDate` varchar(21) DEFAULT '1999.01.01 / 00:00:00',
   `lastDate` varchar(21) DEFAULT '1999.01.01 / 00:00:00',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- Р­РєСЃРїРѕСЂС‚РёСЂСѓРµРјС‹Рµ РґР°РЅРЅС‹Рµ РЅРµ РІС‹РґРµР»РµРЅС‹.
 
@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS `characters` (
   `sex` int(1) DEFAULT 0,
   `race` int(1) DEFAULT 0,
   `skin` int(3) DEFAULT 0,
-  `level` int(3) DEFAULT 1,
+  `level` int(3) DEFAULT 0,
   `exp` int(3) DEFAULT 0,
   `expTime` int(4) DEFAULT 3600,
   `positionX` float DEFAULT 0,
@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS `characters` (
   `regDate` varchar(21) DEFAULT '1999.01.01 / 00:00:00',
   `lastDate` varchar(21) DEFAULT '1999.01.01 / 00:00:00',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- Р­РєСЃРїРѕСЂС‚РёСЂСѓРµРјС‹Рµ РґР°РЅРЅС‹Рµ РЅРµ РІС‹РґРµР»РµРЅС‹.
 
