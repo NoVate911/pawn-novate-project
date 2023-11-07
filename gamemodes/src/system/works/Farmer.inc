@@ -95,7 +95,7 @@ dCreate:Dlg_Work_FarmerLV_Invite(playerid)
     "C_WHITE"Сложность: "C_LIGHTGRAY"очень просто"C_WHITE".\n\
     "C_WHITE"Зарплата: "C_LIGHTGRAY"%d$ за сено"C_WHITE".\n\n";
     new string[sizeof(message)+(-2+8)+(-2+8)];
-    format(string, sizeof(string), message, WORK_FARMER_LV_PRICE_PER_BOX, WORK_FARMER_LV_PRICE_PER_BOX);
+    format(string, sizeof(string), message, WORK_FARMER_LV_PRICE_PER_HAY, WORK_FARMER_LV_PRICE_PER_HAY);
     return Dialog_Open(playerid, Dialog:Dlg_Work_FarmerLV_Invite, DIALOG_STYLE_MSGBOX, ""C_GRAY"Эдуард "C_BLACK"| "C_WHITE"Трудоустройство", string, "Да", "Нет");
 }
 
@@ -124,7 +124,7 @@ dCreate:Dlg_Work_FarmerLV_Uninvite(playerid)
     "C_WHITE"Перенесено сена: "C_LIGHTGRAY"%d штук"C_WHITE".\n\
     "C_WHITE"Заработано: "C_LIGHTGRAY"%d$"C_WHITE".\n\n";
     new string[sizeof(message)+(-2+8)+(-2+8)];
-    format(string, sizeof(string), message, PlayerWFLVInfo[playerid][MovedHayCount], PlayerWFLVInfo[playerid][MovedHayCount] * WORK_FARMER_LV_PRICE_PER_BOX);
+    format(string, sizeof(string), message, PlayerWFLVInfo[playerid][MovedHayCount], PlayerWFLVInfo[playerid][MovedHayCount] * WORK_FARMER_LV_PRICE_PER_HAY);
     return Dialog_Open(playerid, Dialog:Dlg_Work_FarmerLV_Uninvite, DIALOG_STYLE_MSGBOX, ""C_GRAY"Эдуард "C_BLACK"| "C_WHITE"Трудоустройство", string, "Да", "Нет");
 }
 
@@ -134,9 +134,10 @@ dResponse:Dlg_Work_FarmerLV_Uninvite(playerid)
     if(response)
     {
         SetPlayerSkin(playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Skin]);
-        Money_Give(playerid, PlayerWFLVInfo[playerid][MovedHayCount] * WORK_FARMER_LV_PRICE_PER_BOX);
+        Money_Give(playerid, PlayerWFLVInfo[playerid][MovedHayCount] * WORK_FARMER_LV_PRICE_PER_HAY);
         SCM(playerid, -1, ""NOTIF_INFO" "C_WHITE"Вы закончили работу фермера.");
-        SCMf(playerid, -1, ""NOTIF_INFO" "C_WHITE"За перенос %d сена получено %d$.", PlayerWFLVInfo[playerid][MovedHayCount], PlayerWFLVInfo[playerid][MovedHayCount] * WORK_FARMER_LV_PRICE_PER_BOX);
+        if(PlayerWFLVInfo[playerid][MovedHayCount] > 0)
+            SCMf(playerid, -1, ""NOTIF_INFO" "C_WHITE"За перенос %d сена получено %d$.", PlayerWFLVInfo[playerid][MovedHayCount], PlayerWFLVInfo[playerid][MovedHayCount] * WORK_FARMER_LV_PRICE_PER_HAY);
         CInfo[playerid][PInfo[playerid][CharacterSelect]][Working] = false;
         PlayerWFLVInfo[playerid][MovedHayCount] = 0;
         DestroyDynamicCP(PlayerWFLVInfo[playerid][Checkpoint]);

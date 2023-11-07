@@ -111,6 +111,17 @@ stock Data_Clear_PlayerWorksInfo(playerid)
     PlayerWLLVInfo[playerid][MovedBoxCount] = 0;
     DestroyDynamicCP(PlayerWLLVInfo[playerid][Checkpoint]);
     PlayerWLLVInfo[playerid][IsPickup] = false;
+
+    PlayerWFLVInfo[playerid][MovedHayCount] = 0;
+    DestroyDynamicCP(PlayerWFLVInfo[playerid][Checkpoint]);
+    PlayerWFLVInfo[playerid][IsPickup] = false;
+
+    PlayerWDLVInfo[playerid][TakenMarkCount] = 0;
+    PlayerWDLVInfo[playerid][TotalTakenMarkCount] = 0;
+    DestroyDynamicCP(PlayerWDLVInfo[playerid][Checkpoint]);
+    for(new pos = 0; pos < 3; pos++)
+        PlayerWDLVInfo[playerid][CheckpointPosition][pos] = 0.0;
+    PlayerWDLVInfo[playerid][IsAir] = false;
     return 1;
 }
 

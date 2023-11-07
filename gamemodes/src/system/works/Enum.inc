@@ -31,3 +31,22 @@ enum PlayerWorkFarmerLVInfo // Игрок | Player
     bool:IsPickup
 }
 new PlayerWFLVInfo[MAX_PLAYERS][PlayerWorkFarmerLVInfo];
+
+/*      [ ДАЙВЕР (ЛВ) ]      */
+/*      [ DIVER (LV) ]      */
+enum WorkDiverLVInfo // Сервер | Server
+{
+    ActorID,
+    STREAMER_TAG_3D_TEXT_LABEL:Actor3DText
+}
+new WDLVInfo[MAX_INITIAL_WORKS][WorkDiverLVInfo];
+
+enum PlayerWorkDiverLVInfo // Игрок | Player
+{
+    TakenMarkCount,
+    TotalTakenMarkCount,
+    STREAMER_TAG_CP:Checkpoint,
+    Float:CheckpointPosition[3],
+    bool:IsAir
+}
+new PlayerWDLVInfo[MAX_PLAYERS][PlayerWorkDiverLVInfo];

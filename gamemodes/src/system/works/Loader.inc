@@ -135,7 +135,8 @@ dResponse:Dlg_Work_LoaderLV_Uninvite(playerid)
         SetPlayerSkin(playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Skin]);
         Money_Give(playerid, PlayerWLLVInfo[playerid][MovedBoxCount] * WORK_LOADER_LV_PRICE_PER_BOX);
         SCM(playerid, -1, ""NOTIF_INFO" "C_WHITE"Вы закончили работу грузчика.");
-        SCMf(playerid, -1, ""NOTIF_INFO" "C_WHITE"За перенос %d ящиков получено %d$.", PlayerWLLVInfo[playerid][MovedBoxCount], PlayerWLLVInfo[playerid][MovedBoxCount] * WORK_LOADER_LV_PRICE_PER_BOX);
+        if(PlayerWLLVInfo[playerid][MovedBoxCount] > 0)
+            SCMf(playerid, -1, ""NOTIF_INFO" "C_WHITE"За перенос %d ящиков получено %d$.", PlayerWLLVInfo[playerid][MovedBoxCount], PlayerWLLVInfo[playerid][MovedBoxCount] * WORK_LOADER_LV_PRICE_PER_BOX);
         CInfo[playerid][PInfo[playerid][CharacterSelect]][Working] = false;
         PlayerWLLVInfo[playerid][MovedBoxCount] = 0;
         DestroyDynamicCP(PlayerWLLVInfo[playerid][Checkpoint]);

@@ -22,6 +22,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
             Vehicle_KeyStateChange(playerid, newkeys);
             Work_Loader_LV_KeyStateChange(playerid, newkeys);
             Work_Farmer_LV_KeyStateChange(playerid, newkeys);
+            Work_Diver_LV_KeyStateChange(playerid, newkeys);
         }
     }
     return 1;

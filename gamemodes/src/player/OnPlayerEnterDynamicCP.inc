@@ -9,6 +9,7 @@ public OnPlayerEnterDynamicCP(playerid, checkpointid)
         {
             Work_Loader_LV_EnterDynamicCP(playerid, checkpointid);
             Work_Farmer_LV_EnterDynamicCP(playerid, checkpointid);
+            Work_Diver_LV_EnterDynamicCP(playerid, checkpointid);
         }
     }
     return 1;

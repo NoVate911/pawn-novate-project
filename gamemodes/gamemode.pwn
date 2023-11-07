@@ -69,6 +69,7 @@ main(){}
 #include "./src/system/Money.inc"
 #include "./src/system/works/Loader.inc"
 #include "./src/system/works/Farmer.inc"
+#include "./src/system/works/Diver.inc"
 #include "./src/system/works/Init.inc"
 
 /*    [ СЕРВЕРНАЯ СТОРОНА ]   */
