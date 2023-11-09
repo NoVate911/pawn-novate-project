@@ -1,6 +1,6 @@
 /*      [ ПОДКЛЮЧЕНИЕ К БАЗЕ ДАННЫХ ]      */
 /*      [ CONNECTING TO THE DATABASE ]      */
-stock MySQL_ConnectionDatabase(hostname[], username[], password[], database[])
+stock MySQLConnectionDatabase(hostname[], username[], password[], database[])
 {
     SInfo[MySQL] = mysql_connect(hostname, username, password, database);
     mysql_log(ALL);
@@ -17,7 +17,7 @@ stock MySQL_ConnectionDatabase(hostname[], username[], password[], database[])
 
 /*      [ ЗАКРЫТИЕ ПОДКЛЮЧЕНИЯ К БАЗЕ ДАННЫХ ]      */
 /*      [ CLOSING THE DATABASE CONNECTION ]     */
-stock MySQL_CloseConnectionDatabase()
+stock MySQLCloseConnectionDatabase()
 {
     mysql_close(SInfo[MySQL]);
     return 1;

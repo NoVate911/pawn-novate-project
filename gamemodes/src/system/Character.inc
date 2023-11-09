@@ -37,7 +37,7 @@ stock Player_CharacterShow(playerid)
     cache_get_row_count(PInfo[playerid][CharactersCount]);
     if(PInfo[playerid][CharactersCount])
     {
-        Data_Get_CharacterInfo(playerid);
+        DataGetCharacterInfo(playerid);
         Dialog_Show(playerid, Dialog:Dlg_Char_List);
     }
     else
@@ -58,7 +58,7 @@ dCreate:Dlg_Char_List(playerid)
         if(CInfo[playerid][i][ID] == 0)
             format(temp, sizeof(temp), ""C_GRAY"[%d] "C_WHITE"Создать персонажа\n", i+1);
         else
-            format(temp, sizeof(temp), ""C_GRAY"[%d] "C_WHITE"%s %s "C_GRAY"[%d LVL | %d/%d EXP]\n", i+1, CInfo[playerid][i][FirstName], CInfo[playerid][i][LastName], CInfo[playerid][i][Level], CInfo[playerid][i][Exp], Level_Need_Exp(playerid, i));
+            format(temp, sizeof(temp), ""C_GRAY"[%d] "C_WHITE"%s %s "C_GRAY"[%d LVL | %d/%d EXP]\n", i+1, CInfo[playerid][i][FirstName], CInfo[playerid][i][LastName], CInfo[playerid][i][Level], CInfo[playerid][i][Exp], LevelNeedExp(playerid, i));
         strcat(string, temp, sizeof(string));
     }
     return Dialog_Open(playerid, Dialog:Dlg_Char_List, DIALOG_STYLE_LIST, ""C_WHITE"Выбор персонажа", string, "Выбор", "Выход");
@@ -89,7 +89,7 @@ dResponse:Dlg_Char_List(playerid)
         }
     }
     else
-        Kick_Player(playerid, _, "Выход");
+        KickPlayer(playerid, _, "Выход");
     return 1;
 }
 
@@ -292,7 +292,7 @@ dResponse:Dlg_Char_CreateRace(playerid)
         else
         {
             SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"При создании персонажа произошла ошибка. Обратитесь к Администрации!");
-            Kick_Player(playerid, _, "Ошибка");
+            KickPlayer(playerid, _, "Ошибка");
         }
         cache_delete(cache);
     }

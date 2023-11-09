@@ -1,6 +1,6 @@
 /*      [ УСТАНОВКА ВРЕМЕНИ НА СЕРВЕРЕ ]      */
 /*      [ SETTING THE TIME ON THE SERVER ]      */
-stock Time_Set(bool:isOwn = false, hour = 0, minute = 0)
+stock TimeSet(bool:isOwn = false, hour = 0, minute = 0)
 {
     foreach(new i : Player)
     {
@@ -19,7 +19,7 @@ stock Time_Set(bool:isOwn = false, hour = 0, minute = 0)
 
 /*      [ УСТАНОВКА ВРЕМЕНИ ДЛЯ ИГРОКА ]      */
 /*      [ SETTING THE TIME FOR THE PLAYER ]      */
-stock Time_SetPlayer(playerid, bool:isOwn = false, hour = 0, minute = 0)
+stock TimeSetPlayer(playerid, bool:isOwn = false, hour = 0, minute = 0)
 {
     if(PInfo[playerid][IsConnection])
     {

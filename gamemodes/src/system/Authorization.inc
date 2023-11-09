@@ -11,8 +11,8 @@ new const Float:Positions_Spawn[MAX_POSITIONS_SPAWN][4] = { // X, Y, Z, Rotation
 stock Player_SpawnAfterAuthorization(playerid)
 {
     TogglePlayerSpectating(playerid, false);
-    Objects_Remove_For_Player(playerid);
-    Objects_Create_For_Player(playerid);
+    ObjectsRemoveForPlayer(playerid);
+    ObjectsCreateForPlayer(playerid);
     if(CInfo[playerid][PInfo[playerid][CharacterSelect]][Position][0] == 0.0 && CInfo[playerid][PInfo[playerid][CharacterSelect]][Position][1] == 0.0 && CInfo[playerid][PInfo[playerid][CharacterSelect]][Position][2] == 0.0)
         SetSpawnInfo(playerid, 0, CInfo[playerid][PInfo[playerid][CharacterSelect]][Skin], Positions_Spawn[random(MAX_POSITIONS_SPAWN)][0], Positions_Spawn[random(MAX_POSITIONS_SPAWN)][1], Positions_Spawn[random(MAX_POSITIONS_SPAWN)][2], Positions_Spawn[random(MAX_POSITIONS_SPAWN)][3], 0, 0, 0, 0, 0, 0);
     else
@@ -72,7 +72,7 @@ dResponse:Dlg_Auth_Log_Password(playerid)
             new Cache:cache = mysql_query(SInfo[MySQL], mysql, true);
             if(cache_num_rows())
             {
-                Data_Get_PlayerInfo(playerid);
+                DataGetPlayerInfo(playerid);
                 Player_CharacterShow(playerid);
                 SCM(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы авторизовались на сервере.");
                 printf("%s Игрок %s(%d) [%s] авторизовался на сервере.", DEBUG_INFO, PInfo[playerid][Nick], playerid, PInfo[playerid][LastIP]);
@@ -87,7 +87,7 @@ dResponse:Dlg_Auth_Log_Password(playerid)
                 PInfo[playerid][AuthorizationCountTry]--;
                 
                 if(PInfo[playerid][AuthorizationCountTry] < 0)
-                    Kick_Player(playerid, _, "Много попыток входа");
+                    KickPlayer(playerid, _, "Много попыток входа");
                 else
                 {
                     SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Пароль введён неверно. Осталось %d попыток.", PInfo[playerid][AuthorizationCountTry]);
@@ -104,9 +104,7 @@ dResponse:Dlg_Auth_Log_Password(playerid)
         Regex_Delete(regex_password_check);
     }
     else
-    {
-        Kick_Player(playerid, "Сервер", "Выход");
-    }
+        KickPlayer(playerid, "Сервер", "Выход");
     return 1;
 }
 
@@ -149,9 +147,7 @@ dResponse:Dlg_Auth_Reg_Password(playerid)
         Regex_Delete(regex_password_check);
     }
     else
-    {
-        Kick_Player(playerid, "Сервер", "Выход");
-    }
+        KickPlayer(playerid, "Сервер", "Выход");
     return 1;
 }
 

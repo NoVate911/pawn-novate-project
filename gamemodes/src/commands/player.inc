@@ -20,15 +20,15 @@ cmd:n(playerid, params[])
         strmid(message, params, 66, 128, 128);
         strdel(params, 66, 128);
         format(first, sizeof(first), "(( %s %s(%d): %s..", CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, params);
-        Chat_SendMessage(playerid, 10.0, C_F_LIGHTGRAY, first);
+        ChatSendMessage(playerid, 10.0, C_F_LIGHTGRAY, first);
         format(second, sizeof(second), "..%s ))", message);
-        Chat_SendMessage(playerid, 10.0, C_F_LIGHTGRAY, second);
+        ChatSendMessage(playerid, 10.0, C_F_LIGHTGRAY, second);
         SetPlayerChatBubble(playerid, second, C_F_LIGHTGRAY, 10.0, 3000);
     }
     else
     {
         format(message, sizeof(message), "(( %s %s(%d): %s ))", CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, params);
-        Chat_SendMessage(playerid, 10.0, C_F_LIGHTGRAY, message);
+        ChatSendMessage(playerid, 10.0, C_F_LIGHTGRAY, message);
         SetPlayerChatBubble(playerid, message, C_F_LIGHTGRAY, 10.0, 3000);
     }
     return 1;
@@ -46,14 +46,14 @@ cmd:me(playerid, params[])
         strmid(message, params, 76, 128, 128);
         strdel(params, 76, 128);
         format(first, sizeof(first), "%s %s %s..", CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], params);
-        Chat_SendMessage(playerid, 10.0, C_F_PURPLE, first);
+        ChatSendMessage(playerid, 10.0, C_F_PURPLE, first);
         format(second, sizeof(second), "..%s", message);
-        Chat_SendMessage(playerid, 10.0, C_F_PURPLE, second);
+        ChatSendMessage(playerid, 10.0, C_F_PURPLE, second);
     }
     else
     {
         format(message, sizeof(message), "%s %s %s", CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], params);
-        Chat_SendMessage(playerid, 10.0, C_F_PURPLE, message);
+        ChatSendMessage(playerid, 10.0, C_F_PURPLE, message);
     }
     return 1;
 }
@@ -80,14 +80,14 @@ cmd:do(playerid, params[])
         strmid(message, params, 74, 128, 128);
         strdel(params, 74, 128);
         format(first, sizeof(first), "%s.. (%s %s)", params, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName]);
-        Chat_SendMessage(playerid, 10.0, C_F_PURPLE, first);
+        ChatSendMessage(playerid, 10.0, C_F_PURPLE, first);
         format(second, sizeof(second), "..%s", message);
-        Chat_SendMessage(playerid, 10.0, C_F_PURPLE, second);
+        ChatSendMessage(playerid, 10.0, C_F_PURPLE, second);
     }
     else
     {
         format(message, sizeof(message), "%s (%s %s)", params, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName]);
-        Chat_SendMessage(playerid, 10.0, C_F_PURPLE, message);
+        ChatSendMessage(playerid, 10.0, C_F_PURPLE, message);
     }
     return 1;
 }

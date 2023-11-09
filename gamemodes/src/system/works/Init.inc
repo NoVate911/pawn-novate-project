@@ -1,8 +1,10 @@
-stock Works_Init()
+/*      [ ЗАГРУЗКА ВСЕХ РАБОТ ]      */
+/*      [ UPLOADING ALL WORKS ]      */
+stock WorksInit()
 {
     new tickCount = GetTickCount();
-    Work_Loader_LV_Init();
-    Work_Farmer_LV_Init();
-    Work_Diver_LV_Init();
+    WorkLoaderLVInit();
+    WorkFarmerLVInit();
+    WorkDiverLVInit();
     return printf("%s Начальные работы загружены за %dms.", DEBUG_INFO, GetTickCount() - tickCount);
 }

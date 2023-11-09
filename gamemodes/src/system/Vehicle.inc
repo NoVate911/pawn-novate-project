@@ -1,6 +1,6 @@
 /*      [ ИНИЦИАЛИЗАЦИЯ ТРАНСПОРТА ]      */
 /*      [ INITIALIZING TRANSPORT ]      */
-stock Vehicle_Init()
+stock VehicleInit()
 {
     Vehicle_Count = 0;
     return 1;
@@ -8,7 +8,7 @@ stock Vehicle_Init()
 
 /*      [ СОЗДАНИЕ ТРАНСПОРТА ]      */
 /*      [ CREATING A TRANSPORT ]      */
-stock Vehicle_Create(vehicleid, Float:x, Float:y, Float:z, Float:rotation, color1, color2, Float:fuel = 80.0, bool:isAdmin = false)
+stock VehicleCreate(vehicleid, Float:x, Float:y, Float:z, Float:rotation, color1, color2, Float:fuel = 80.0, bool:isAdmin = false)
 {
     new vehicle = CreateVehicle(vehicleid, x, y, z, rotation, color1, color2, 0);
     new vw = 0, engine = 0, lights = 0, alarm = 0, doors = 0, bonnet = 0, boot = 0, objective = 0;
@@ -47,7 +47,7 @@ stock Vehicle_Create(vehicleid, Float:x, Float:y, Float:z, Float:rotation, color
 
 /*      [ УДАЛЕНИЕ ТРАНСПОРТА ]      */
 /*      [ DELETING A TRANSPORT ]      */
-stock Vehicle_Destroy(vehicleid)
+stock VehicleDestroy(vehicleid)
 {
     for(new v = 0; v < MAX_VEHICLES; v++)
     {
@@ -78,9 +78,9 @@ stock Vehicle_Destroy(vehicleid)
 
 /*      [ ПОЧИНКА ТРАНСПОРТА ]      */
 /*      [ REPAIR OF TRANSPORT ]      */
-stock Vehicle_Repair(vehicleid)
+stock VehicleRepair(vehicleid)
 {
-    if(Vehicle_FindID(vehicleid))
+    if(VehicleFindID(vehicleid))
     {
         for(new v = 0; v < MAX_VEHICLES; v++)
         {
@@ -97,9 +97,9 @@ stock Vehicle_Repair(vehicleid)
 
 /*      [ УПРАВЛЕНИЕ ДВЕРЬМИ ТРАНСПОРТА ]      */
 /*      [ TRANSPORT DOOR MANAGEMENT ]      */
-stock Vehicle_DoorManagement(vehicleid)
+stock VehicleDoorManagement(vehicleid)
 {
-    if(Vehicle_FindID(vehicleid))
+    if(VehicleFindID(vehicleid))
     {
         new engine = 0, lights = 0, alarm = 0, doors = 0, bonnet = 0, boot = 0, objective = 0;
         for(new v = 0; v < MAX_VEHICLES; v++)
@@ -118,9 +118,9 @@ stock Vehicle_DoorManagement(vehicleid)
 
 /*      [ ПОЛУЧИТЬ ЗНАЧЕНИЕ ДВЕРЕЙ У ТРАНСПОРТА ]      */
 /*      [ GET THE VALUE OF TRANSPORT DOORS ]      */
-stock Vehicle_GetDoorValue(vehicleid)
+stock VehicleGetDoorValue(vehicleid)
 {
-    if(Vehicle_FindID(vehicleid))
+    if(VehicleFindID(vehicleid))
     {
         for(new v = 0; v < MAX_VEHICLES; v++)
         {
@@ -135,9 +135,9 @@ stock Vehicle_GetDoorValue(vehicleid)
 
 /*      [ СМЕНА ЦВЕТА ТРАНСПОРТА ]      */
 /*      [ CHANGING THE COLOR OF TRANSPORT ]      */
-stock Vehicle_SetColor(vehicleid, color1, color2)
+stock VehicleSetColor(vehicleid, color1, color2)
 {
-    if(Vehicle_FindID(vehicleid))
+    if(VehicleFindID(vehicleid))
     {
         for(new v = 0; v < MAX_VEHICLES; v++)
         {
@@ -155,7 +155,7 @@ stock Vehicle_SetColor(vehicleid, color1, color2)
 
 /*      [ ПОИСК ТРАНСПОРТА ПО НОМЕРУ ]      */
 /*      [ SEARCH FOR TRANSPORT BY NUMBER ]      */
-stock Vehicle_FindID(vehicleid)
+stock VehicleFindID(vehicleid)
 {
     for(new v = 0; v < MAX_VEHICLES; v++)
     {
@@ -167,12 +167,12 @@ stock Vehicle_FindID(vehicleid)
 
 /*      [ ВЫВЕСТИ ВЕСЬ ТРАНСПОРТ ]      */
 /*      [ WITHDRAW ALL TRANSPORT ]      */
-stock Vehicle_PrintAllInfo(playerid)
+stock VehiclePrintAllInfo(playerid)
 {
     if(Vehicle_Count > 0)
     {
         printf("%s %s %s(%d) [%s:%s] запросил информацию о транспорте на сервере.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP]);
-        Chat_Clear(playerid, _, 1);
+        ChatClear(playerid, _, 1);
         for(new v = 0; v < MAX_VEHICLES; v++)
         {
             if(VInfo[v][ID] != 0)
@@ -185,7 +185,7 @@ stock Vehicle_PrintAllInfo(playerid)
     return 0;
 }
 
-stock Vehicle_KeyStateChange(playerid, newkeys)
+stock VehicleKeyStateChange(playerid, newkeys)
 {
     if(IsPlayerInAnyVehicle(playerid))
     {
@@ -193,7 +193,7 @@ stock Vehicle_KeyStateChange(playerid, newkeys)
         new engine = 0, lights = 0, alarm = 0, doors = 0, bonnet = 0, boot = 0, objective = 0;
         if(GetPlayerVehicleSeat(playerid) == 0) // Водитель | Driver
         {
-            if(Vehicle_FindID(vehicleid))
+            if(VehicleFindID(vehicleid))
             {
                 GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
                 switch(newkeys)

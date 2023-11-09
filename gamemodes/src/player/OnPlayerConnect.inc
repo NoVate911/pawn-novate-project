@@ -19,7 +19,7 @@ public OnPlayerConnect(playerid)
         if(strcmp(PInfo[p][Nick], PInfo[playerid][Nick]) == 0)
         {
             if(PInfo[p][IsConnection])
-                return Kick_Player(playerid, _, "Игрок на сервере");
+                return KickPlayer(playerid, _, "Игрок на сервере");
         }
     }
 
@@ -34,12 +34,12 @@ function Timer_OnPlayerConnect(playerid)
 {
     KillTimer(PTimerInfo[playerid][Authorization]);
     PInfo[playerid][IsConnection] = true;
-    Time_SetPlayer(playerid);
-    Weather_SetPlayer(playerid);
-    Chat_Clear(playerid);
+    TimeSetPlayer(playerid);
+    WeatherSetPlayer(playerid);
+    ChatClear(playerid);
     TogglePlayerSpectating(playerid, true);
     SetPlayerVirtualWorld(playerid, playerid + 1000);
-    Animations_Preload(playerid);
+    AnimationsPreload(playerid);
 
     InterpolateCameraPos(playerid, Positions_Camera_Connect[0][0], Positions_Camera_Connect[0][1], Positions_Camera_Connect[0][2], Positions_Camera_Connect[1][0], Positions_Camera_Connect[1][1], Positions_Camera_Connect[1][2], 120000);
     InterpolateCameraLookAt(playerid, Positions_Camera_Connect[2][0], Positions_Camera_Connect[2][1], Positions_Camera_Connect[2][2], Positions_Camera_Connect[2][0], Positions_Camera_Connect[2][1], Positions_Camera_Connect[2][2], 120000);

@@ -13,16 +13,16 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                 {
                     if(newkeys & KEY_SPRINT && newkeys & KEY_JUMP)
                     {
-                        Animation_Stop(playerid);
+                        AnimationStop(playerid);
                         ApplyAnimation(playerid, "PED", "IDLE_TIRED", 4.0, 0, 1, 0, 0, 3000, 1);
                     }
                 }
             }
 
-            Vehicle_KeyStateChange(playerid, newkeys);
-            Work_Loader_LV_KeyStateChange(playerid, newkeys);
-            Work_Farmer_LV_KeyStateChange(playerid, newkeys);
-            Work_Diver_LV_KeyStateChange(playerid, newkeys);
+            VehicleKeyStateChange(playerid, newkeys);
+            WorkLoaderLVKeyStateChange(playerid, newkeys);
+            WorkFarmerLVKeyStateChange(playerid, newkeys);
+            WorkDiverLVKeyStateChange(playerid, newkeys);
         }
     }
     return 1;

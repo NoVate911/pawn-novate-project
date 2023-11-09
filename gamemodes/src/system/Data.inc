@@ -1,6 +1,6 @@
 /*      [ ОБНУЛЯЕМ ИНФОРМАЦИЮ ОБ ИГРОКЕ ]      */
 /*      [ WE RESET THE INFORMATION ABOUT THE PLAYER ]      */
-stock Data_Clear_PlayerInfo(playerid)
+stock DataClearPlayerInfo(playerid)
 {
     PInfo[playerid][IsConnection] = false;
     PInfo[playerid][IsLogged] = false;
@@ -24,7 +24,7 @@ stock Data_Clear_PlayerInfo(playerid)
 
 /*      [ ОБНУЛЯЕМ ИНФОРМАЦИЮ О ТАЙМЕРАХ ИГРОКА ]      */
 /*      [ WE RESET THE INFORMATION ABOUT THE TIMERS OF THE PLAYER ]      */
-stock Data_Clear_PlayerTimerInfo(playerid)
+stock DataClearPlayerTimerInfo(playerid)
 {
     KillTimer(PTimerInfo[playerid][Second]);
     return 1;
@@ -32,7 +32,7 @@ stock Data_Clear_PlayerTimerInfo(playerid)
 
 /*      [ ОБНУЛЯЕМ ИНФОРМАЦИЮ О КИКЕ ИГРОКА ]      */
 /*      [ WE RESET THE INFORMATION ABOUT THE PLAYER'S KICK ]      */
-stock Data_Clear_PlayerKickInfo(playerid)
+stock DataClearPlayerKickInfo(playerid)
 {
     PKickInfo[playerid][Author] = EOS;
     PKickInfo[playerid][Reason] = EOS;
@@ -41,7 +41,7 @@ stock Data_Clear_PlayerKickInfo(playerid)
 
 /*      [ ОБНУЛЯЕМ ИНФОРМАЦИЮ О AFK ИГРОКА ]      */
 /*      [ RESET THE PLAYER'S AFK INFORMATION ]      */
-stock Data_Clear_PlayerAFKInfo(playerid)
+stock DataClearPlayerAFKInfo(playerid)
 {
     PAFKInfo[playerid][IsTrue] = false;
     PAFKInfo[playerid][Time] = 0;
@@ -52,7 +52,7 @@ stock Data_Clear_PlayerAFKInfo(playerid)
 
 /*      [ ОБНУЛЯЕМ ИНФОРМАЦИЮ О КИКЕ ИГРОКА ]      */
 /*      [ WE RESET THE INFORMATION ABOUT THE PLAYER'S KICK ]      */
-stock Data_Clear_CharacterInfo(playerid)
+stock DataClearCharacterInfo(playerid)
 {
     for(new i = 0; i < PInfo[playerid][CharactersCount]; i++)
     {
@@ -95,7 +95,7 @@ stock Data_Clear_CharacterInfo(playerid)
 
 /*      [ ОБНУЛЯЕМ ИНФОРМАЦИЮ О НАБЛЮДЕНИИ У АДМИНИСТРАТОРА ]      */
 /*      [ WE RESET THE INFORMATION ABOUT THE OBSERVATION AT THE ADMINISTRATOR ]      */
-stock Data_Clear_AdminSpectateInfo(playerid)
+stock DataClearAdminSpectateInfo(playerid)
 {
     ASInfo[playerid][Toggle] = false;
     for(new pos = 0; pos < 3; pos++)
@@ -106,7 +106,7 @@ stock Data_Clear_AdminSpectateInfo(playerid)
 
 /*      [ ОБНУЛЯЕМ ИНФОРМАЦИЮ О НАЧАЛЬНЫХ РАБОТАХ У ИГРОКА ]      */
 /*      [ WE RESET THE INFORMATION ABOUT THE WORK OF THE LOADER FROM THE PLAYER ]      */
-stock Data_Clear_PlayerWorksInfo(playerid)
+stock DataClearPlayerWorksInfo(playerid)
 {
     PlayerWLLVInfo[playerid][MovedBoxCount] = 0;
     DestroyDynamicCP(PlayerWLLVInfo[playerid][Checkpoint]);
@@ -127,7 +127,7 @@ stock Data_Clear_PlayerWorksInfo(playerid)
 
 /*      [ ПОЛУЧАЕМ ДАННЫЕ ИГРОКА ИЗ БАЗЫ ДАННЫХ ]      */
 /*      [ GETTING PLAYER DATA FROM THE DATABASE ]      */
-stock Data_Get_PlayerInfo(playerid)
+stock DataGetPlayerInfo(playerid)
 {
     cache_get_value_name_int(0, "id", PInfo[playerid][ID]);
     cache_get_value_name(0, "email", PInfo[playerid][Email], MAX_EMAIL_LEN);
@@ -146,7 +146,7 @@ stock Data_Get_PlayerInfo(playerid)
 
 /*      [ ПОЛУЧАЕМ ДАННЫЕ ПЕРСОНАЖА ИЗ БАЗЫ ДАННЫХ ]      */
 /*      [ GETTING CHARACTER DATA FROM THE DATABASE ]      */
-stock Data_Get_CharacterInfo(playerid)
+stock DataGetCharacterInfo(playerid)
 {
     for(new i = 0; i < PInfo[playerid][CharactersCount]; i++)
     {
@@ -182,7 +182,7 @@ stock Data_Get_CharacterInfo(playerid)
 
 /*      [ ЗАПИСЫВАЕМ ДАННЫЕ АККАУНТА В БАЗУ ДАННЫХ ]      */
 /*      [ WE RECORD THE ACCOUNT DATA IN THE DATABASE ]      */
-stock Data_Set_PlayerInfo(playerid)
+stock DataSetPlayerInfo(playerid)
 {
     static const query[] = "UPDATE accounts SET donate = '%d' WHERE nick = '%s' LIMIT 1";
     new mysql[sizeof(query)+(-2+11)+(-2+MAX_PLAYER_NAME)];
@@ -193,7 +193,7 @@ stock Data_Set_PlayerInfo(playerid)
 
 /*      [ ЗАПИСЫВАЕМ ДАННЫЕ ПЕРСОНАЖА В БАЗУ ДАННЫХ ]      */
 /*      [ WE WRITE THE CHARACTER'S DATA TO THE DATABASE ]      */
-stock Data_Set_CharacterInfo(playerid)
+stock DataSetCharacterInfo(playerid)
 {
     GetPlayerPos(playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Position][0], CInfo[playerid][PInfo[playerid][CharacterSelect]][Position][1], CInfo[playerid][PInfo[playerid][CharacterSelect]][Position][2]);
     GetPlayerFacingAngle(playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Rotation]);

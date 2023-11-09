@@ -7,9 +7,9 @@ public OnPlayerEnterDynamicCP(playerid, checkpointid)
     {
         if(!CInfo[playerid][PInfo[playerid][CharacterSelect]][IsDialogActive])
         {
-            Work_Loader_LV_EnterDynamicCP(playerid, checkpointid);
-            Work_Farmer_LV_EnterDynamicCP(playerid, checkpointid);
-            Work_Diver_LV_EnterDynamicCP(playerid, checkpointid);
+            WorkLoaderLVEnterDynamicCP(playerid, checkpointid);
+            WorkFarmerLVEnterDynamicCP(playerid, checkpointid);
+            WorkDiverLVEnterDynamicCP(playerid, checkpointid);
         }
     }
     return 1;

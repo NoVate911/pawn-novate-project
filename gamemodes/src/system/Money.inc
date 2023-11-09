@@ -1,6 +1,6 @@
 /*      [ УСТАНОВИТЬ ДЕНЬГИ ПЕРСОНАЖУ ]      */
 /*      [ SET MONEY TO THE CHARACTER ]      */
-stock Money_Set(playerid, money)
+stock MoneySet(playerid, money)
 {
     CInfo[playerid][PInfo[playerid][CharacterSelect]][Money] = money;
     ResetPlayerMoney(playerid);
@@ -12,7 +12,7 @@ stock Money_Set(playerid, money)
 
 /*      [ ОТНЯТЬ ДЕНЬГИ У ПЕРСОНАЖА ]      */
 /*      [ TAKE MONEY AWAY FROM A CHARACTER ]      */
-stock Money_Take(playerid, money)
+stock MoneyTake(playerid, money)
 {
     CInfo[playerid][PInfo[playerid][CharacterSelect]][Money] -= money;
     ResetPlayerMoney(playerid);
@@ -24,7 +24,7 @@ stock Money_Take(playerid, money)
 
 /*      [ ВЫДАТЬ ДЕНЬГИ ПЕРСОНАЖУ ]      */
 /*      [ GIVE MONEY TO A CHARACTER ]      */
-stock Money_Give(playerid, money)
+stock MoneyGive(playerid, money)
 {
     CInfo[playerid][PInfo[playerid][CharacterSelect]][Money] += money;
     ResetPlayerMoney(playerid);
@@ -36,7 +36,7 @@ stock Money_Give(playerid, money)
 
 /*      [ ОБНОВИТЬ ДЕНЬГИ У ПЕРСОНАЖА ]      */
 /*      [ UPGRADE YOUR CHARACTER'S MONEY ]      */
-stock Money_Update(playerid)
+stock MoneyUpdate(playerid)
 {
     if(GetPlayerMoney(playerid) != CInfo[playerid][PInfo[playerid][CharacterSelect]][Money])
     {

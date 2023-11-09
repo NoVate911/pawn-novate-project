@@ -1,6 +1,6 @@
 /*      [ УСТАНОВКА ПОГОДЫ НА СЕРВЕРЕ ]      */
 /*      [ SETTING THE WEATHER ON THE SERVER ]      */
-stock Weather_Set(bool:isOwn = false, weather = 0)
+stock WeatherSet(bool:isOwn = false, weather = 0)
 {
     foreach(new i : Player)
     {
@@ -23,7 +23,7 @@ stock Weather_Set(bool:isOwn = false, weather = 0)
 
 /*      [ УСТАНОВКА ПОГОДЫ ДЛЯ ИГРОКА ]      */
 /*      [ SETTING THE WEATHER FOR THE PLAYER ]      */
-stock Weather_SetPlayer(playerid, bool:isOwn = false, weather = 0)
+stock WeatherSetPlayer(playerid, bool:isOwn = false, weather = 0)
 {
     if(PInfo[playerid][IsConnection])
     {

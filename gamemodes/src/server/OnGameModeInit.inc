@@ -1,12 +1,12 @@
 public OnGameModeInit()
 {
     new tickCount = GetTickCount();
-    MySQL_ConnectionDatabase(MYSQL_HOSTNAME, MYSQL_USERNAME, MYSQL_PASSWORD, MYSQL_DATABASE);
+    MySQLConnectionDatabase(MYSQL_HOSTNAME, MYSQL_USERNAME, MYSQL_PASSWORD, MYSQL_DATABASE);
     STimerInfo[Second] = SetTimer("Timer_OnServerSecond", 1000, false);
-    Vehicle_Init();
-    Works_Init();
-    Time_Set();
-    Weather_Set();
+    VehicleInit();
+    WorksInit();
+    TimeSet();
+    WeatherSet();
     SetGameModeText(SERVER_VERSION);
     DisableInteriorEnterExits();
     EnableStuntBonusForAll(false);

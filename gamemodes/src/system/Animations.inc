@@ -1,18 +1,18 @@
 /*      [ СПИСОК БИБЛИОТЕК С АНИМАЦИЯМИ ДЛЯ ПРЕДЗАГРУЗКИ ]      */
 /*      [ LIST OF LIBRARIES WITH ANIMATIONS FOR PRELOADING ]      */
-stock Animations_Preload(playerid)
+stock AnimationsPreload(playerid)
 {
     if(IsPlayerNPC(playerid))
         return 1;
     
-    Animation_Preload(playerid, "PED");
-    Animation_Preload(playerid, "CARRY");
+    AnimationPreload(playerid, "PED");
+    AnimationPreload(playerid, "CARRY");
     return 1;
 }
 
 /*      [ ПРЕДЗАГРУЗКА БИБЛИОТЕКИ АНИМАЦИИ ]      */
 /*      [ PRELOADING THE ANIMATION LIBRARY ]      */
-stock Animation_Preload(playerid, animlib[])
+stock AnimationPreload(playerid, animlib[])
 {
     ApplyAnimation(playerid, animlib, "null", 0.0, 0, 0, 0, 0, 0, 0);
     return 1;
@@ -20,7 +20,7 @@ stock Animation_Preload(playerid, animlib[])
 
 /*      [ ОСТАНОВКА АНИМАЦИИ ]      */
 /*      [ STOPPING ANIMATION ]      */
-function Timer_Animation_Stop(playerid)
+function TimerOnAnimationStop(playerid)
 {
     if(IsPlayerNPC(playerid))
         return 1;
@@ -29,7 +29,7 @@ function Timer_Animation_Stop(playerid)
     return KillTimer(PTimerInfo[playerid][Animation]);
 }
 
-stock Animation_Stop(playerid)
+stock AnimationStop(playerid)
 {
     if(IsPlayerNPC(playerid))
         return 1;

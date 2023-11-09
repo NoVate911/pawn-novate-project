@@ -1,6 +1,6 @@
 /*      [ ПРОВЕРКА НА AFK ]      */
 /*      [ CHECKING FOR AFK ]      */
-stock AFK_Check(playerid)
+stock AFKCheck(playerid)
 {
     new Float:x, Float:y, Float:z;
     GetPlayerPos(playerid, x, y, z);
@@ -10,7 +10,7 @@ stock AFK_Check(playerid)
         PAFKInfo[playerid][Time]++;
     else
     {
-        if(AFK_Exit(playerid))
+        if(AFKExit(playerid))
             SCM(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы вышли с AFK режима.");
     }
 
@@ -25,7 +25,7 @@ stock AFK_Check(playerid)
         // Устанавливаем режим AFK игроку | Setting the AFK mode to the player
         if(PAFKInfo[playerid][Time] == MAX_AFK_TIME_SET)
         {
-            if(AFK_Enter(playerid))
+            if(AFKEnter(playerid))
                 SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Вы бездействовали %d минуту и встали в AFK режим.", MAX_AFK_TIME_SET / 60);
         }
         else
@@ -43,7 +43,7 @@ stock AFK_Check(playerid)
                     SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Вы будете кикнуты за AFK через %d минуту.", ((MAX_AFK_TIME_WARNING * 5) - (MAX_AFK_TIME_WARNING * 4)) / 60);
 
                 case MAX_AFK_TIME_WARNING * 5: // Четвёртое предупреждение |  warning
-                    Kick_Player(playerid, _, "Долгое AFK");
+                    KickPlayer(playerid, _, "Долгое AFK");
             }
         }
     }
@@ -52,7 +52,7 @@ stock AFK_Check(playerid)
 
 /*      [ ВХОД В AFK ]      */
 /*      [ LOGIN TO AFK ]      */
-stock AFK_Enter(playerid)
+stock AFKEnter(playerid)
 {
     if(!PAFKInfo[playerid][IsTrue])
     {
@@ -64,7 +64,7 @@ stock AFK_Enter(playerid)
 
 /*      [ ВЫХОД С AFK ]      */
 /*      [ EXIT FROM AFK ]      */
-stock AFK_Exit(playerid)
+stock AFKExit(playerid)
 {
     if(PAFKInfo[playerid][IsTrue])
     {

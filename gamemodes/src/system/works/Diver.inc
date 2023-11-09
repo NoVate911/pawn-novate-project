@@ -11,14 +11,14 @@ new const Float:Work_Diver_LV_PositionsMarks[WORK_DIVER_LV_MARK_POINT][3] = { //
 
 /*      [ ========== ========== ========== ========== ========== ]      */
 
-stock Work_Diver_LV_Init()
+stock WorkDiverLVInit()
 {
     WDLVInfo[WORK_DIVER_LV_ID][ActorID] = CreateDynamicActor(WORK_DIVER_LV_NPC_INVITE_SKIN_ID, Work_Diver_LV_PositionsInvite[0], Work_Diver_LV_PositionsInvite[1], Work_Diver_LV_PositionsInvite[2], Work_Farmer_LV_PositionsInvite[3], _, _, 0, 0);
     WDLVInfo[WORK_DIVER_LV_ID][Actor3DText] = CreateDynamic3DTextLabel("> Долматинец <\n"C_WHITE"Нажмите "C_YELLOW"\"ALT\" "C_WHITE"для диалога", C_F_YELLOW, Work_Diver_LV_PositionsInvite[0], Work_Diver_LV_PositionsInvite[1], Work_Diver_LV_PositionsInvite[2]+1.5, 10.0, _, _, _, 0, 0);
     return 1;
 }
 
-stock Work_Diver_LV_KeyStateChange(playerid, newkeys)
+stock WorkDiverLVKeyStateChange(playerid, newkeys)
 {
     if(GetPlayerState(playerid) == PLAYER_STATE_ONFOOT)
     {
@@ -31,11 +31,11 @@ stock Work_Diver_LV_KeyStateChange(playerid, newkeys)
                     ApplyDynamicActorAnimation(WDLVInfo[WORK_DIVER_LV_ID][ActorID], "PED", "IDLE_CHAT", 4.1, 0, 1, 1, 1, 1);
                     CInfo[playerid][PInfo[playerid][CharacterSelect]][IsDialogActive] = true;
                     if(!CInfo[playerid][PInfo[playerid][CharacterSelect]][Working])
-                        Dialog_Show(playerid, Dialog:Dlg_Work_DiverLV_Invite);
+                        Dialog_Show(playerid, Dialog:DlgWorkDiverLVInvite);
                     else
                     {
                         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][WorkingType] == WORK_DIVER_LV_ID)
-                            Dialog_Show(playerid, Dialog:Dlg_Work_DiverLV_Uninvite);
+                            Dialog_Show(playerid, Dialog:DlgWorkDiverLVUninvite);
                     }
                 }
 
@@ -68,7 +68,7 @@ stock Work_Diver_LV_KeyStateChange(playerid, newkeys)
     return 1;
 }
 
-stock Work_Diver_LV_EnterDynamicCP(playerid, checkpointid)
+stock WorkDiverLVEnterDynamicCP(playerid, checkpointid)
 {
     if(GetPlayerState(playerid) == PLAYER_STATE_ONFOOT)
     {
@@ -97,7 +97,7 @@ stock Work_Diver_LV_EnterDynamicCP(playerid, checkpointid)
 
 /*      [ ========== ========== ========== ========== ========== ]      */
 
-dCreate:Dlg_Work_DiverLV_Invite(playerid)
+dCreate:DlgWorkDiverLVInvite(playerid)
 {
     static const message[] = "\
     "C_WHITE"\nДолматинец: "C_LIGHTGRAY"Ну дарова! Чего ты так стесняешься подойти то? Я не кусаюсь!\n\
@@ -109,10 +109,10 @@ dCreate:Dlg_Work_DiverLV_Invite(playerid)
     "C_WHITE"Зарплата: "C_LIGHTGRAY"%d$ за метку"C_WHITE".\n\n";
     new string[sizeof(message)+(-2+8)+(-2+8)];
     format(string, sizeof(string), message, WORK_DIVER_LV_PRICE_PER_MARK, WORK_DIVER_LV_PRICE_PER_MARK);
-    return Dialog_Open(playerid, Dialog:Dlg_Work_DiverLV_Invite, DIALOG_STYLE_MSGBOX, ""C_GRAY"Долматинец "C_BLACK"| "C_WHITE"Трудоустройство", string, "Да", "Нет");
+    return Dialog_Open(playerid, Dialog:DlgWorkDiverLVInvite, DIALOG_STYLE_MSGBOX, ""C_GRAY"Долматинец "C_BLACK"| "C_WHITE"Трудоустройство", string, "Да", "Нет");
 }
 
-dResponse:Dlg_Work_DiverLV_Invite(playerid)
+dResponse:DlgWorkDiverLVInvite(playerid)
 {
     CInfo[playerid][PInfo[playerid][CharacterSelect]][IsDialogActive] = false;
     if(response)
@@ -128,7 +128,7 @@ dResponse:Dlg_Work_DiverLV_Invite(playerid)
     return 1;
 }
 
-dCreate:Dlg_Work_DiverLV_Uninvite(playerid)
+dCreate:DlgWorkDiverLVUninvite(playerid)
 {
     static const message[] = "\
     "C_WHITE"\nДолматинец: "C_LIGHTGRAY"Хочешь сказать, что уже устал?\n\
@@ -138,16 +138,16 @@ dCreate:Dlg_Work_DiverLV_Uninvite(playerid)
     "C_WHITE"Заработано: "C_LIGHTGRAY"%d$"C_WHITE".\n\n";
     new string[sizeof(message)+(-2+8)+(-2+8)];
     format(string, sizeof(string), message, PlayerWDLVInfo[playerid][TotalTakenMarkCount], PlayerWDLVInfo[playerid][TotalTakenMarkCount] * WORK_DIVER_LV_PRICE_PER_MARK);
-    return Dialog_Open(playerid, Dialog:Dlg_Work_DiverLV_Uninvite, DIALOG_STYLE_MSGBOX, ""C_GRAY"Долматинец "C_BLACK"| "C_WHITE"Трудоустройство", string, "Да", "Нет");
+    return Dialog_Open(playerid, Dialog:DlgWorkDiverLVUninvite, DIALOG_STYLE_MSGBOX, ""C_GRAY"Долматинец "C_BLACK"| "C_WHITE"Трудоустройство", string, "Да", "Нет");
 }
 
-dResponse:Dlg_Work_DiverLV_Uninvite(playerid)
+dResponse:DlgWorkDiverLVUninvite(playerid)
 {
     CInfo[playerid][PInfo[playerid][CharacterSelect]][IsDialogActive] = false;
     if(response)
     {
         SetPlayerSkin(playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Skin]);
-        Money_Give(playerid, PlayerWDLVInfo[playerid][TotalTakenMarkCount] * WORK_DIVER_LV_PRICE_PER_MARK);
+        MoneyGive(playerid, PlayerWDLVInfo[playerid][TotalTakenMarkCount] * WORK_DIVER_LV_PRICE_PER_MARK);
         SCM(playerid, -1, ""NOTIF_INFO" "C_WHITE"Вы закончили работу дайвера.");
         if(PlayerWDLVInfo[playerid][TotalTakenMarkCount] > 0)
             SCMf(playerid, -1, ""NOTIF_INFO" "C_WHITE"За находку %d вещей получено %d$.", PlayerWDLVInfo[playerid][TotalTakenMarkCount], PlayerWDLVInfo[playerid][TotalTakenMarkCount] * WORK_DIVER_LV_PRICE_PER_MARK);

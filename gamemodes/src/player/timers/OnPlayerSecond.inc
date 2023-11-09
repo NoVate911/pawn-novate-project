@@ -9,21 +9,21 @@ function Timer_OnPlayerSecond(playerid)
         if(!PInfo[playerid][IsLogged]) // Проверка на вход | Check for entry
         {
             if(PInfo[playerid][AuthorizationTime] <= 0)
-                Kick_Player(playerid, "Сервер", "Время истекло");
+                KickPlayer(playerid, "Сервер", "Время истекло");
             else
                 PInfo[playerid][AuthorizationTime]--;
         }
         else
         {
             if(CInfo[playerid][PInfo[playerid][CharacterSelect]][MoneyTime] <= 0) // Проверка на деньги | Checking for money
-                Money_Update(playerid);
+                MoneyUpdate(playerid);
             else
                 CInfo[playerid][PInfo[playerid][CharacterSelect]][MoneyTime]--;
 
-            AFK_Check(playerid);
+            AFKCheck(playerid);
             if(!PAFKInfo[playerid][IsTrue])
             {
-                Level_Check(playerid);
+                LevelCheck(playerid);
             }
         }
     }

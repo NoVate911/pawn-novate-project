@@ -1,6 +1,6 @@
 /*      [ ОЧИСТКА ЧАТА ]      */
 /*      [ CLEARING THE CHAT ]      */
-stock Chat_Clear(playerid, bool:global = false, count = 50)
+stock ChatClear(playerid, bool:global = false, count = 50)
 {
     for(new i = 0; i < count; i++)
     {
@@ -14,7 +14,7 @@ stock Chat_Clear(playerid, bool:global = false, count = 50)
 
 /*      [ ОТПРАВКА СООБЩЕНИЙ В ЧАТ АДМИНИСТРАЦИИ ]      */
 /*      [ SENDING MESSAGES TO THE ADMINISTRATION CHAT ]      */
-stock Chat_SendMessageToAdmin(message[], adminLevel = 0, bool:isAdmin = true)
+stock ChatSendMessageToAdmin(message[], adminLevel = 0, bool:isAdmin = true)
 {
     foreach(new i : Player)
     {
@@ -43,14 +43,12 @@ stock Chat_SendMessageToAdmin(message[], adminLevel = 0, bool:isAdmin = true)
 
 /*      [ ОТПРАВКА СООБЩЕНИЙ В ЧАТ ]      */
 /*      [ SENDING MESSAGES TO THE CHAT ]      */
-stock Chat_SendMessage(playerid, Float:max_range, color, string[], Float:max_ratio = 1.6)
+stock ChatSendMessage(playerid, Float:max_range, color, string[], Float:max_ratio = 1.6)
 {
     new Float:pos_x, Float:pos_y, Float:pos_z, Float:range, Float:range_ratio, Float:range_with_ratio, clr_r, clr_g, clr_b, Float:color_r, Float:color_g, Float:color_b;
 
     if(!GetPlayerPos(playerid, pos_x, pos_y, pos_z))
-    {
         return 0;
-    }
 
     color_r = float(color >> 24 & 0xFF);
     color_g = float(color >> 16 & 0xFF);

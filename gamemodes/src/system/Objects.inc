@@ -1,6 +1,6 @@
 /*      [ СОЗДАТЬ ОБЪЕКТЫ ДЛЯ ИГРОКА ]      */
 /*      [ CREATE OBJECTS FOR THE PLAYER ]      */
-stock Objects_Create_For_Player(playerid)
+stock ObjectsCreateForPlayer(playerid)
 {
     // 2522.0081, -1272.9301, 35.6090
     CreateDynamicObject(17946, 2533.8203, -1290.5547, 36.9453, 0.00000, 0.00000, 0.00000, -1, -1, playerid);
@@ -48,7 +48,7 @@ stock Objects_Create_For_Player(playerid)
 
 /*      [ УДАЛИТЬ ОБЪЕКТЫ ДЛЯ ИГРОКА ]      */
 /*      [ DELETE OBJECTS FOR THE PLAYER ]      */
-stock Objects_Remove_For_Player(playerid)
+stock ObjectsRemoveForPlayer(playerid)
 {
     // 213.0821, 1875.7795, 17.6406
     RemoveBuildingForPlayer(playerid, 2887, 213.0821, 1875.7795, 17.6406, 200.25);

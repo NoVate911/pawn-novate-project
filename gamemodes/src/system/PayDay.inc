@@ -1,6 +1,6 @@
 /*      [ ПРОВЕРКА НА ЗАРПЛАТУ (PAYDAY) ]      */
 /*      [ SALARY CHECK (PAYDAY) ]      */
-stock PayDay_Check()
+stock PayDayCheck()
 {
     if(TInfo[Minute] == 0 && (0 <= TInfo[Second] <= 3))
     {
@@ -14,22 +14,21 @@ stock PayDay_Check()
 
 /*      [ ЗАПУСК ЗАРПЛАТЫ (PAYDAY) ]      */
 /*      [ SALARY LAUNCH (PAYDAY) ]      */
-stock PayDay_Launch()
+stock PayDayLaunch()
 {
-    printf("%s Запущенный PayDay прошёл успешно.", DEBUG_INFO);
-
+    printf("%s Текущее время %d:%d.", DEBUG_INFO, TInfo[Hour], TInfo[Minute]);
     foreach(new i : Player)
     {
         if(PInfo[i][IsLogged])
         {
-            Chat_Clear(i, false, 1);
+            ChatClear(i, false, 1);
             SCM(i, -1, "===== ЗАРПЛАТА =====");
             SCM(i, -1, "");
             SCMf(i, -1, "Текущее время: %d:%d", TInfo[Hour], TInfo[Minute]);
             if(!PAFKInfo[i][IsTrue])
             {
                 SCMf(i, -1, "Пособие по безработице: %d$", MAX_PAYDAY_BENEFIT);
-                Money_Give(i, 500);
+                MoneyGive(i, 500);
             }
             else
             {
@@ -37,7 +36,7 @@ stock PayDay_Launch()
             }
             SCM(i, -1, "");
             SCM(i, -1, "====================");
-            Chat_Clear(i, false, 1);
+            ChatClear(i, false, 1);
         }
     }
 
