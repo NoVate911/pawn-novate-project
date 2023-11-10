@@ -1,6 +1,6 @@
 /*      [ СЕКУНДНЫЙ ТАЙМЕР ДЛЯ ИГРОКА ]      */
 /*      [ SECOND TIMER FOR THE PLAYER ]      */
-function Timer_OnPlayerSecond(playerid)
+function TimerOnPlayerSecond(playerid)
 {
     if(!PInfo[playerid][IsConnection]) // Проверка на подключение | Checking for connection
         return 1;
@@ -27,5 +27,5 @@ function Timer_OnPlayerSecond(playerid)
             }
         }
     }
-    return PTimerInfo[playerid][Second] = SetTimerEx("Timer_OnPlayerSecond", 1000, false, "i", playerid);
+    return PTimerInfo[playerid][Second] = SetTimerEx("TimerOnPlayerSecond", 1000, false, "i", playerid);
 }

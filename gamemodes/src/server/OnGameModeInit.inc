@@ -2,7 +2,7 @@ public OnGameModeInit()
 {
     new tickCount = GetTickCount();
     MySQLConnectionDatabase(MYSQL_HOSTNAME, MYSQL_USERNAME, MYSQL_PASSWORD, MYSQL_DATABASE);
-    STimerInfo[Second] = SetTimer("Timer_OnServerSecond", 1000, false);
+    STimerInfo[Second] = SetTimer("TimerOnServerSecond", 1000, false);
     VehicleInit();
     WorksInit();
     TimeSet();
@@ -13,5 +13,6 @@ public OnGameModeInit()
     LimitGlobalChatRadius(0.0);
     LimitPlayerMarkerRadius(0.0);
     ManualVehicleEngineAndLights();
+    SetNameTagDrawDistance(25.0);
     return printf("%s Мод загружен за %dms.", DEBUG_LOAD, GetTickCount() - tickCount);
 }

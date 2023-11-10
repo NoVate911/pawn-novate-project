@@ -8,7 +8,7 @@ new const Float:Positions_Spawn[MAX_POSITIONS_SPAWN][4] = { // X, Y, Z, Rotation
 
 /*      [ ПОЯВЛЕНИЕ ИГРОКА ПОСЛЕ АУТЕНТИФИКАЦИИ ]      */
 /*      [ THE APPEARANCE OF THE PLAYER AFTER AUTHENTICATION ]      */
-stock Player_SpawnAfterAuthorization(playerid)
+stock PlayerSpawnAfterAuthorization(playerid)
 {
     TogglePlayerSpectating(playerid, false);
     ObjectsRemoveForPlayer(playerid);
@@ -36,29 +36,29 @@ stock Player_SpawnAfterAuthorization(playerid)
 
 /*      [ ДИАЛОГОВЫЕ ОКНА ]      */
 /*      [ DIALOG BOXES ]      */
-dCreate:Dlg_Auth_Log_Password(playerid)
+dCreate:DlgAuthLogPassword(playerid)
 {
     static const message[] = "\
     "C_WHITE"\n\\cС возвращением на сервер "C_EMERALD""SERVER_NAME" "C_WHITE"| "C_EMERALD""SERVER_TYPE""C_WHITE".\n\
     "C_WHITE"\\cДля входа используйте свой пароль.\n\
     "C_WHITE"\\cВведите свой пароль в поле ввода и нажмите \"Играть\"\n\n";
-    return Dialog_Open(playerid, Dialog:Dlg_Auth_Log_Password, DIALOG_STYLE_PASSWORD, ""C_GRAY"Аутентификация "C_BLACK"| "C_WHITE"Авторизация", message, "Играть", "Выход");
+    return Dialog_Open(playerid, Dialog:DlgAuthLogPassword, DIALOG_STYLE_PASSWORD, ""C_GRAY"Аутентификация "C_BLACK"| "C_WHITE"Авторизация", message, "Играть", "Выход");
 }
 
-dResponse:Dlg_Auth_Log_Password(playerid)
+dResponse:DlgAuthLogPassword(playerid)
 {
     if(response)
     {
         if(!strlen(inputtext))
         {
             SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Все поля должны быть заполнены.");
-            return Dialog_Show(playerid, Dialog:Dlg_Auth_Log_Password);
+            return Dialog_Show(playerid, Dialog:DlgAuthLogPassword);
         }
 
         if(!(MIN_PASSWORD_LEN < strlen(inputtext) < MAX_PASSWORD_LEN))
         {
             SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Пароль слишком длинный или короткий.");
-            return Dialog_Show(playerid, Dialog:Dlg_Auth_Log_Password);
+            return Dialog_Show(playerid, Dialog:DlgAuthLogPassword);
         }
 
         new Regex:regex_password_check = Regex_New("^[a-zA-Z0-9]{1,}$");
@@ -73,7 +73,7 @@ dResponse:Dlg_Auth_Log_Password(playerid)
             if(cache_num_rows())
             {
                 DataGetPlayerInfo(playerid);
-                Player_CharacterShow(playerid);
+                PlayerCharacterShow(playerid);
                 SCM(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы авторизовались на сервере.");
                 printf("%s Игрок %s(%d) [%s] авторизовался на сервере.", DEBUG_INFO, PInfo[playerid][Nick], playerid, PInfo[playerid][LastIP]);
 
@@ -91,7 +91,7 @@ dResponse:Dlg_Auth_Log_Password(playerid)
                 else
                 {
                     SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Пароль введён неверно. Осталось %d попыток.", PInfo[playerid][AuthorizationCountTry]);
-                    Dialog_Show(playerid, Dialog:Dlg_Auth_Log_Password);
+                    Dialog_Show(playerid, Dialog:DlgAuthLogPassword);
                 }
             }
             cache_delete(cache);
@@ -99,7 +99,7 @@ dResponse:Dlg_Auth_Log_Password(playerid)
         else
         {
             SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Пароль может состоять из цифр/чисел и латинских символов.");
-            Dialog_Show(playerid, Dialog:Dlg_Auth_Log_Password);
+            Dialog_Show(playerid, Dialog:DlgAuthLogPassword);
         }
         Regex_Delete(regex_password_check);
     }
@@ -108,41 +108,41 @@ dResponse:Dlg_Auth_Log_Password(playerid)
     return 1;
 }
 
-dCreate:Dlg_Auth_Reg_Password(playerid)
+dCreate:DlgAuthRegPassword(playerid)
 {
     static const message[] = "\
     "C_WHITE"\n\\cДобро пожаловать на сервер "C_EMERALD""SERVER_NAME" "C_WHITE"| "C_EMERALD""SERVER_TYPE""C_WHITE".\n\
     "C_WHITE"\\cНа данный логин не зарегистрировано ни одного аккаунта.\n\
     "C_WHITE"\\cДля регистрации, введите пароль в поле ввода и нажмите "C_EMERALD"\"Далее\""C_WHITE".\n\n";
-    return Dialog_Open(playerid, Dialog:Dlg_Auth_Reg_Password, DIALOG_STYLE_INPUT, ""C_GRAY"Аутентификация "C_BLACK"| "C_WHITE"Регистрация", message, "Далее", "Выход");
+    return Dialog_Open(playerid, Dialog:DlgAuthRegPassword, DIALOG_STYLE_INPUT, ""C_GRAY"Аутентификация "C_BLACK"| "C_WHITE"Регистрация", message, "Далее", "Выход");
 }
 
-dResponse:Dlg_Auth_Reg_Password(playerid)
+dResponse:DlgAuthRegPassword(playerid)
 {
     if(response)
     {
         if(!strlen(inputtext))
         {
             SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Все поля должны быть заполнены.");
-            return Dialog_Show(playerid, Dialog:Dlg_Auth_Reg_Password);
+            return Dialog_Show(playerid, Dialog:DlgAuthRegPassword);
         }
 
         if(!(MIN_PASSWORD_LEN < strlen(inputtext) < MAX_PASSWORD_LEN))
         {
             SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Пароль слишком длинный или короткий.");
-            return Dialog_Show(playerid, Dialog:Dlg_Auth_Reg_Password);
+            return Dialog_Show(playerid, Dialog:DlgAuthRegPassword);
         }
 
         new Regex:regex_password_check = Regex_New("^[a-zA-Z0-9]{1,}$");
         if(Regex_Check(inputtext, regex_password_check))
         {
             strmid(PInfo[playerid][Password], inputtext, 0, strlen(inputtext), MAX_PASSWORD_LEN);
-            Dialog_Show(playerid, Dialog:Dlg_Auth_Reg_Email);
+            Dialog_Show(playerid, Dialog:DlgAuthRegEmail);
         }
         else
         {
             SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Пароль может состоять из цифр/чисел и латинских символов.");
-            Dialog_Show(playerid, Dialog:Dlg_Auth_Reg_Password);
+            Dialog_Show(playerid, Dialog:DlgAuthRegPassword);
         }
         Regex_Delete(regex_password_check);
     }
@@ -151,28 +151,28 @@ dResponse:Dlg_Auth_Reg_Password(playerid)
     return 1;
 }
 
-dCreate:Dlg_Auth_Reg_Email(playerid)
+dCreate:DlgAuthRegEmail(playerid)
 {
     static const message[] = "\
     "C_WHITE"\n\\cТеперь пройдём по безопасности.\n\
     "C_WHITE"\\cВведите свою электронную почту в поле ввода и нажмите "C_EMERALD"\"Далее\""C_WHITE".\n\n";
-    return Dialog_Open(playerid, Dialog:Dlg_Auth_Reg_Email, DIALOG_STYLE_INPUT, ""C_GRAY"Аутентификация "C_BLACK"| "C_WHITE"Регистрация", message, "Далее", "");
+    return Dialog_Open(playerid, Dialog:DlgAuthRegEmail, DIALOG_STYLE_INPUT, ""C_GRAY"Аутентификация "C_BLACK"| "C_WHITE"Регистрация", message, "Далее", "");
 }
 
-dResponse:Dlg_Auth_Reg_Email(playerid)
+dResponse:DlgAuthRegEmail(playerid)
 {
     if(response)
     {
         if(!strlen(inputtext))
         {
             SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Все поля должны быть заполнены.");
-            return Dialog_Show(playerid, Dialog:Dlg_Auth_Reg_Email);
+            return Dialog_Show(playerid, Dialog:DlgAuthRegEmail);
         }
 
         if(!(MIN_EMAIL_LEN < strlen(inputtext) < MAX_EMAIL_LEN))
         {
             SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Адрес электронной почты слишком длинный или короткий.");
-            return Dialog_Show(playerid, Dialog:Dlg_Auth_Reg_Email);
+            return Dialog_Show(playerid, Dialog:DlgAuthRegEmail);
         }
 
         new Regex:regex_email_check = Regex_New("^[a-zA-Z0-9.-_]{1,43}@[a-zA-Z]{1,12}.[a-zA-Z]{1,8}$");
@@ -195,7 +195,7 @@ dResponse:Dlg_Auth_Reg_Email(playerid)
             new Cache:cache = mysql_query(SInfo[MySQL], mysql, true);
             if(cache_num_results())
             {
-                Player_CharacterShow(playerid);
+                PlayerCharacterShow(playerid);
                 SCM(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы зарегистрировались на сервере.");
                 printf("%s Игрок %s(%d) [%s] зарегистрировался на сервере.", DEBUG_INFO, PInfo[playerid][Nick], playerid, PInfo[playerid][RegIP]);
             }
@@ -204,7 +204,7 @@ dResponse:Dlg_Auth_Reg_Email(playerid)
         else
         {
             SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Неверный адрес электронной почты.");
-            Dialog_Show(playerid, Dialog:Dlg_Auth_Reg_Email);
+            Dialog_Show(playerid, Dialog:DlgAuthRegEmail);
         }
         Regex_Delete(regex_email_check);
     }

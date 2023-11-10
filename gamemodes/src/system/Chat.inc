@@ -80,3 +80,17 @@ stock ChatSendMessage(playerid, Float:max_range, color, string[], Float:max_rati
     SendClientMessage(playerid, color, string);
     return 1;
 }
+
+/*      [ ОТПРАВКА ГЛОБАЛЬНЫХ СООБЩЕНИЙ В ЧАТ ]      */
+/*      [ SENDING GLOBAL CHAT MESSAGES ]      */
+stock ChatSendGlobalMessage(message[])
+{
+    foreach(new i : Player)
+    {
+        if(PInfo[i][IsLogged])
+        {
+            SCMf(i, -1, message);
+        }
+    }
+    return 1;
+}

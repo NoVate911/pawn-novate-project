@@ -1,6 +1,6 @@
 /*      [ СЕКУНДНЫЙ ТАЙМЕР ДЛЯ СЕРВЕРА ]      */
 /*      [ SECOND TIMER FOR THE SERVER ]      */
-function Timer_OnServerSecond()
+function TimerOnServerSecond()
 {
     // Получение времени | Getting the time
     gettime(TInfo[Hour], TInfo[Minute], TInfo[Second]);
@@ -18,5 +18,5 @@ function Timer_OnServerSecond()
     if(PayDayCheck())
         PayDayLaunch();
 
-    return STimerInfo[Second] = SetTimer("Timer_OnServerSecond", 1000, false);
+    return STimerInfo[Second] = SetTimer("TimerOnServerSecond", 1000, false);
 }

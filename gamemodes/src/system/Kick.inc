@@ -6,7 +6,7 @@ stock KickPlayer(playerid, author[]="Сервер", reason[]="Неизвестн
     strmid(PKickInfo[playerid][Reason], reason, 0, strlen(reason), MAX_PLAYER_NAME*2);
 
     if(showDialog)
-        Dialog_Show(playerid, Dialog:Dlg_Kick);
+        Dialog_Show(playerid, Dialog:DlgKick);
     ChatClear(playerid);
     SCM(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Для отключения от сервера, используйте "C_YELLOW"/q"C_WHITE".");
     return PTimerInfo[playerid][Kicks] = SetTimerEx("TimerOnPlayerKick", 200, false, "i", playerid);

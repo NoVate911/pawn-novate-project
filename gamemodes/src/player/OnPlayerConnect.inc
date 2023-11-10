@@ -23,14 +23,14 @@ public OnPlayerConnect(playerid)
         }
     }
 
-    return PTimerInfo[playerid][Authorization] = SetTimerEx("Timer_OnPlayerConnect", 200, false, "i", playerid);
+    return PTimerInfo[playerid][Authorization] = SetTimerEx("TimerOnPlayerConnect", 200, false, "i", playerid);
 }
 
 /*      [ ========== ========== ========== ========== ========== ]      */
 
 /*      [ ТАЙМЕР НА ПОДКЛЮЧЕНИЕ ]      */
 /*      [ CONNECTION TIMER ]      */
-function Timer_OnPlayerConnect(playerid)
+function TimerOnPlayerConnect(playerid)
 {
     KillTimer(PTimerInfo[playerid][Authorization]);
     PInfo[playerid][IsConnection] = true;
@@ -52,13 +52,13 @@ function Timer_OnPlayerConnect(playerid)
     {
         PInfo[playerid][AuthorizationTime] = MAX_AUTHORIZATION_TIME;
         PInfo[playerid][AuthorizationCountTry] = AUTHORIZATION_COUNT_TRY;
-        Dialog_Show(playerid, Dialog:Dlg_Auth_Log_Password);
+        Dialog_Show(playerid, Dialog:DlgAuthLogPassword);
     }
     else
     {
         PInfo[playerid][AuthorizationTime] = MAX_REGISTRATION_TIME;
-        Dialog_Show(playerid, Dialog:Dlg_Auth_Reg_Password);
+        Dialog_Show(playerid, Dialog:DlgAuthRegPassword);
     }
     cache_delete(cache);
-    return PTimerInfo[playerid][Second] = SetTimerEx("Timer_OnPlayerSecond", 1000, false, "i", playerid);
+    return PTimerInfo[playerid][Second] = SetTimerEx("TimerOnPlayerSecond", 1000, false, "i", playerid);
 }

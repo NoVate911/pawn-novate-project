@@ -544,18 +544,62 @@ cmd:setadmin(playerid, params[]) // Выдать игроку права Адм�
             if(CInfo[params[0]][PInfo[params[0]][CharacterSelect]][AdminLevel] == 0)
             {
                 CInfo[params[0]][PInfo[params[0]][CharacterSelect]][AdminLevel] = 1;
-                CInfo[params[0]][PInfo[params[0]][CharacterSelect]][AdminPassword] = 0000;
+                CInfo[params[0]][PInfo[params[0]][CharacterSelect]][AdminPassword] = 1234;
                 new message_admin[74+(-2+MAX_PLAYER_NAME)+(-2+MAX_PLAYER_NAME)+(-2+4)+(-2+MAX_PLAYER_NAME)+(-2+MAX_PLAYER_NAME)+(-2+4)];
                 format(message_admin, sizeof(message_admin), ""C_LIGHTGRAY"Администратор %s %s(%d) выдал %s %s(%d) права Администратора.", CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0]);
                 ChatSendMessageToAdmin(message_admin);
                 SCMf(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы выдали %s %s(%d) права Администратора.", CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0]);
-                SCM(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вам были выданы права Администратора.");
+                SCM(params[0], -1, ""NOTIF_SUCCESS" "C_WHITE"Вам были выданы права Администратора.");
+                SCM(params[0], -1, ""NOTIF_SUCCESS" "C_WHITE"Стандартный пароль установлен на "C_GREEN"\"1234\""C_WHITE". Для смены обратитесь к старшему Администратору.");
                 printf("%s Администратор %s %s(%d) [%s:%s] выдал %s %s(%d) [%s:%s] права Администратора.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][Login], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP]);
             }
             else
             {
                 SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У данного игрока уже есть права Администратора.");
                 printf("%s Администратор %s %s(%d) [%s:%s] попытался выдать %s %s(%d) [%s:%s] права Администратора.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][Login], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP]);
+            }
+        }
+    }
+    else
+        SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""COMMAND_NOT_FOUND"");
+    return 1;
+}
+
+cmd:takeadmin(playerid, params[]) // Забрать права Администратора у игрока | Take away the Administrator rights from the player
+{
+    if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
+    {
+        if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
+        {
+            if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] < 6)
+                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У Вас недостаточно прав для выполнения данной команды.");
+
+            if(sscanf(params, "d", params[0]))
+                return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE""COMMAND_INVALID"", "takeadmin [ID]");
+
+            if(!PInfo[params[0]][IsLogged])
+                return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_FOUND"");
+
+            if(params[0] == playerid)
+                return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_ME"");
+
+            if(CInfo[params[0]][PInfo[params[0]][CharacterSelect]][AdminLevel] > CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel])
+                return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_VALID"");
+
+            if(CInfo[params[0]][PInfo[params[0]][CharacterSelect]][AdminLevel] > 0)
+            {
+                CInfo[params[0]][PInfo[params[0]][CharacterSelect]][AdminLevel] = 0;
+                new message_admin[77+(-2+MAX_PLAYER_NAME)+(-2+MAX_PLAYER_NAME)+(-2+4)+(-2+MAX_PLAYER_NAME)+(-2+MAX_PLAYER_NAME)+(-2+4)];
+                format(message_admin, sizeof(message_admin), ""C_LIGHTGRAY"Администратор %s %s(%d) забрал у %s %s(%d) права Администратора.", CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0]);
+                ChatSendMessageToAdmin(message_admin);
+                SCMf(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы забрали у %s %s(%d) права Администратора.", CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0]);
+                printf("%s Администратор %s %s(%d) [%s:%s] забрал у %s %s(%d) [%s:%s] права Администратора.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][Login], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP]);
+                KickPlayer(params[0], CInfo[playerid][PInfo[playerid][CharacterSelect]][FullName], "Снятие с Администратора");
+            }
+            else
+            {
+                SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У данного игрока и так нет прав Администратора.");
+                printf("%s Администратор %s %s(%d) [%s:%s] попытался забрать у %s %s(%d) [%s:%s] права Администратора.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][Login], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP]);
             }
         }
     }
@@ -585,8 +629,11 @@ cmd:kick(playerid, params[]) // Кикнуть игрока с сервера | 
             if(CInfo[params[0]][PInfo[params[0]][CharacterSelect]][AdminLevel] > CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel])
                 return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_VALID"");
 
-            KickPlayer(params[0], CInfo[playerid][PInfo[playerid][CharacterSelect]][FullName], params[1]);
+            new message[45+(-2+MAX_PLAYER_NAME)+(-2+MAX_PLAYER_NAME)+(-2+MAX_PLAYER_NAME)+(-2+MAX_PLAYER_NAME)+(-2+MAX_PLAYER_NAME*2)];
+            format(message, sizeof(message), ""C_RED"Администратор %s %s кикнул %s %s. Причина: %s", CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[1]);
+            ChatSendGlobalMessage(message);
             printf("%s Администратор %s %s(%d) [%s:%s] кикнул %s %s(%d) [%s:%s]. Причина: %s", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][Login], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP], params[1]);
+            KickPlayer(params[0], CInfo[playerid][PInfo[playerid][CharacterSelect]][FullName], params[1]);
         }
     }
     else
