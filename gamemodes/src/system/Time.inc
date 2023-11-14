@@ -14,6 +14,12 @@ stock TimeSet(bool:isOwn = false, hour = 0, minute = 0)
                 SetPlayerTime(i, TInfo[Hour], TInfo[Minute]);
         }
     }
+    new string[9+(-2+2)+(-2+2)];
+    if(isOwn)
+        format(string, sizeof(string), "%02d:%02d", hour, minute);
+    else
+        format(string, sizeof(string), "%02d:%02d", TInfo[Hour], TInfo[Minute]);
+    TextDrawSetString(TDInfo[Time], string);
     return 1;
 }
 
@@ -30,5 +36,11 @@ stock TimeSetPlayer(playerid, bool:isOwn = false, hour = 0, minute = 0)
         else // Нет | No
             SetPlayerTime(playerid, TInfo[Hour], TInfo[Minute]);
     }
+    new string[9+(-2+2)+(-2+2)];
+    if(isOwn)
+        format(string, sizeof(string), "%02d:%02d", hour, minute);
+    else
+        format(string, sizeof(string), "%02d:%02d", TInfo[Hour], TInfo[Minute]);
+    TextDrawSetString(TDInfo[Time], string);
     return 1;
 }

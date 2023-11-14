@@ -24,6 +24,7 @@ stock PlayerSpawnAfterAuthorization(playerid)
     SetPlayerHealth(playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Health]);
     SetPlayerArmour(playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Armour]);
     SetPlayerColor(playerid, 0xFFFFFF22);
+    TextDrawShowForPlayer(playerid, TDInfo[Time]);
     PInfo[playerid][IsLogged] = true;
     CInfo[playerid][PInfo[playerid][CharacterSelect]][IsSpawning] = true;
     format(CInfo[playerid][PInfo[playerid][CharacterSelect]][FullName], MAX_PLAYER_NAME, "%s_%s", CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName]);

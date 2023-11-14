@@ -18,3 +18,9 @@ enum VehicleInfo
 }
 new VInfo[MAX_VEHICLES][VehicleInfo];
 new Vehicle_Count; // Количество созданного транспорта | Number of vehicles created
+
+enum TextDrawInfo
+{
+    Text:Time
+}
+new TDInfo[TextDrawInfo];
