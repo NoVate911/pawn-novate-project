@@ -27,5 +27,6 @@ public OnPlayerDisconnect(playerid, reason)
     DataClearPlayerAFKInfo(playerid);
     DataClearAdminSpectateInfo(playerid);
     DataClearPlayerWorksInfo(playerid);
+    DataClearPlayerTextDrawInfo(playerid);
     return 1;
 }

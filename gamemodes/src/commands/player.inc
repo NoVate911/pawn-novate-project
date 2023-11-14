@@ -91,3 +91,10 @@ cmd:do(playerid, params[])
     }
     return 1;
 }
+
+cmd:td(playerid, params[])
+{
+    new string[4+(-2+4)];
+    format(string, sizeof(string), "+%d$", (random(1000 - 1) + 1));
+    TextDrawNotificationShow(playerid, string);
+}

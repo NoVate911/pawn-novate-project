@@ -19,8 +19,18 @@ enum VehicleInfo
 new VInfo[MAX_VEHICLES][VehicleInfo];
 new Vehicle_Count; // Количество созданного транспорта | Number of vehicles created
 
+/*      [ ПЕРЕМЕННЫЕ ИНТЕРФЕЙСА (сервер) ]      */
+/*      [ INTERFACE VARIABLES (server) ]      */
 enum TextDrawInfo
 {
     Text:Time
 }
 new TDInfo[TextDrawInfo];
+
+/*      [ ПЕРЕМЕННЫЕ ИНТЕРФЕЙСА (игрок) ]      */
+/*      [ INTERFACE VARIABLES (player) ]      */
+enum PlayerTextDrawInfo
+{
+    PlayerText:Notification
+}
+new PTDInfo[MAX_PLAYERS][PlayerTextDrawInfo];

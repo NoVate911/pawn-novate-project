@@ -29,6 +29,7 @@ enum PlayerTimerInfo
     Authorization,
     Kicks,
     Animation,
+    Notification,
 
     Second
 }

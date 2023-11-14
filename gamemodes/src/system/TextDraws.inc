@@ -1,6 +1,6 @@
 stock TextDrawsCreateForServer()
 {
-    // Время / Time
+    // Время | Time
     TDInfo[Time] = TextDrawCreate(577.333435, 24.474081, "00:00");
     TextDrawLetterSize(TDInfo[Time], 0.449999, 1.600000);
     TextDrawAlignment(TDInfo[Time], 2);
@@ -11,4 +11,39 @@ stock TextDrawsCreateForServer()
     TextDrawFont(TDInfo[Time], 3);
     TextDrawSetProportional(TDInfo[Time], 1);
     return 1;
+}
+
+stock TextDrawsCreateForPlayer(playerid)
+{
+    // Уведомления | Notifications
+    PTDInfo[playerid][Notification] = CreatePlayerTextDraw(playerid, 83.333328, 309.452148, "+666$");
+    PlayerTextDrawLetterSize(playerid, PTDInfo[playerid][Notification], 0.449999, 1.600000);
+    PlayerTextDrawAlignment(playerid, PTDInfo[playerid][Notification], 2);
+    PlayerTextDrawColor(playerid, PTDInfo[playerid][Notification], -1);
+    PlayerTextDrawSetShadow(playerid, PTDInfo[playerid][Notification], 0);
+    PlayerTextDrawSetOutline(playerid, PTDInfo[playerid][Notification], 1);
+    PlayerTextDrawBackgroundColor(playerid, PTDInfo[playerid][Notification], 51);
+    PlayerTextDrawFont(playerid, PTDInfo[playerid][Notification], 3);
+    PlayerTextDrawSetProportional(playerid, PTDInfo[playerid][Notification], 1);
+    return 1;
+}
+
+/*      [ ОТОБРАЖЕНИЕ УВЕДОМЛЕНИЙ ]      */
+/*      [ DISPLAYING NOTIFICATIONS ]      */
+stock TextDrawNotificationShow(playerid, message[], color = -1)
+{
+    PlayerTextDrawSetString(playerid, PTDInfo[playerid][Notification], message);
+    PlayerTextDrawColor(playerid, PTDInfo[playerid][Notification], color);
+    PlayerTextDrawShow(playerid, PTDInfo[playerid][Notification]);
+    if(PTimerInfo[playerid][Notification])
+        KillTimer(PTimerInfo[playerid][Notification]);
+    PlayerPlaySound(playerid, 1054, 0.0, 0.0, 0.0);
+    PTimerInfo[playerid][Notification] = SetTimerEx("TimerOnTextDrawNotificationShow", 2000, false, "i", playerid);
+    return 1;
+}
+
+function TimerOnTextDrawNotificationShow(playerid)
+{
+    PlayerTextDrawHide(playerid, PTDInfo[playerid][Notification]);
+    return KillTimer(PTimerInfo[playerid][Notification]);
 }

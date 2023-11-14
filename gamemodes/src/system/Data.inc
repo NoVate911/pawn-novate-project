@@ -125,6 +125,14 @@ stock DataClearPlayerWorksInfo(playerid)
     return 1;
 }
 
+/*      [ ОБНУЛЯЕМ ИНФОРМАЦИЮ О ИНТЕРФЕЙСЕ ИГРОКА ]      */
+/*      [ WE RESET THE INFORMATION ABOUT THE PLAYER INTERFACE ]      */
+stock DataClearPlayerTextDrawInfo(playerid)
+{
+    PlayerTextDrawDestroy(playerid, PTDInfo[playerid][Notification]);
+    return 1;
+}
+
 /*      [ ПОЛУЧАЕМ ДАННЫЕ ИГРОКА ИЗ БАЗЫ ДАННЫХ ]      */
 /*      [ GETTING PLAYER DATA FROM THE DATABASE ]      */
 stock DataGetPlayerInfo(playerid)

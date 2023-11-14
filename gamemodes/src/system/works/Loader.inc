@@ -65,6 +65,7 @@ stock WorkLoaderLVEnterDynamicCP(playerid, checkpointid)
                         SetPlayerSpecialAction(playerid, 0);
                         RemovePlayerAttachedObject(playerid, 2);
                         ApplyAnimation(playerid, "CARRY", "PUTDWN05", 4.0, 0, 0, 0, 0, 0, 1);
+                        TextDrawNotificationShow(playerid, "+1");
                     }
                     else
                     {
@@ -136,7 +137,12 @@ dResponse:DlgWorkLoaderLVUninvite(playerid)
         MoneyGive(playerid, PlayerWLLVInfo[playerid][MovedBoxCount] * WORK_LOADER_LV_PRICE_PER_BOX);
         SCM(playerid, -1, ""NOTIF_INFO" "C_WHITE"Вы закончили работу грузчика.");
         if(PlayerWLLVInfo[playerid][MovedBoxCount] > 0)
+        {
             SCMf(playerid, -1, ""NOTIF_INFO" "C_WHITE"За перенос %d ящиков получено %d$.", PlayerWLLVInfo[playerid][MovedBoxCount], PlayerWLLVInfo[playerid][MovedBoxCount] * WORK_LOADER_LV_PRICE_PER_BOX);
+            new string[4+(-2+8)];
+            format(string, sizeof(string), "+%d$", PlayerWLLVInfo[playerid][MovedBoxCount] * WORK_LOADER_LV_PRICE_PER_BOX);
+            TextDrawNotificationShow(playerid, string, C_F_GREEN);
+        }
         CInfo[playerid][PInfo[playerid][CharacterSelect]][Working] = false;
         PlayerWLLVInfo[playerid][MovedBoxCount] = 0;
         DestroyDynamicCP(PlayerWLLVInfo[playerid][Checkpoint]);
