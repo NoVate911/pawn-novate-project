@@ -3,10 +3,10 @@ new const Float:WorkDiverLVPositionsBalloon[WORK_DIVER_LV_TAKE_BALLOON_POINT][3]
     {-1382.2135, 2114.1858, 42.2000}
 };
 new const Float:WorkDiverLVPositionsMarks[WORK_DIVER_LV_MARK_POINT][3] = { // Позиции меток | Placemark positions
-    {-1264.9594, 2130.3674, 31.1240},
-    {-1255.9902, 2121.3491, 30.1487},
-    {-1235.5114, 2143.7822, 32.4737},
-    {-1226.3005, 2121.7324, 26.6363}
+    {-1264.9594, 2130.3674, 40.0},
+    {-1255.9902, 2121.3491, 40.0},
+    {-1235.5114, 2143.7822, 40.0},
+    {-1226.3005, 2121.7324, 40.0}
 };
 
 /*      [ ========== ========== ========== ========== ========== ]      */
@@ -45,7 +45,9 @@ stock WorkDiverLVKeyStateChange(playerid, newkeys)
                     {
                         DestroyDynamicCP(PWInfo[playerid][Checkpoint]);
                         PWInfo[playerid][DiverTotalTakenMarkCount]++;
-                        NotificationShow(playerid, PWInfo[playerid][DiverTotalTakenMarkCount], _, false);
+                        new string[2+(-2+2)];
+                        format(string, sizeof(string), "%d", PWInfo[playerid][DiverTotalTakenMarkCount]);
+                        NotificationShow(playerid, string, _, false);
                         if(PWInfo[playerid][DiverTakenMarkCount] >= WORK_DIVER_LV_MARK_POINT)
                         {
                             SCM(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Баллон с воздухом на исходе! Вернитесь на пристань и возьмите новый.");
@@ -56,7 +58,7 @@ stock WorkDiverLVKeyStateChange(playerid, newkeys)
                         else
                         {
                             new const rand = random(WORK_DIVER_LV_MARK_POINT);
-                            PWInfo[playerid][Checkpoint] = CreateDynamicCP(WorkDiverLVPositionsMarks[rand][0], WorkDiverLVPositionsMarks[rand][1], WorkDiverLVPositionsMarks[rand][2], 3.0, 0, 0, playerid);
+                            PWInfo[playerid][Checkpoint] = CreateDynamicCP(WorkDiverLVPositionsMarks[rand][0], WorkDiverLVPositionsMarks[rand][1], 40.0, 3.0, 0, 0, playerid);
                             for(new pos = 0; pos < 3; pos++)
                                 PWInfo[playerid][DiverCheckpointPosition][pos] = WorkDiverLVPositionsMarks[rand][pos];
                             PWInfo[playerid][DiverTakenMarkCount]++;
@@ -82,13 +84,15 @@ stock WorkDiverLVEnterDynamicCP(playerid, checkpointid)
                     if(!PWInfo[playerid][DiverIsAir])
                     {
                         DestroyDynamicCP(PWInfo[playerid][Checkpoint]);
-                        SCM(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы получили кислородный баллон. Отправляйтесь на поиски потерянных вещей под водой.");
+                        SCM(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы получили кислородный баллон. Отправляйтесь на сбор мусора.");
                         new const rand = random(WORK_DIVER_LV_MARK_POINT);
-                        PWInfo[playerid][Checkpoint] = CreateDynamicCP(WorkDiverLVPositionsMarks[rand][0], WorkDiverLVPositionsMarks[rand][1], WorkDiverLVPositionsMarks[rand][2], 3.0, 0, 0, playerid);
+                        PWInfo[playerid][Checkpoint] = CreateDynamicCP(WorkDiverLVPositionsMarks[rand][0], WorkDiverLVPositionsMarks[rand][1], 40.0, 3.0, 0, 0, playerid);
                         for(new pos = 0; pos < 3; pos++)
                             PWInfo[playerid][DiverCheckpointPosition][pos] = WorkDiverLVPositionsMarks[rand][pos];
                         PWInfo[playerid][DiverIsAir] = true;
                     }
+                    else
+                        NotificationShow(playerid, "L.ALT", C_F_YELLOW, false);
                 }
             }
         }
@@ -103,10 +107,10 @@ dCreate:DlgWorkDiverLVInvite(playerid)
     static const message[] = "\
     "C_WHITE"\nДолматинец: "C_LIGHTGRAY"Привет! Сразу к делу. Меня зовут Долма, но в местных кругах я Долматинец.\n\
     "C_LIGHTGRAY"Это хороший пляж на котором люди отдыхают, плавают и веселяться.\n\
-    "C_LIGHTGRAY"Некоторые из отдыхающих теряют вещи под водой во время плавания, а я их собираю и продаю.\n\
-    "C_LIGHTGRAY"За каждую потерянную вещь ты получаешь %d$. Поможешь?\n\n\
-    "C_WHITE"Сложность: "C_LIGHTGRAY"средняя"C_WHITE".\n\
-    "C_WHITE"Зарплата: "C_LIGHTGRAY"%d$ за найденную вещь"C_WHITE".\n\n";
+    "C_LIGHTGRAY"Некоторые из отдыхающих мусорят, теряют вещи и пакостят. Пакости - дело полиции, а вот мусор - моё..\n\
+    "C_LIGHTGRAY"За каждый предмет, который соберёшь ты получаешь %d$. Поможешь?\n\n\
+    "C_WHITE"Сложность: "C_LIGHTGRAY"очень просто"C_WHITE".\n\
+    "C_WHITE"Зарплата: "C_LIGHTGRAY"%d$ за найденный мусор"C_WHITE".\n\n";
     new string[sizeof(message)+(-2+8)+(-2+8)];
     format(string, sizeof(string), message, WORK_DIVER_LV_PRICE_PER_MARK, WORK_DIVER_LV_PRICE_PER_MARK);
     return Dialog_Open(playerid, Dialog:DlgWorkDiverLVInvite, DIALOG_STYLE_MSGBOX, ""C_GRAY"Долматинец "C_BLACK"| "C_WHITE"Трудоустройство", string, "Да", "Нет");
@@ -122,7 +126,7 @@ dResponse:DlgWorkDiverLVInvite(playerid)
         CInfo[playerid][PInfo[playerid][CharacterSelect]][WorkingType] = WORK_DIVER_LV_ID;
         PWInfo[playerid][Checkpoint] = CreateDynamicCP(WorkDiverLVPositionsBalloon[random(WORK_DIVER_LV_TAKE_BALLOON_POINT)][0], WorkDiverLVPositionsBalloon[random(WORK_DIVER_LV_TAKE_BALLOON_POINT)][1], WorkDiverLVPositionsBalloon[random(WORK_DIVER_LV_TAKE_BALLOON_POINT)][2], 3.0, 0, 0, playerid);
         SCM(playerid, -1, ""NOTIF_INFO" "C_WHITE"Вы трудоустроились на работу дайвера.");
-        SCM(playerid, -1, ""NOTIF_INFO" "C_WHITE"Берите баллон с кислородом и плывите на поиски потерянных вещей. За каждую найденную вещь вы получаете денежное вознаграждение.");
+        SCM(playerid, -1, ""NOTIF_INFO" "C_WHITE"Берите баллон с кислородом и плывите на поиски мусора. За каждый найденный мусор Вы получаете денежное вознаграждение.");
         SCM(playerid, -1, ""NOTIF_INFO" "C_WHITE"По окончанию работы обратитесь к Долматинцу.");
     }
     return 1;
@@ -132,9 +136,9 @@ dCreate:DlgWorkDiverLVUninvite(playerid)
 {
     static const message[] = "\
     "C_WHITE"\nДолматинец: "C_LIGHTGRAY"Это отлично! Ты большой молодец!\n\
-    "C_LIGHTGRAY"Я смогу это продать и получить хорошие деньги, хе-хе-хе..\n\
-    "C_LIGHTGRAY"Ты хочешь закончить поиск вещей?\n\n\
-    "C_WHITE"Найдено вещей: "C_LIGHTGRAY"%d штук"C_WHITE".\n\
+    "C_LIGHTGRAY"Я смогу это сдать и получить хорошие деньги, хе-хе-хе..\n\
+    "C_LIGHTGRAY"Ты хочешь закончить сбор мусора?\n\n\
+    "C_WHITE"Найдено мусора: "C_LIGHTGRAY"%d штук"C_WHITE".\n\
     "C_WHITE"Заработано: "C_LIGHTGRAY"%d$"C_WHITE".\n\n";
     new string[sizeof(message)+(-2+8)+(-2+8)];
     format(string, sizeof(string), message, PWInfo[playerid][DiverTotalTakenMarkCount], PWInfo[playerid][DiverTotalTakenMarkCount] * WORK_DIVER_LV_PRICE_PER_MARK);
@@ -151,7 +155,7 @@ dResponse:DlgWorkDiverLVUninvite(playerid)
         SCM(playerid, -1, ""NOTIF_INFO" "C_WHITE"Вы закончили работу дайвера.");
         if(PWInfo[playerid][DiverTotalTakenMarkCount] > 0)
         {
-            SCMf(playerid, -1, ""NOTIF_INFO" "C_WHITE"За найденные %d вещей Вы получили %d$.", PWInfo[playerid][DiverTotalTakenMarkCount], PWInfo[playerid][DiverTotalTakenMarkCount] * WORK_DIVER_LV_PRICE_PER_MARK);
+            SCMf(playerid, -1, ""NOTIF_INFO" "C_WHITE"За найденные %d мусора Вы получили %d$.", PWInfo[playerid][DiverTotalTakenMarkCount], PWInfo[playerid][DiverTotalTakenMarkCount] * WORK_DIVER_LV_PRICE_PER_MARK);
             new string[4+(-2+8)];
             format(string, sizeof(string), "+%d$", PWInfo[playerid][DiverTotalTakenMarkCount] * WORK_DIVER_LV_PRICE_PER_MARK);
             NotificationShow(playerid, string, C_F_GREEN);

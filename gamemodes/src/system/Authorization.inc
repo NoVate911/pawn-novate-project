@@ -30,7 +30,8 @@ stock PlayerSpawnAfterAuthorization(playerid)
     CInfo[playerid][PInfo[playerid][CharacterSelect]][IsSpawning] = true;
     format(CInfo[playerid][PInfo[playerid][CharacterSelect]][FullName], MAX_PLAYER_NAME, "%s_%s", CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName]);
     SetPlayerName(playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][FullName]);
-    FreezePlayer(playerid);
+    if(CInfo[playerid][PInfo[playerid][CharacterSelect]][Interior] != 0 || CInfo[playerid][PInfo[playerid][CharacterSelect]][VirtualWorld] != 0)
+        FreezePlayer(playerid);
     printf("%s Игрок %s(%d) [%s] был заспавнен под персонажем %s %s", DEBUG_INFO, PInfo[playerid][Nick], playerid, PInfo[playerid][LastIP], CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName]);
     return 1;
 }
