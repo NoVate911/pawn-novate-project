@@ -19,20 +19,20 @@ public OnPlayerText(playerid, text[])
     new message[128];
     if(strlen(text) > 60)
     {
-        new first[24+(-2+MAX_PLAYER_NAME)+(-2+MAX_PLAYER_NAME)+(-2+4)+(-2+1)+(-2+61)], second[4+(-2+124)];
-        strmid(message, text, 64, 128, 128);
-        strdel(text, 64, 128);
-        format(first, sizeof(first), "%s %s(%d) сказал%s: %s..", CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, (CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName] == 0 ? ("а") : ("")), text);
-        ChatSendMessage(playerid, 10.0, C_F_WHITE, first);
+        new first[24+(-2+MAX_PLAYER_NAME)+(-2+MAX_PLAYER_NAME)+(-2+4)+(-2+1)+(-2+61)], second[4+(-2+126)];
+        strmid(message, text, 61, 128, 128);
+        strdel(text, 61, 128);
+        format(first, sizeof(first), "%s %s(%d) сказал%s: %s..", CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, (CInfo[playerid][PInfo[playerid][CharacterSelect]][Sex] == 0 ? ("а") : ("")), text);
+        ChatSendMessage(playerid, MAX_DISTANCE_CHAT, C_F_WHITE, first);
         format(second, sizeof(second), "..%s", message);
-        ChatSendMessage(playerid, 10.0, C_F_WHITE, second);
-        SetPlayerChatBubble(playerid, second, C_F_WHITE, 10.0, 3000);
+        ChatSendMessage(playerid, MAX_DISTANCE_CHAT, C_F_WHITE, second);
+        SetPlayerChatBubble(playerid, second, C_F_WHITE, MAX_DISTANCE_CHAT/2, 3000);
     }
     else
     {
-        format(message, sizeof(message), "%s %s(%d) сказал%s: %s", CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, (CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName] == 0 ? ("а") : ("")), text);
-        ChatSendMessage(playerid, 10.0, C_F_WHITE, message);
-        SetPlayerChatBubble(playerid, message, C_F_WHITE, 10.0, 3000);
+        format(message, sizeof(message), "%s %s(%d) сказал%s: %s", CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, (CInfo[playerid][PInfo[playerid][CharacterSelect]][Sex] == 0 ? ("а") : ("")), text);
+        ChatSendMessage(playerid, MAX_DISTANCE_CHAT, C_F_WHITE, message);
+        SetPlayerChatBubble(playerid, message, C_F_WHITE, MAX_DISTANCE_CHAT/2, 3000);
     }
 
     if(GetPlayerState(playerid) == PLAYER_STATE_ONFOOT)

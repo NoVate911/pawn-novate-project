@@ -7,6 +7,7 @@ stock AnimationsPreload(playerid)
     
     AnimationPreload(playerid, "PED");
     AnimationPreload(playerid, "CARRY");
+    AnimationPreload(playerid, "ON_LOOKERS");
     return 1;
 }
 
