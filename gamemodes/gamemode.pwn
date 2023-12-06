@@ -43,11 +43,11 @@ main(){}
 #include "./src/String.inc"
 #include "./src/Define.inc"
 #include "./src/system/Define.inc"
-#include "./src/system/works/Define.inc"
+#include "./src/system/initial_works/Define.inc"
 #include "./src/server/Enum.inc"
 #include "./src/Enum.inc"
 #include "./src/system/Enum.inc"
-#include "./src/system/works/Enum.inc"
+#include "./src/system/initial_works/Enum.inc"
 
 /*    [ СИСТЕМЫ ]    */
 /*    [ SYSTEMS ]    */
@@ -71,10 +71,10 @@ main(){}
 #include "./src/system/Money.inc"
 #include "./src/system/Freeze.inc"
 #include "./src/system/Notification.inc"
-#include "./src/system/works/Loader.inc"
-#include "./src/system/works/Farmer.inc"
-#include "./src/system/works/Diver.inc"
-#include "./src/system/works/Init.inc"
+#include "./src/system/initial_works/Loader.inc"
+#include "./src/system/initial_works/Farmer.inc"
+#include "./src/system/initial_works/Diver.inc"
+#include "./src/system/initial_works/Init.inc"
 
 /*    [ СЕРВЕРНАЯ СТОРОНА ]   */
 /*    [ SERVER SIDE ]   */
