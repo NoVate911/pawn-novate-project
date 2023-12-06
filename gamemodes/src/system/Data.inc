@@ -65,6 +65,8 @@ stock DataClearCharacterInfo(playerid)
         CInfo[playerid][i][IsSpawning] = false;
         CInfo[playerid][i][IsDialogActive] = false;
         CInfo[playerid][i][IsFrozen] = false;
+        CInfo[playerid][i][DelaySendMessage] = 0;
+        CInfo[playerid][i][DelaySendCommand] = 0;
 
         CInfo[playerid][i][ID] = 0;
         CInfo[playerid][i][Login] = EOS;

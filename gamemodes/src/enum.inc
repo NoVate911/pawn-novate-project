@@ -62,6 +62,8 @@ enum CharacterInfo
     bool:IsSpawning,
     bool:IsDialogActive,
     bool:IsFrozen,
+    DelaySendMessage,
+    DelaySendCommand,
 
     ID,
     Login[MAX_PLAYER_NAME],

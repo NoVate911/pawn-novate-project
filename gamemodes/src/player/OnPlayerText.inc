@@ -6,7 +6,14 @@ public OnPlayerText(playerid, text[])
     if(!PInfo[playerid][IsLogged])
     {
         SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Для использования чата необходимо авторизоваться.");
-        return KickPlayer(playerid, _, "Не авторизирован");
+        KickPlayer(playerid, _, "Не авторизирован");
+        return 0;
+    }
+
+    if(CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendMessage] > 0)
+    {
+        SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Подождите %d секунд перед отправкой сообщения.", CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendMessage]);
+        return 0;
     }
 
     new message[128];
@@ -42,6 +49,6 @@ public OnPlayerText(playerid, text[])
         if(AFKExit(playerid))
             SCM(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы написали сообщение в чат и автоматически вышли с AFK режима.");
     }
-
+    ChatDelaySendMessage(playerid);
     return 0;
 }

@@ -73,7 +73,7 @@ stock WorkFarmerLVEnterDynamicCP(playerid, checkpointid)
                         PWInfo[playerid][Checkpoint] = CreateDynamicCP(WorkFarmerLVPositionsPut[random(WORK_FARMER_LV_PUT_POINT)][0], WorkFarmerLVPositionsPut[random(WORK_FARMER_LV_PUT_POINT)][1], WorkFarmerLVPositionsPut[random(WORK_FARMER_LV_PUT_POINT)][2], 2.0, 0, 0, playerid);
                         PWInfo[playerid][FarmerIsPickup] = true;
                         SetPlayerSpecialAction(playerid, 25);
-                        SetPlayerAttachedObject(playerid, 2, 2969, 5, 0.01, 0.1, 0.2, -90, 0, 90);
+                        SetPlayerAttachedObject(playerid, 2, 1453, 5, 0.01, 0.1, 0.2, 0, 10, 85);
                         ApplyAnimation(playerid, "CARRY", "LIFTUP05", 4.0, 0, 0, 0, 0, 0, 1);
                     }
                 }

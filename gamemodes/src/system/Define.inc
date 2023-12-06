@@ -27,6 +27,8 @@
 /*      [ ЧАТ ]      */
 /*      [ CHAT ]      */
 #define MAX_DISTANCE_CHAT           (10.0) // Максимальная дистанция отправки сообщений | Maximum distance for sending messages
+#define MAX_DELAY_SEND_MESSAGE_CHAT (2) // Максимальное время задержки после отправки сообщения (в секундах) | Maximum delay time after sending a message (in seconds)
+#define MAX_DELAY_SEND_COMMAND_CHAT (3) // Максимальное время задержки после отправки команды (в секундах) | Maximum delay time after sending a command (in seconds)
 
 /*      [ УРОВЕНЬ/ОПЫТ ]      */
 /*      [ LEVEL/EXP ]      */

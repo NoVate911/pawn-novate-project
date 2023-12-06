@@ -94,3 +94,19 @@ stock ChatSendGlobalMessage(message[])
     }
     return 1;
 }
+
+/*      [ ЗАДЕРЖКА НА ОТПРАВКУ ТЕКСТА В ЧАТ ]      */
+/*      [ THE DELAY IN SENDING A TEXT TO THE CHAT ]      */
+stock ChatDelaySendMessage(playerid, delay = MAX_DELAY_SEND_MESSAGE_CHAT)
+{
+    CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendMessage] = delay;
+    return 1;
+}
+
+/*      [ ЗАДЕРЖКА НА ОТПРАВКУ КОМАНДЫ В ЧАТ ]      */
+/*      [ DELAY IN SENDING A COMMAND TO THE CHAT ]      */
+stock ChatDelaySendCommand(playerid, delay = MAX_DELAY_SEND_COMMAND_CHAT)
+{
+    CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand] = delay;
+    return 1;
+}
