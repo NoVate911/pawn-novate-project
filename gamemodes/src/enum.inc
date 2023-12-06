@@ -30,6 +30,7 @@ enum PlayerTimerInfo
     Kicks,
     Animation,
     Notification,
+    Freeze,
 
     Second
 }
@@ -60,6 +61,7 @@ enum CharacterInfo
 {
     bool:IsSpawning,
     bool:IsDialogActive,
+    bool:IsFrozen,
 
     ID,
     Login[MAX_PLAYER_NAME],

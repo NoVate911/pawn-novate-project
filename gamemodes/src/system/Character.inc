@@ -1,6 +1,6 @@
 /*      [ СКИНЫ ПЕРСОНАЖЕЙ ]      */
 /*      [ CHARACTER SKINS ]      */
-new const Skins_Male[9][4] = { // Мужские | Male
+new const SkinsMale[9][4] = { // Мужские | Male
     {18,21,22,28},
     {18,21,22,28},
     {18,21,22,28},
@@ -12,7 +12,7 @@ new const Skins_Male[9][4] = { // Мужские | Male
     {18,21,22,28}
 };
 
-new const Skins_Female[9][2] = { // Женские | Female
+new const SkinsFemale[9][2] = { // Женские | Female
     {13,69},
     {13,69},
     {13,69},
@@ -279,9 +279,9 @@ dResponse:DlgCharCreateRace(playerid)
         }
 
         if(CInfo[playerid][0][Sex] == 0)
-            CInfo[playerid][0][Skin] = Skins_Male[skinID][random(4)];
+            CInfo[playerid][0][Skin] = SkinsMale[skinID][random(4)];
         else if(CInfo[playerid][0][Sex] == 1)
-            CInfo[playerid][0][Skin] = Skins_Female[skinID][random(2)];
+            CInfo[playerid][0][Skin] = SkinsFemale[skinID][random(2)];
 
         static const query[] = "INSERT INTO characters (login,firstName,lastName,age,sex,race,skin,regIP,lastIP,regDate,lastDate) VALUES ('%s','%s','%s','%d','%d','%d','%d','%s','%s','%s','%s')";
         new mysql[sizeof(query)+(-2+MAX_PLAYER_NAME)+(-2+MAX_PLAYER_NAME)+(-2+MAX_PLAYER_NAME)+(-2+2)+(-2+1)+(-2+1)+(-2+3)+(-2+16)+(-2+16)+(-2+22)+(-2+22)];

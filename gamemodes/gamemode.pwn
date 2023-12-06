@@ -52,6 +52,7 @@ main(){}
 /*    [ СИСТЕМЫ ]    */
 /*    [ SYSTEMS ]    */
 #include "./src/system/Objects.inc"
+#include "./src/system/Interiors.inc"
 #include "./src/system/TextDraws.inc"
 #include "./src/system/Database.inc"
 #include "./src/system/Data.inc"
@@ -68,6 +69,7 @@ main(){}
 #include "./src/system/AFK.inc"
 #include "./src/system/Menu.inc"
 #include "./src/system/Money.inc"
+#include "./src/system/Freeze.inc"
 #include "./src/system/works/Loader.inc"
 #include "./src/system/works/Farmer.inc"
 #include "./src/system/works/Diver.inc"

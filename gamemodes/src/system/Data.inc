@@ -26,6 +26,12 @@ stock DataClearPlayerInfo(playerid)
 /*      [ WE RESET THE INFORMATION ABOUT THE TIMERS OF THE PLAYER ]      */
 stock DataClearPlayerTimerInfo(playerid)
 {
+    KillTimer(PTimerInfo[playerid][Authorization]);
+    KillTimer(PTimerInfo[playerid][Kicks]);
+    KillTimer(PTimerInfo[playerid][Animation]);
+    KillTimer(PTimerInfo[playerid][Notification]);
+    KillTimer(PTimerInfo[playerid][Freeze]);
+    
     KillTimer(PTimerInfo[playerid][Second]);
     return 1;
 }
@@ -58,6 +64,7 @@ stock DataClearCharacterInfo(playerid)
     {
         CInfo[playerid][i][IsSpawning] = false;
         CInfo[playerid][i][IsDialogActive] = false;
+        CInfo[playerid][i][IsFrozen] = false;
 
         CInfo[playerid][i][ID] = 0;
         CInfo[playerid][i][Login] = EOS;

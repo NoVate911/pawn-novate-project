@@ -409,7 +409,7 @@ cmd:clearchat(playerid)
     return 1;
 }
 
-cmd:heal(playerid, params[]) // Выдать игроку здоровье | Give the player health
+cmd:hp(playerid, params[]) // Выдать игроку здоровье | Give the player health
 {
     if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
     {
@@ -419,7 +419,7 @@ cmd:heal(playerid, params[]) // Выдать игроку здоровье | Giv
                 return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У Вас недостаточно прав для выполнения данной команды.");
 
             if(sscanf(params, "dd", params[0], params[1]))
-                return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE""COMMAND_INVALID"", "heal [ID] [Количество]");
+                return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE""COMMAND_INVALID"", "hp [ID] [Количество]");
 
             if(!PInfo[params[0]][IsLogged])
                 return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_FOUND"");
@@ -874,7 +874,190 @@ cmd:spec(playerid, params[]) // Следить за игроком | Follow the 
 }
 alias:spec("sp")
 
-cmd:vehicleput(playerid, params[]) // Посадить игрока в транспорт | 
+cmd:tpcoord(playerid, params[0])
+{
+    if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
+    {
+        if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
+        {
+            if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] < 2)
+                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У Вас недостаточно прав для выполнения данной команды.");
+
+            new Float:x, Float:y, Float:z;
+            if(sscanf(params, "fff", x, y, z))
+                return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE""COMMAND_INVALID"", "tpcoord {X} {Y} {Z}");
+
+            SetPlayerPos(playerid, x, y, z);
+            SCMf(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы телепортировались по координатам (%.2f, %.2f, %.2f).", x, y, z);
+            printf("%s Администратор %s %s(%d) [%s:%s] телепортировался по координатам: %.2f, %.2f, %.2f.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], x, y, z);
+        }
+    }
+    else
+        SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""COMMAND_NOT_FOUND"");
+    return 1;
+}
+alias:tpcoord("tpc")
+
+cmd:setinterior(playerid, params[])
+{
+    if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
+    {
+        if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
+        {
+            if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] < 2)
+                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У Вас недостаточно прав для выполнения данной команды.");
+
+            if(sscanf(params, "dd", params[0], params[1]))
+                return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE""COMMAND_INVALID"", "setinterior [ID] [INTERIOR]");
+
+            if(!PInfo[params[0]][IsLogged])
+                return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_FOUND"");
+
+            if(CInfo[params[0]][PInfo[params[0]][CharacterSelect]][AdminLevel] > CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel])
+                return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_VALID"");
+
+            if(!(0 <= params[1] <= 256))
+                return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Неверный интерьер. Диапазон: от 0 до 256.");
+
+            SetPlayerInterior(params[0], params[1]);
+            SCMf(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы переместили %s %s(%d) в %d интерьер.", CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], params[1]);
+            SCMf(params[0], -1, ""NOTIF_SUCCESS" "C_WHITE"Администратор переместил Вас в %d интерьер.", params[1]);
+            printf("%s Администратор %s %s(%d) [%s:%s] переместил %s %s(%d) [%s:%s] в %d интерьер.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][Login], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP], params[1]);
+        }
+    }
+    else
+        SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""COMMAND_NOT_FOUND"");
+    return 1;
+}
+alias:setinterior("setint")
+
+cmd:resetinterior(playerid, params[])
+{
+    if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
+    {
+        if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
+        {
+            if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] < 2)
+                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У Вас недостаточно прав для выполнения данной команды.");
+
+            if(sscanf(params, "d", params[0]))
+                return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE""COMMAND_INVALID"", "resetinterior [ID]");
+
+            if(!PInfo[params[0]][IsLogged])
+                return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_FOUND"");
+
+            if(CInfo[params[0]][PInfo[params[0]][CharacterSelect]][AdminLevel] > CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel])
+                return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_VALID"");
+
+            SetPlayerInterior(params[0], 0);
+            SCMf(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы восстановили %s %s(%d) интерьер.", CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0]);
+            SCM(params[0], -1, ""NOTIF_SUCCESS" "C_WHITE"Администратор восстановил Ваш интерьер.");
+            printf("%s Администратор %s %s(%d) [%s:%s] восстановил %s %s(%d) [%s:%s] интерьер.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][Login], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP]);
+        }
+    }
+    else
+        SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""COMMAND_NOT_FOUND"");
+    return 1;
+}
+alias:resetinterior("resetint")
+
+cmd:setvirtualworld(playerid, params[])
+{
+    if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
+    {
+        if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
+        {
+            if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] < 2)
+                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У Вас недостаточно прав для выполнения данной команды.");
+
+            if(sscanf(params, "dd", params[0], params[1]))
+                return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE""COMMAND_INVALID"", "setvirtualworld [ID] [VIRTUAL WORLD]");
+
+            if(!PInfo[params[0]][IsLogged])
+                return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_FOUND"");
+
+            if(CInfo[params[0]][PInfo[params[0]][CharacterSelect]][AdminLevel] > CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel])
+                return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_VALID"");
+
+            if(!(0 <= params[1] <= 2147483647))
+                return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Неверный виртуальный мир. Диапазон: от 0 до 2147483647.");
+
+            SetPlayerVirtualWorld(params[0], params[1]);
+            SCMf(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы переместили %s %s(%d) в %d виртуальный мир.", CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], params[1]);
+            SCMf(params[0], -1, ""NOTIF_SUCCESS" "C_WHITE"Администратор переместил Вас в %d виртуальный мир.", params[1]);
+            printf("%s Администратор %s %s(%d) [%s:%s] переместил %s %s(%d) [%s:%s] в %d виртуальный мир.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][Login], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP], params[1]);
+        }
+    }
+    else
+        SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""COMMAND_NOT_FOUND"");
+    return 1;
+}
+alias:setvirtualworld("setvw")
+
+cmd:resetvirtualworld(playerid, params[])
+{
+    if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
+    {
+        if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
+        {
+            if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] < 2)
+                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У Вас недостаточно прав для выполнения данной команды.");
+
+            if(sscanf(params, "d", params[0]))
+                return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE""COMMAND_INVALID"", "resetvirtualworld [ID]");
+
+            if(!PInfo[params[0]][IsLogged])
+                return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_FOUND"");
+
+            if(CInfo[params[0]][PInfo[params[0]][CharacterSelect]][AdminLevel] > CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel])
+                return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_VALID"");
+
+            SetPlayerVirtualWorld(params[0], 0);
+            SCMf(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы восстановили %s %s(%d) виртуальный мир.", CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0]);
+            SCM(params[0], -1, ""NOTIF_SUCCESS" "C_WHITE"Администратор восстановил Ваш виртуальный мир.");
+            printf("%s Администратор %s %s(%d) [%s:%s] восстановил %s %s(%d) [%s:%s] виртуальный мир.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][Login], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP]);
+        }
+    }
+    else
+        SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""COMMAND_NOT_FOUND"");
+    return 1;
+}
+alias:resetvirtualworld("resetvw")
+
+cmd:spawn(playerid, params[])
+{
+    if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
+    {
+        if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
+        {
+            if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] < 2)
+                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У Вас недостаточно прав для выполнения данной команды.");
+
+            if(sscanf(params, "d", params[0]))
+                return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE""COMMAND_INVALID"", "spawn [ID]");
+
+            if(!PInfo[params[0]][IsLogged])
+                return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_FOUND"");
+
+            if(CInfo[params[0]][PInfo[params[0]][CharacterSelect]][AdminLevel] > CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel])
+                return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_VALID"");
+
+            SetPlayerPos(params[0], PositionsSpawn[random(MAX_POSITIONS_SPAWN)][0], PositionsSpawn[random(MAX_POSITIONS_SPAWN)][1], PositionsSpawn[random(MAX_POSITIONS_SPAWN)][2]);
+            SetPlayerFacingAngle(params[0], PositionsSpawn[random(MAX_POSITIONS_SPAWN)][3]);
+            SetCameraBehindPlayer(playerid);
+            SetPlayerInterior(params[0], 0);
+            SetPlayerVirtualWorld(params[0], 0);
+            SCMf(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы заспавнили %s %s(%d).", CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0]);
+            SCM(params[0], -1, ""NOTIF_SUCCESS" "C_WHITE"Вы были заспанены Администратором.");
+            printf("%s Администратор %s %s(%d) [%s:%s] заспавнил %s %s(%d) [%s:%s].", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][Login], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP]);
+        }
+    }
+    else
+        SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""COMMAND_NOT_FOUND"");
+    return 1;
+}
+
+cmd:freeze(playerid, params[]) // Телепортировать игрока к себе | Teleport the player to yourself
 {
     if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
     {
@@ -883,23 +1066,28 @@ cmd:vehicleput(playerid, params[]) // Посадить игрока в тран�
             if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] < 3)
                 return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У Вас недостаточно прав для выполнения данной команды.");
 
-            if(sscanf(params, "dd", params[0], params[1]))
-                return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE""COMMAND_INVALID"", "vehicleput [ID] [ID транспорта]");
+            if(sscanf(params, "d", params[0]))
+                return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE""COMMAND_INVALID"", "freeze [ID]");
 
             if(!PInfo[params[0]][IsLogged])
                 return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_FOUND"");
 
-            if(VehicleFindID(params[1]))
-            {
-                PutPlayerInVehicle(params[0], params[1], 0);
-                SCMf(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы посадили %s %s(%d) в транспорт (ID: %d).", CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], params[1]);
-            }
-            else
-                SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Транспорт с данным ID не найден.");
+            if(params[0] == playerid)
+                return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_ME"");
+
+            if(CInfo[params[0]][PInfo[params[0]][CharacterSelect]][AdminLevel] > CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel])
+                return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_VALID"");
+
+            FreezePlayer(playerid, false);
+            new message_admin[50+(-2+MAX_PLAYER_NAME)+(-2+MAX_PLAYER_NAME)+(-2+4)+(-2+11)+(-2+MAX_PLAYER_NAME)+(-2+MAX_PLAYER_NAME)+(-2+4)];
+            format(message_admin, sizeof(message_admin), ""C_LIGHTGRAY"Администратор %s %s(%d) %s %s %s(%d).", CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, (CInfo[params[0]][PInfo[params[0]][CharacterSelect]][IsFrozen] ? ("заморозил") : ("разморозил")), CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0]);
+            ChatSendMessageToAdmin(message_admin);
+            SCMf(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы %s %s %s(%d).", (CInfo[params[0]][PInfo[params[0]][CharacterSelect]][IsFrozen] ? ("заморозили") : ("разморозили")), CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0]);
+            SCMf(params[0], -1, ""NOTIF_SUCCESS" "C_WHITE"Вы были %s Администратором.", (CInfo[params[0]][PInfo[params[0]][CharacterSelect]][IsFrozen] ? ("заморожены") : ("разморожены")));
+            printf("%s Администратор %s %s(%d) [%s:%s] %s %s %s(%d) [%s:%s].", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], (CInfo[params[0]][PInfo[params[0]][CharacterSelect]][IsFrozen] ? ("заморозил") : ("разморозил")), CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][Login], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP]);
         }
     }
     else
         SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""COMMAND_NOT_FOUND"");
     return 1;
 }
-alias:vehicleput("vehput")

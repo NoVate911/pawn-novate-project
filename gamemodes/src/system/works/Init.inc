@@ -6,5 +6,6 @@ stock WorksInit()
     WorkLoaderLVInit();
     WorkFarmerLVInit();
     WorkDiverLVInit();
-    return printf("%s Начальные работы загружены за %dms.", DEBUG_INFO, GetTickCount() - tickCount);
+    printf("%s Начальные работы загружены за %dms.", DEBUG_INFO, GetTickCount() - tickCount);
+    return 1;
 }

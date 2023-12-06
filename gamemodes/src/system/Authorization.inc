@@ -1,7 +1,7 @@
 /*      [ ПОЗИЦИИ ПОЯВЛЕНИЯ (ПРИ СПАВНЕ / СПАВН НЕ НАЙДЕН) ]      */
 /*      [ SPAWN POSITIONS (AT SPAWN / SPAWN NOT FOUND) ]      */
-new const Float:Positions_Spawn[MAX_POSITIONS_SPAWN][4] = { // X, Y, Z, Rotation
-    {1180.0479, -2036.9869, 69.0078, 270.7819} // LS
+new const Float:PositionsSpawn[MAX_POSITIONS_SPAWN][4] = { // X, Y, Z, Rotation
+    {1680.0198, 1447.8165, 10.7739, 270.7773} // LV
 };
 
 /*      [ ========== ========== ========== ========== ========== ]      */
@@ -14,7 +14,7 @@ stock PlayerSpawnAfterAuthorization(playerid)
     ObjectsRemoveForPlayer(playerid);
     ObjectsCreateForPlayer(playerid);
     if(CInfo[playerid][PInfo[playerid][CharacterSelect]][Position][0] == 0.0 && CInfo[playerid][PInfo[playerid][CharacterSelect]][Position][1] == 0.0 && CInfo[playerid][PInfo[playerid][CharacterSelect]][Position][2] == 0.0)
-        SetSpawnInfo(playerid, 0, CInfo[playerid][PInfo[playerid][CharacterSelect]][Skin], Positions_Spawn[random(MAX_POSITIONS_SPAWN)][0], Positions_Spawn[random(MAX_POSITIONS_SPAWN)][1], Positions_Spawn[random(MAX_POSITIONS_SPAWN)][2], Positions_Spawn[random(MAX_POSITIONS_SPAWN)][3], 0, 0, 0, 0, 0, 0);
+        SetSpawnInfo(playerid, 0, CInfo[playerid][PInfo[playerid][CharacterSelect]][Skin], PositionsSpawn[random(MAX_POSITIONS_SPAWN)][0], PositionsSpawn[random(MAX_POSITIONS_SPAWN)][1], PositionsSpawn[random(MAX_POSITIONS_SPAWN)][2], PositionsSpawn[random(MAX_POSITIONS_SPAWN)][3], 0, 0, 0, 0, 0, 0);
     else
         SetSpawnInfo(playerid, 0, CInfo[playerid][PInfo[playerid][CharacterSelect]][Skin], CInfo[playerid][PInfo[playerid][CharacterSelect]][Position][0], CInfo[playerid][PInfo[playerid][CharacterSelect]][Position][1], CInfo[playerid][PInfo[playerid][CharacterSelect]][Position][2], CInfo[playerid][PInfo[playerid][CharacterSelect]][Rotation], 0, 0, 0, 0, 0, 0);
     SpawnPlayer(playerid);
@@ -30,6 +30,7 @@ stock PlayerSpawnAfterAuthorization(playerid)
     CInfo[playerid][PInfo[playerid][CharacterSelect]][IsSpawning] = true;
     format(CInfo[playerid][PInfo[playerid][CharacterSelect]][FullName], MAX_PLAYER_NAME, "%s_%s", CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName]);
     SetPlayerName(playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][FullName]);
+    FreezePlayer(playerid);
     printf("%s Игрок %s(%d) [%s] был заспавнен под персонажем %s %s", DEBUG_INFO, PInfo[playerid][Nick], playerid, PInfo[playerid][LastIP], CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName]);
     return 1;
 }

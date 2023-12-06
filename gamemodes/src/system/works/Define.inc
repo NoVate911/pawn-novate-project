@@ -31,7 +31,7 @@
 #define WORK_DIVER_LV_ID                    (2) // Ид работы | Work ID
 
 #define WORK_DIVER_LV_NPC_INVITE_SKIN_ID    (32) // Ид скина для бота | Skin ID for the bot
-#define WORK_DIVER_LV_MALE_SKIN_ID          (18) // Ид мужского скина | Male Skin ID
+#define WORK_DIVER_LV_MALE_SKIN_ID          (97) // Ид мужского скина | Male Skin ID
 #define WORK_DIVER_LV_FEMALE_SKIN_ID        (251) // Ид женского скина | Female Skin ID
 
 #define WORK_DIVER_LV_PRICE_PER_MARK        (5) // Цена за одну метку | Price per label

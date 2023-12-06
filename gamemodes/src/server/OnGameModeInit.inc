@@ -15,5 +15,6 @@ public OnGameModeInit()
     LimitPlayerMarkerRadius(0.0);
     ManualVehicleEngineAndLights();
     SetNameTagDrawDistance(25.0);
-    return printf("%s Мод загружен за %dms.", DEBUG_LOAD, GetTickCount() - tickCount);
+    printf("%s Мод загружен за %dms.", DEBUG_LOAD, GetTickCount() - tickCount);
+    return 1;
 }
