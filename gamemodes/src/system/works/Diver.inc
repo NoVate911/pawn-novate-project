@@ -1,8 +1,8 @@
-new const Float:Work_Diver_LV_PositionsInvite[4] = {-1377.9067, 2106.2063, 42.2325, 137.0381}; // Позиция устройства на работу | The position of the device for work
-new const Float:Work_Diver_LV_PositionsBalloon[WORK_DIVER_LV_TAKE_BALLOON_POINT][3] = { // Позиции взятия баллона | Balloon taking positions
+new const Float:WorkDiverLVPositionsInvite[4] = {-1377.9067, 2106.2063, 42.2325, 137.0381}; // Позиция устройства на работу | The position of the device for work
+new const Float:WorkDiverLVPositionsBalloon[WORK_DIVER_LV_TAKE_BALLOON_POINT][3] = { // Позиции взятия баллона | Balloon taking positions
     {-1382.2135, 2114.1858, 42.2000}
 };
-new const Float:Work_Diver_LV_PositionsMarks[WORK_DIVER_LV_MARK_POINT][3] = { // Позиции меток | Placemark positions
+new const Float:WorkDiverLVPositionsMarks[WORK_DIVER_LV_MARK_POINT][3] = { // Позиции меток | Placemark positions
     {-1264.9594, 2130.3674, 31.1240},
     {-1255.9902, 2121.3491, 30.1487},
     {-1235.5114, 2143.7822, 32.4737},
@@ -13,8 +13,8 @@ new const Float:Work_Diver_LV_PositionsMarks[WORK_DIVER_LV_MARK_POINT][3] = { //
 
 stock WorkDiverLVInit()
 {
-    WDLVInfo[WORK_DIVER_LV_ID][ActorID] = CreateDynamicActor(WORK_DIVER_LV_NPC_INVITE_SKIN_ID, Work_Diver_LV_PositionsInvite[0], Work_Diver_LV_PositionsInvite[1], Work_Diver_LV_PositionsInvite[2], Work_Farmer_LV_PositionsInvite[3], _, _, 0, 0);
-    WDLVInfo[WORK_DIVER_LV_ID][Actor3DText] = CreateDynamic3DTextLabel("> Долматинец <\n"C_WHITE"Нажмите "C_YELLOW"\"ALT\" "C_WHITE"для диалога", C_F_YELLOW, Work_Diver_LV_PositionsInvite[0], Work_Diver_LV_PositionsInvite[1], Work_Diver_LV_PositionsInvite[2]+1.5, 10.0, _, _, _, 0, 0);
+    WInfo[WORK_DIVER_LV_ID][ActorID] = CreateDynamicActor(WORK_DIVER_LV_NPC_INVITE_SKIN_ID, WorkDiverLVPositionsInvite[0], WorkDiverLVPositionsInvite[1], WorkDiverLVPositionsInvite[2], WorkDiverLVPositionsInvite[3], _, _, 0, 0);
+    WInfo[WORK_DIVER_LV_ID][Actor3DText] = CreateDynamic3DTextLabel("> Долматинец <\n"C_WHITE"Нажмите "C_YELLOW"\"ALT\" "C_WHITE"для диалога", C_F_YELLOW, WorkDiverLVPositionsInvite[0], WorkDiverLVPositionsInvite[1], WorkDiverLVPositionsInvite[2]+1.5, 10.0, _, _, _, 0, 0);
     return 1;
 }
 
@@ -26,9 +26,9 @@ stock WorkDiverLVKeyStateChange(playerid, newkeys)
         {
             case KEY_WALK: // L. ALT
             {
-                if(IsPlayerInRangeOfPoint(playerid, 2.0, Work_Diver_LV_PositionsInvite[0], Work_Diver_LV_PositionsInvite[1], Work_Diver_LV_PositionsInvite[2]))
+                if(IsPlayerInRangeOfPoint(playerid, 2.0, WorkDiverLVPositionsInvite[0], WorkDiverLVPositionsInvite[1], WorkDiverLVPositionsInvite[2]))
                 {
-                    ApplyDynamicActorAnimation(WDLVInfo[WORK_DIVER_LV_ID][ActorID], "PED", "IDLE_CHAT", 4.1, 0, 1, 1, 1, 1);
+                    ApplyDynamicActorAnimation(WInfo[WORK_DIVER_LV_ID][ActorID], "PED", "IDLE_CHAT", 4.1, 0, 1, 1, 1, 1);
                     CInfo[playerid][PInfo[playerid][CharacterSelect]][IsDialogActive] = true;
                     if(!CInfo[playerid][PInfo[playerid][CharacterSelect]][Working])
                         Dialog_Show(playerid, Dialog:DlgWorkDiverLVInvite);
@@ -39,26 +39,27 @@ stock WorkDiverLVKeyStateChange(playerid, newkeys)
                     }
                 }
 
-                if(PlayerWDLVInfo[playerid][IsAir])
+                if(PWInfo[playerid][DiverIsAir])
                 {
-                    if(IsPlayerInRangeOfPoint(playerid, 2.0, PlayerWDLVInfo[playerid][CheckpointPosition][0], PlayerWDLVInfo[playerid][CheckpointPosition][1], PlayerWDLVInfo[playerid][CheckpointPosition][2]))
+                    if(IsPlayerInRangeOfPoint(playerid, 2.0, PWInfo[playerid][DiverCheckpointPosition][0], PWInfo[playerid][DiverCheckpointPosition][1], PWInfo[playerid][DiverCheckpointPosition][2]))
                     {
-                        DestroyDynamicCP(PlayerWDLVInfo[playerid][Checkpoint]);
-                        PlayerWDLVInfo[playerid][TotalTakenMarkCount]++;
-                        if(PlayerWDLVInfo[playerid][TakenMarkCount] >= WORK_DIVER_LV_MARK_POINT)
+                        DestroyDynamicCP(PWInfo[playerid][Checkpoint]);
+                        PWInfo[playerid][DiverTotalTakenMarkCount]++;
+                        NotificationShow(playerid, PWInfo[playerid][DiverTotalTakenMarkCount], _, false);
+                        if(PWInfo[playerid][DiverTakenMarkCount] >= WORK_DIVER_LV_MARK_POINT)
                         {
-                            SCM(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Баллон с воздухом на исходе! Вернитесь на берег и возьмите новый.");
-                            PlayerWDLVInfo[playerid][Checkpoint] = CreateDynamicCP(Work_Diver_LV_PositionsBalloon[random(WORK_DIVER_LV_TAKE_BALLOON_POINT)][0], Work_Diver_LV_PositionsBalloon[random(WORK_DIVER_LV_TAKE_BALLOON_POINT)][1], Work_Diver_LV_PositionsBalloon[random(WORK_DIVER_LV_TAKE_BALLOON_POINT)][2], 3.0, 0, 0, playerid);
-                            PlayerWDLVInfo[playerid][IsAir] = false;
-                            PlayerWDLVInfo[playerid][TakenMarkCount] = 0;
+                            SCM(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Баллон с воздухом на исходе! Вернитесь на пристань и возьмите новый.");
+                            PWInfo[playerid][Checkpoint] = CreateDynamicCP(WorkDiverLVPositionsBalloon[random(WORK_DIVER_LV_TAKE_BALLOON_POINT)][0], WorkDiverLVPositionsBalloon[random(WORK_DIVER_LV_TAKE_BALLOON_POINT)][1], WorkDiverLVPositionsBalloon[random(WORK_DIVER_LV_TAKE_BALLOON_POINT)][2], 3.0, 0, 0, playerid);
+                            PWInfo[playerid][DiverIsAir] = false;
+                            PWInfo[playerid][DiverTakenMarkCount] = 0;
                         }
                         else
                         {
                             new const rand = random(WORK_DIVER_LV_MARK_POINT);
-                            PlayerWDLVInfo[playerid][Checkpoint] = CreateDynamicCP(Work_Diver_LV_PositionsMarks[rand][0], Work_Diver_LV_PositionsMarks[rand][1], Work_Diver_LV_PositionsMarks[rand][2], 3.0, 0, 0, playerid);
+                            PWInfo[playerid][Checkpoint] = CreateDynamicCP(WorkDiverLVPositionsMarks[rand][0], WorkDiverLVPositionsMarks[rand][1], WorkDiverLVPositionsMarks[rand][2], 3.0, 0, 0, playerid);
                             for(new pos = 0; pos < 3; pos++)
-                                PlayerWDLVInfo[playerid][CheckpointPosition][pos] = Work_Diver_LV_PositionsMarks[rand][pos];
-                            PlayerWDLVInfo[playerid][TakenMarkCount]++;
+                                PWInfo[playerid][DiverCheckpointPosition][pos] = WorkDiverLVPositionsMarks[rand][pos];
+                            PWInfo[playerid][DiverTakenMarkCount]++;
                         }
                     }
                 }
@@ -76,17 +77,17 @@ stock WorkDiverLVEnterDynamicCP(playerid, checkpointid)
         {
             if(CInfo[playerid][PInfo[playerid][CharacterSelect]][WorkingType] == WORK_DIVER_LV_ID)
             {
-                if(checkpointid == PlayerWDLVInfo[playerid][Checkpoint])
+                if(checkpointid == PWInfo[playerid][Checkpoint])
                 {
-                    if(!PlayerWDLVInfo[playerid][IsAir])
+                    if(!PWInfo[playerid][DiverIsAir])
                     {
-                        DestroyDynamicCP(PlayerWDLVInfo[playerid][Checkpoint]);
-                        SCM(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы получили кислородный баллон. Отправляйтесь на поиски вещей.");
+                        DestroyDynamicCP(PWInfo[playerid][Checkpoint]);
+                        SCM(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы получили кислородный баллон. Отправляйтесь на поиски потерянных вещей под водой.");
                         new const rand = random(WORK_DIVER_LV_MARK_POINT);
-                        PlayerWDLVInfo[playerid][Checkpoint] = CreateDynamicCP(Work_Diver_LV_PositionsMarks[rand][0], Work_Diver_LV_PositionsMarks[rand][1], Work_Diver_LV_PositionsMarks[rand][2], 3.0, 0, 0, playerid);
+                        PWInfo[playerid][Checkpoint] = CreateDynamicCP(WorkDiverLVPositionsMarks[rand][0], WorkDiverLVPositionsMarks[rand][1], WorkDiverLVPositionsMarks[rand][2], 3.0, 0, 0, playerid);
                         for(new pos = 0; pos < 3; pos++)
-                            PlayerWDLVInfo[playerid][CheckpointPosition][pos] = Work_Diver_LV_PositionsMarks[rand][pos];
-                        PlayerWDLVInfo[playerid][IsAir] = true;
+                            PWInfo[playerid][DiverCheckpointPosition][pos] = WorkDiverLVPositionsMarks[rand][pos];
+                        PWInfo[playerid][DiverIsAir] = true;
                     }
                 }
             }
@@ -100,13 +101,12 @@ stock WorkDiverLVEnterDynamicCP(playerid, checkpointid)
 dCreate:DlgWorkDiverLVInvite(playerid)
 {
     static const message[] = "\
-    "C_WHITE"\nДолматинец: "C_LIGHTGRAY"Ну дарова! Чего ты так стесняешься подойти то? Я не кусаюсь!\n\
-    "C_LIGHTGRAY"Слухай, я по делу, на самом деле. Работёнка видно тебе нужна, а у меня она имеется.\n\
-    "C_LIGHTGRAY"Твоя задача перетаскать ящики от точки выдачи до точки погрузки.\n\
-    "C_LIGHTGRAY"Работа хоть и тяжёлая, но и я заплачу не гроши, а нормальную сумму.\n\
-    "C_LIGHTGRAY"За каждую метку ты получишь %d$. Ну что, по рукам?\n\n\
-    "C_WHITE"Сложность: "C_LIGHTGRAY"очень просто"C_WHITE".\n\
-    "C_WHITE"Зарплата: "C_LIGHTGRAY"%d$ за метку"C_WHITE".\n\n";
+    "C_WHITE"\nДолматинец: "C_LIGHTGRAY"Привет! Сразу к делу. Меня зовут Долма, но в местных кругах я Долматинец.\n\
+    "C_LIGHTGRAY"Это хороший пляж на котором люди отдыхают, плавают и веселяться.\n\
+    "C_LIGHTGRAY"Некоторые из отдыхающих теряют вещи под водой во время плавания, а я их собираю и продаю.\n\
+    "C_LIGHTGRAY"За каждую потерянную вещь ты получаешь %d$. Поможешь?\n\n\
+    "C_WHITE"Сложность: "C_LIGHTGRAY"средняя"C_WHITE".\n\
+    "C_WHITE"Зарплата: "C_LIGHTGRAY"%d$ за найденную вещь"C_WHITE".\n\n";
     new string[sizeof(message)+(-2+8)+(-2+8)];
     format(string, sizeof(string), message, WORK_DIVER_LV_PRICE_PER_MARK, WORK_DIVER_LV_PRICE_PER_MARK);
     return Dialog_Open(playerid, Dialog:DlgWorkDiverLVInvite, DIALOG_STYLE_MSGBOX, ""C_GRAY"Долматинец "C_BLACK"| "C_WHITE"Трудоустройство", string, "Да", "Нет");
@@ -120,9 +120,9 @@ dResponse:DlgWorkDiverLVInvite(playerid)
         SetPlayerSkin(playerid, (CInfo[playerid][PInfo[playerid][CharacterSelect]][Sex] == 0 ? (WORK_DIVER_LV_MALE_SKIN_ID) : (WORK_DIVER_LV_FEMALE_SKIN_ID)));
         CInfo[playerid][PInfo[playerid][CharacterSelect]][Working] = true;
         CInfo[playerid][PInfo[playerid][CharacterSelect]][WorkingType] = WORK_DIVER_LV_ID;
-        PlayerWDLVInfo[playerid][Checkpoint] = CreateDynamicCP(Work_Diver_LV_PositionsBalloon[random(WORK_DIVER_LV_TAKE_BALLOON_POINT)][0], Work_Diver_LV_PositionsBalloon[random(WORK_DIVER_LV_TAKE_BALLOON_POINT)][1], Work_Diver_LV_PositionsBalloon[random(WORK_DIVER_LV_TAKE_BALLOON_POINT)][2], 3.0, 0, 0, playerid);
+        PWInfo[playerid][Checkpoint] = CreateDynamicCP(WorkDiverLVPositionsBalloon[random(WORK_DIVER_LV_TAKE_BALLOON_POINT)][0], WorkDiverLVPositionsBalloon[random(WORK_DIVER_LV_TAKE_BALLOON_POINT)][1], WorkDiverLVPositionsBalloon[random(WORK_DIVER_LV_TAKE_BALLOON_POINT)][2], 3.0, 0, 0, playerid);
         SCM(playerid, -1, ""NOTIF_INFO" "C_WHITE"Вы трудоустроились на работу дайвера.");
-        SCM(playerid, -1, ""NOTIF_INFO" "C_WHITE"Берите баллон с кислородом и плывите на поиски вещей. За каждую вещь вы получаете денежное вознаграждение.");
+        SCM(playerid, -1, ""NOTIF_INFO" "C_WHITE"Берите баллон с кислородом и плывите на поиски потерянных вещей. За каждую найденную вещь вы получаете денежное вознаграждение.");
         SCM(playerid, -1, ""NOTIF_INFO" "C_WHITE"По окончанию работы обратитесь к Долматинцу.");
     }
     return 1;
@@ -131,13 +131,13 @@ dResponse:DlgWorkDiverLVInvite(playerid)
 dCreate:DlgWorkDiverLVUninvite(playerid)
 {
     static const message[] = "\
-    "C_WHITE"\nДолматинец: "C_LIGHTGRAY"Хочешь сказать, что уже устал?\n\
-    "C_LIGHTGRAY"С такими темпами работы ты никуда не продвинешься.\n\
-    "C_LIGHTGRAY"Ну да ладно, не моё дело. Ты хочешь закончить работу?\n\n\
+    "C_WHITE"\nДолматинец: "C_LIGHTGRAY"Это отлично! Ты большой молодец!\n\
+    "C_LIGHTGRAY"Я смогу это продать и получить хорошие деньги, хе-хе-хе..\n\
+    "C_LIGHTGRAY"Ты хочешь закончить поиск вещей?\n\n\
     "C_WHITE"Найдено вещей: "C_LIGHTGRAY"%d штук"C_WHITE".\n\
     "C_WHITE"Заработано: "C_LIGHTGRAY"%d$"C_WHITE".\n\n";
     new string[sizeof(message)+(-2+8)+(-2+8)];
-    format(string, sizeof(string), message, PlayerWDLVInfo[playerid][TotalTakenMarkCount], PlayerWDLVInfo[playerid][TotalTakenMarkCount] * WORK_DIVER_LV_PRICE_PER_MARK);
+    format(string, sizeof(string), message, PWInfo[playerid][DiverTotalTakenMarkCount], PWInfo[playerid][DiverTotalTakenMarkCount] * WORK_DIVER_LV_PRICE_PER_MARK);
     return Dialog_Open(playerid, Dialog:DlgWorkDiverLVUninvite, DIALOG_STYLE_MSGBOX, ""C_GRAY"Долматинец "C_BLACK"| "C_WHITE"Трудоустройство", string, "Да", "Нет");
 }
 
@@ -147,15 +147,22 @@ dResponse:DlgWorkDiverLVUninvite(playerid)
     if(response)
     {
         SetPlayerSkin(playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Skin]);
-        MoneyGive(playerid, PlayerWDLVInfo[playerid][TotalTakenMarkCount] * WORK_DIVER_LV_PRICE_PER_MARK);
+        MoneyGive(playerid, PWInfo[playerid][DiverTotalTakenMarkCount] * WORK_DIVER_LV_PRICE_PER_MARK);
         SCM(playerid, -1, ""NOTIF_INFO" "C_WHITE"Вы закончили работу дайвера.");
-        if(PlayerWDLVInfo[playerid][TotalTakenMarkCount] > 0)
-            SCMf(playerid, -1, ""NOTIF_INFO" "C_WHITE"За находку %d вещей получено %d$.", PlayerWDLVInfo[playerid][TotalTakenMarkCount], PlayerWDLVInfo[playerid][TotalTakenMarkCount] * WORK_DIVER_LV_PRICE_PER_MARK);
+        if(PWInfo[playerid][DiverTotalTakenMarkCount] > 0)
+        {
+            SCMf(playerid, -1, ""NOTIF_INFO" "C_WHITE"За найденные %d вещей Вы получили %d$.", PWInfo[playerid][DiverTotalTakenMarkCount], PWInfo[playerid][DiverTotalTakenMarkCount] * WORK_DIVER_LV_PRICE_PER_MARK);
+            new string[4+(-2+8)];
+            format(string, sizeof(string), "+%d$", PWInfo[playerid][DiverTotalTakenMarkCount] * WORK_DIVER_LV_PRICE_PER_MARK);
+            NotificationShow(playerid, string, C_F_GREEN);
+        }
         CInfo[playerid][PInfo[playerid][CharacterSelect]][Working] = false;
-        PlayerWDLVInfo[playerid][TakenMarkCount] = 0;
-        PlayerWDLVInfo[playerid][TotalTakenMarkCount] = 0;
-        PlayerWDLVInfo[playerid][IsAir] = false;
-        DestroyDynamicCP(PlayerWDLVInfo[playerid][Checkpoint]);
+        PWInfo[playerid][DiverTakenMarkCount] = 0;
+        PWInfo[playerid][DiverTotalTakenMarkCount] = 0;
+        for(new pos = 0; pos < 3; pos++)
+            PWInfo[playerid][DiverCheckpointPosition] = 0.0;
+        PWInfo[playerid][DiverIsAir] = false;
+        DestroyDynamicCP(PWInfo[playerid][Checkpoint]);
     }
     return 1;
 }

@@ -115,20 +115,16 @@ stock DataClearAdminSpectateInfo(playerid)
 /*      [ WE RESET THE INFORMATION ABOUT THE WORK OF THE LOADER FROM THE PLAYER ]      */
 stock DataClearPlayerWorksInfo(playerid)
 {
-    PlayerWLLVInfo[playerid][MovedBoxCount] = 0;
-    DestroyDynamicCP(PlayerWLLVInfo[playerid][Checkpoint]);
-    PlayerWLLVInfo[playerid][IsPickup] = false;
-
-    PlayerWFLVInfo[playerid][MovedHayCount] = 0;
-    DestroyDynamicCP(PlayerWFLVInfo[playerid][Checkpoint]);
-    PlayerWFLVInfo[playerid][IsPickup] = false;
-
-    PlayerWDLVInfo[playerid][TakenMarkCount] = 0;
-    PlayerWDLVInfo[playerid][TotalTakenMarkCount] = 0;
-    DestroyDynamicCP(PlayerWDLVInfo[playerid][Checkpoint]);
+    DestroyDynamicCP(PWInfo[playerid][Checkpoint]);
+    PWInfo[playerid][LoaderMovedBoxCount] = 0;
+    PWInfo[playerid][LoaderIsPickup] = false;
+    PWInfo[playerid][FarmerMovedHayCount] = 0;
+    PWInfo[playerid][FarmerIsPickup] = false;
+    PWInfo[playerid][DiverTakenMarkCount] = 0;
+    PWInfo[playerid][DiverTotalTakenMarkCount] = 0;
     for(new pos = 0; pos < 3; pos++)
-        PlayerWDLVInfo[playerid][CheckpointPosition][pos] = 0.0;
-    PlayerWDLVInfo[playerid][IsAir] = false;
+        PWInfo[playerid][DiverCheckpointPosition] = 0.0;
+    PWInfo[playerid][DiverIsAir] = false;
     return 1;
 }
 

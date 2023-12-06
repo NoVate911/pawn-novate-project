@@ -27,23 +27,3 @@ stock TextDrawsCreateForPlayer(playerid)
     PlayerTextDrawSetProportional(playerid, PTDInfo[playerid][Notification], 1);
     return 1;
 }
-
-/*      [ ОТОБРАЖЕНИЕ УВЕДОМЛЕНИЙ ]      */
-/*      [ DISPLAYING NOTIFICATIONS ]      */
-stock TextDrawNotificationShow(playerid, message[], color = -1)
-{
-    PlayerTextDrawSetString(playerid, PTDInfo[playerid][Notification], message);
-    PlayerTextDrawColor(playerid, PTDInfo[playerid][Notification], color);
-    PlayerTextDrawShow(playerid, PTDInfo[playerid][Notification]);
-    if(PTimerInfo[playerid][Notification])
-        KillTimer(PTimerInfo[playerid][Notification]);
-    PlayerPlaySound(playerid, 1054, 0.0, 0.0, 0.0);
-    PTimerInfo[playerid][Notification] = SetTimerEx("TimerOnTextDrawNotificationShow", 2000, false, "i", playerid);
-    return 1;
-}
-
-function TimerOnTextDrawNotificationShow(playerid)
-{
-    PlayerTextDrawHide(playerid, PTDInfo[playerid][Notification]);
-    return KillTimer(PTimerInfo[playerid][Notification]);
-}

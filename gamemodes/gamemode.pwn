@@ -70,6 +70,7 @@ main(){}
 #include "./src/system/Menu.inc"
 #include "./src/system/Money.inc"
 #include "./src/system/Freeze.inc"
+#include "./src/system/Notification.inc"
 #include "./src/system/works/Loader.inc"
 #include "./src/system/works/Farmer.inc"
 #include "./src/system/works/Diver.inc"

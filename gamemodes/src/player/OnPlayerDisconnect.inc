@@ -7,12 +7,9 @@ public OnPlayerDisconnect(playerid, reason)
     {
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][Working])
         {
-            switch(CInfo[playerid][PInfo[playerid][CharacterSelect]][WorkingType])
-            {
-                case WORK_LOADER_LV_ID: MoneyGive(playerid, PlayerWLLVInfo[playerid][MovedBoxCount] * WORK_LOADER_LV_PRICE_PER_BOX);
-                case WORK_FARMER_LV_ID: MoneyGive(playerid, PlayerWFLVInfo[playerid][MovedHayCount] * WORK_FARMER_LV_PRICE_PER_HAY);
-                case WORK_DIVER_LV_ID: MoneyGive(playerid, PlayerWDLVInfo[playerid][TotalTakenMarkCount] * WORK_DIVER_LV_PRICE_PER_MARK);
-            }
+            MoneyGive(playerid, PWInfo[playerid][LoaderMovedBoxCount] * WORK_LOADER_LV_PRICE_PER_BOX);
+            MoneyGive(playerid, PWInfo[playerid][FarmerMovedHayCount] * WORK_FARMER_LV_PRICE_PER_HAY);
+            MoneyGive(playerid, PWInfo[playerid][DiverTotalTakenMarkCount] * WORK_DIVER_LV_PRICE_PER_MARK);
         }
 
         DataSetPlayerInfo(playerid);
