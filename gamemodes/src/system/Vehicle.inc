@@ -360,7 +360,7 @@ stock VehicleKeyStateChange(playerid, newkeys)
                             {
                                 VInfo[v][IsLights] = !VInfo[v][IsLights];
                                 SetVehicleParamsEx(vehicleid, VInfo[v][IsEngine], VInfo[v][IsLights], alarm, VInfo[v][IsDoorsClosed], bonnet, boot, objective);
-                                TextDrawsUpdateForServer(playerid, VInfo[v][Speedometer][3], _, (VInfo[v][IsEngine] ? (C_F_GREEN) : (C_F_RED)));
+                                TextDrawsUpdateForServer(playerid, VInfo[v][Speedometer][3], _, (VInfo[v][IsLights] ? (C_F_GREEN) : (C_F_RED)));
                             }
                         }
                     }
