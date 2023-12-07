@@ -27,3 +27,23 @@ stock TextDrawsCreateForPlayer(playerid)
     PlayerTextDrawSetProportional(playerid, PTDInfo[playerid][Notification], 1);
     return 1;
 }
+
+stock TextDrawsUpdateForServer(playerid, Text:textdraw, string[] = "Null", color = C_F_WHITE)
+{
+    TextDrawHideForPlayer(playerid, textdraw);
+    if(strcmp(string, "Null") != 0)
+        TextDrawSetString(textdraw, string);
+    TextDrawColor(textdraw, color);
+    TextDrawShowForPlayer(playerid, textdraw);
+    return 1;
+}
+
+stock TextDrawsUpdateForPlayer(playerid, PlayerText:textdraw, string[] = "Null", color = C_F_WHITE)
+{
+    PlayerTextDrawHide(playerid, textdraw);
+    if(strcmp(string, "Null") != 0)
+        PlayerTextDrawSetString(playerid, textdraw, string);
+    PlayerTextDrawColor(playerid, textdraw, color);
+    PlayerTextDrawShow(playerid, textdraw);
+    return 1;
+}

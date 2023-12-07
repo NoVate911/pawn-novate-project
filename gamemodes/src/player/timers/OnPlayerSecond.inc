@@ -34,6 +34,25 @@ function TimerOnPlayerSecond(playerid)
             {
                 LevelCheck(playerid);
             }
+
+            // Проверка на нахождение в транспорте | Checking for being in transport
+            if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsVehicle])
+            {
+                if(GetPlayerVehicleSeat(playerid) == 0)
+                {
+                    new vehicleid = GetPlayerVehicleID(playerid);
+                    new string[9+(-2+3)];
+                    for(new vehicle = 0; vehicle < MAX_VEHICLES; vehicle++)
+                    {
+                        if(VInfo[vehicle][ID] == vehicleid)
+                        {
+                            format(string, sizeof(string), "%.0f KM/H", VInfo[vehicle][Speed]);
+                            TextDrawsUpdateForServer(playerid, VInfo[vehicle][Speedometer][4], string);
+                            break;
+                        }
+                    }
+                }
+            }
         }
     }
     return PTimerInfo[playerid][Second] = SetTimerEx("TimerOnPlayerSecond", 1000, false, "i", playerid);

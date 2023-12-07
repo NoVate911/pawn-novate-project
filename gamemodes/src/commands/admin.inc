@@ -3,7 +3,7 @@ cmd:alogin(playerid, params[]) // Войти под Администраторо
     if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
     {
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand] > 0)
-            return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Подождите %d секунд перед отправкой команды.", CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand]);
+            return 1;
 
         if(sscanf(params, "d", params[0]))
             return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE""COMMAND_INVALID"", "alogin [пароль]");
@@ -44,7 +44,7 @@ cmd:alogout(playerid)
     if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
     {
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand] > 0)
-            return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Подождите %d секунд перед отправкой команды.", CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand]);
+            return 1;
 
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
@@ -68,7 +68,7 @@ cmd:createvehicle(playerid, params[]) // Создать транспорт | Cre
     if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
     {
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand] > 0)
-            return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Подождите %d секунд перед отправкой команды.", CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand]);
+            return 1;
 
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
@@ -109,7 +109,7 @@ cmd:removevehicle(playerid, params[]) // Удалить транспорт | Del
     if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
     {
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand] > 0)
-            return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Подождите %d секунд перед отправкой команды.", CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand]);
+            return 1;
 
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
@@ -162,7 +162,7 @@ cmd:fixvehicle(playerid, params[]) // Починить транспорт | Repa
     if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
     {
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand] > 0)
-            return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Подождите %d секунд перед отправкой команды.", CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand]);
+            return 1;
 
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
@@ -215,7 +215,7 @@ cmd:vehiclelock(playerid, params[]) // Управление замком тра�
     if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
     {
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand] > 0)
-            return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Подождите %d секунд перед отправкой команды.", CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand]);
+            return 1;
 
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
@@ -268,7 +268,7 @@ cmd:vehiclecolor(playerid, params[]) // Смена цвета транспорт
     if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
     {
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand] > 0)
-            return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Подождите %d секунд перед отправкой команды.", CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand]);
+            return 1;
 
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
@@ -313,7 +313,7 @@ cmd:vehiclelist(playerid) // Вывести весь созданный тран
     if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
     {
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand] > 0)
-            return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Подождите %d секунд перед отправкой команды.", CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand]);
+            return 1;
 
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
@@ -334,7 +334,7 @@ cmd:vehiclegoto(playerid, params[]) // Переместиться к транс�
     if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
     {
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand] > 0)
-            return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Подождите %d секунд перед отправкой команды.", CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand]);
+            return 1;
 
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
@@ -378,7 +378,7 @@ cmd:vehiclegethere(playerid, params[]) // Переместить транспо�
     if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
     {
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand] > 0)
-            return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Подождите %d секунд перед отправкой команды.", CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand]);
+            return 1;
 
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
@@ -422,7 +422,7 @@ cmd:clearchat(playerid)
     if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
     {
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand] > 0)
-            return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Подождите %d секунд перед отправкой команды.", CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand]);
+            return 1;
 
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
@@ -447,7 +447,7 @@ cmd:hp(playerid, params[]) // Выдать игроку здоровье | Give 
     if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
     {
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand] > 0)
-            return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Подождите %d секунд перед отправкой команды.", CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand]);
+            return 1;
 
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
@@ -482,7 +482,7 @@ cmd:armour(playerid, params[]) // Выдать игроку броню | Give th
     if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
     {
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand] > 0)
-            return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Подождите %d секунд перед отправкой команды.", CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand]);
+            return 1;
 
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
@@ -517,7 +517,7 @@ cmd:settime(playerid, params[])
     if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
     {
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand] > 0)
-            return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Подождите %d секунд перед отправкой команды.", CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand]);
+            return 1;
 
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
@@ -551,7 +551,7 @@ cmd:resettime(playerid)
     if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
     {
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand] > 0)
-            return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Подождите %d секунд перед отправкой команды.", CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand]);
+            return 1;
 
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
@@ -576,7 +576,7 @@ cmd:setadmin(playerid, params[]) // Выдать игроку права Адм�
     if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
     {
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand] > 0)
-            return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Подождите %d секунд перед отправкой команды.", CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand]);
+            return 1;
 
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
@@ -618,7 +618,7 @@ cmd:takeadmin(playerid, params[]) // Забрать права Админист�
     if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
     {
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand] > 0)
-            return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Подождите %d секунд перед отправкой команды.", CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand]);
+            return 1;
 
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
@@ -664,7 +664,7 @@ cmd:kick(playerid, params[]) // Кикнуть игрока с сервера | 
     if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
     {
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand] > 0)
-            return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Подождите %d секунд перед отправкой команды.", CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand]);
+            return 1;
 
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
@@ -700,7 +700,7 @@ cmd:setskin(playerid, params[]) // Выдать постоянный скин и
     if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
     {
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand] > 0)
-            return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Подождите %d секунд перед отправкой команды.", CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand]);
+            return 1;
 
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
@@ -741,7 +741,7 @@ cmd:settempskin(playerid, params[]) // Выдать временный скин 
     if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
     {
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand] > 0)
-            return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Подождите %d секунд перед отправкой команды.", CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand]);
+            return 1;
 
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
@@ -781,7 +781,7 @@ cmd:payday(playerid) // Запустить зарплату (PayDay) | Launch Sa
     if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
     {
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand] > 0)
-            return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Подождите %d секунд перед отправкой команды.", CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand]);
+            return 1;
 
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
@@ -805,7 +805,7 @@ cmd:goto(playerid, params[]) // Телепортироваться к игрок
     if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
     {
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand] > 0)
-            return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Подождите %d секунд перед отправкой команды.", CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand]);
+            return 1;
 
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
@@ -847,7 +847,7 @@ cmd:gethere(playerid, params[]) // Телепортировать игрока �
     if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
     {
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand] > 0)
-            return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Подождите %d секунд перед отправкой команды.", CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand]);
+            return 1;
 
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
@@ -889,7 +889,7 @@ cmd:spec(playerid, params[]) // Следить за игроком | Follow the 
     if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
     {
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand] > 0)
-            return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Подождите %d секунд перед отправкой команды.", CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand]);
+            return 1;
 
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
@@ -951,7 +951,7 @@ cmd:tpcoord(playerid, params[0])
     if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
     {
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand] > 0)
-            return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Подождите %d секунд перед отправкой команды.", CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand]);
+            return 1;
 
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
@@ -978,7 +978,7 @@ cmd:setinterior(playerid, params[])
     if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
     {
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand] > 0)
-            return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Подождите %d секунд перед отправкой команды.", CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand]);
+            return 1;
 
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
@@ -1014,7 +1014,7 @@ cmd:resetinterior(playerid, params[])
     if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
     {
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand] > 0)
-            return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Подождите %d секунд перед отправкой команды.", CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand]);
+            return 1;
 
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
@@ -1047,7 +1047,7 @@ cmd:setvirtualworld(playerid, params[])
     if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
     {
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand] > 0)
-            return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Подождите %d секунд перед отправкой команды.", CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand]);
+            return 1;
 
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
@@ -1083,7 +1083,7 @@ cmd:resetvirtualworld(playerid, params[])
     if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
     {
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand] > 0)
-            return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Подождите %d секунд перед отправкой команды.", CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand]);
+            return 1;
 
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
@@ -1116,7 +1116,7 @@ cmd:spawn(playerid, params[])
     if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
     {
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand] > 0)
-            return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Подождите %d секунд перед отправкой команды.", CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand]);
+            return 1;
 
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
@@ -1152,7 +1152,7 @@ cmd:freeze(playerid, params[]) // Телепортировать игрока к
     if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
     {
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand] > 0)
-            return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Подождите %d секунд перед отправкой команды.", CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand]);
+            return 1;
 
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {

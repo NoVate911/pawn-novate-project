@@ -92,6 +92,8 @@ main(){}
 #include "./src/player/OnPlayerCommandPerformed.inc"
 #include "./src/player/OnPlayerKeyStateChange.inc"
 #include "./src/player/OnPlayerEnterDynamicCP.inc"
+#include "./src/player/OnPlayerStateChange.inc"
+#include "./src/player/OnPlayerExitVehicle.inc"
 
 /*    [ КОМАНДЫ ]    */
 /*    [ COMMANDS ]    */

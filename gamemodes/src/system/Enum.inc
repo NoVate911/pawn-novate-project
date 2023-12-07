@@ -4,13 +4,15 @@ enum VehicleInfo
 {
     ID,
     Model,
-    Float:Position[3],
-    Float:Rotation,
+    Float:SpawnPosition[3],
+    Float:SpawnRotation,
     Color1,
     Color2,
     Float:Fuel,
     Float:Health,
+    Float:Speed,
     Text3D:Description,
+    Text:Speedometer[6],
     
     bool:IsEngine,
     bool:IsLights,

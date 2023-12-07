@@ -62,6 +62,7 @@ enum CharacterInfo
     bool:IsSpawning,
     bool:IsDialogActive,
     bool:IsFrozen,
+    bool:IsVehicle,
     DelaySendMessage,
     DelaySendCommand,
 

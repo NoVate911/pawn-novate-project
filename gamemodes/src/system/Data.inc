@@ -65,6 +65,7 @@ stock DataClearCharacterInfo(playerid)
         CInfo[playerid][i][IsSpawning] = false;
         CInfo[playerid][i][IsDialogActive] = false;
         CInfo[playerid][i][IsFrozen] = false;
+        CInfo[playerid][i][IsVehicle] = false;
         CInfo[playerid][i][DelaySendMessage] = 0;
         CInfo[playerid][i][DelaySendCommand] = 0;
 
@@ -135,6 +136,8 @@ stock DataClearPlayerWorksInfo(playerid)
 stock DataClearPlayerTextDrawInfo(playerid)
 {
     PlayerTextDrawDestroy(playerid, PTDInfo[playerid][Notification]);
+    // for(new speedometer = 0; speedometer < 6; speedometer++)
+    //     PlayerTextDrawDestroy(playerid, PTDInfo[playerid][Speedometer][speedometer]);
     return 1;
 }
 

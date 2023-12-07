@@ -21,17 +21,19 @@ stock VehicleCreate(vehicleid, Float:x, Float:y, Float:z, Float:rotation, color1
                 Vehicle_Count++;
                 VInfo[v][ID] = vehicle;
                 VInfo[v][Model] = vehicleid;
-                VInfo[v][Position][0] = x;
-                VInfo[v][Position][1] = y;
-                VInfo[v][Position][2] = z;
-                VInfo[v][Rotation] = rotation;
+                VInfo[v][SpawnPosition][0] = x;
+                VInfo[v][SpawnPosition][1] = y;
+                VInfo[v][SpawnPosition][2] = z;
+                VInfo[v][SpawnRotation] = rotation;
                 VInfo[v][Color1] = color1;
                 VInfo[v][Color2] = color2;
                 VInfo[v][Fuel] = fuel;
                 VInfo[v][Health] = 1000.0;
+                VInfo[v][Speed] = 0.0;
                 vw = GetVehicleVirtualWorld(vehicle);
                 if(isAdmin)
                     VInfo[v][Description] = CreateDynamic3DTextLabel("ADMIN CAR", C_F_RED, x, y, z+0.5, 10.0, _, vehicle, _, vw);
+                VehicleCreateSpeedometer(v);
                 VInfo[v][IsEngine] = false;
                 VInfo[v][IsLights] = false;
                 VInfo[v][IsDoorsClosed] = false;
@@ -45,6 +47,69 @@ stock VehicleCreate(vehicleid, Float:x, Float:y, Float:z, Float:rotation, color1
     return 0;
 }
 
+/*      [ СОЗДАНИЕ СПИДОМЕТРА ДЛЯ ТРАНСПОРТА ]      */
+/*      [ CREATING A SPEEDOMETER FOR TRANSPORT ]      */
+stock VehicleCreateSpeedometer(id)
+{
+    VInfo[id][Speedometer][0] = TextDrawCreate(406.000000, 424.611083, "usebox");
+    TextDrawLetterSize(VInfo[id][Speedometer][0], 0.000000, -10.456583);
+    TextDrawTextSize(VInfo[id][Speedometer][0], 613.666625, 0.000000);
+    TextDrawAlignment(VInfo[id][Speedometer][0], 1);
+    TextDrawColor(VInfo[id][Speedometer][0], 0);
+    TextDrawUseBox(VInfo[id][Speedometer][0], true);
+    TextDrawBoxColor(VInfo[id][Speedometer][0], 136);
+    TextDrawSetShadow(VInfo[id][Speedometer][0], 0);
+    TextDrawSetOutline(VInfo[id][Speedometer][0], -22);
+    TextDrawBackgroundColor(VInfo[id][Speedometer][0], -1);
+    TextDrawFont(VInfo[id][Speedometer][0], 0);
+    VInfo[id][Speedometer][1] = TextDrawCreate(445.333801, 338.903625, "DOORS");
+    TextDrawLetterSize(VInfo[id][Speedometer][1], 0.400999, 1.400889);
+    TextDrawAlignment(VInfo[id][Speedometer][1], 2);
+    TextDrawColor(VInfo[id][Speedometer][1], C_F_GREEN);
+    TextDrawSetShadow(VInfo[id][Speedometer][1], 0);
+    TextDrawSetOutline(VInfo[id][Speedometer][1], 1);
+    TextDrawBackgroundColor(VInfo[id][Speedometer][1], 51);
+    TextDrawFont(VInfo[id][Speedometer][1], 3);
+    TextDrawSetProportional(VInfo[id][Speedometer][1], 1);
+    VInfo[id][Speedometer][2] = TextDrawCreate(507.333465, 339.318389, "ENGINE");
+    TextDrawLetterSize(VInfo[id][Speedometer][2], 0.400000, 1.400889);
+    TextDrawAlignment(VInfo[id][Speedometer][2], 2);
+    TextDrawColor(VInfo[id][Speedometer][2], C_F_RED);
+    TextDrawSetShadow(VInfo[id][Speedometer][2], 0);
+    TextDrawSetOutline(VInfo[id][Speedometer][2], 1);
+    TextDrawBackgroundColor(VInfo[id][Speedometer][2], 51);
+    TextDrawFont(VInfo[id][Speedometer][2], 3);
+    TextDrawSetProportional(VInfo[id][Speedometer][2], 1);
+    VInfo[id][Speedometer][3] = TextDrawCreate(572.333251, 339.318420, "LIGHT");
+    TextDrawLetterSize(VInfo[id][Speedometer][3], 0.400999, 1.400889);
+    TextDrawAlignment(VInfo[id][Speedometer][3], 2);
+    TextDrawColor(VInfo[id][Speedometer][3], C_F_RED);
+    TextDrawSetShadow(VInfo[id][Speedometer][3], 0);
+    TextDrawSetOutline(VInfo[id][Speedometer][3], 1);
+    TextDrawBackgroundColor(VInfo[id][Speedometer][3], 51);
+    TextDrawFont(VInfo[id][Speedometer][3], 3);
+    TextDrawSetProportional(VInfo[id][Speedometer][3], 1);
+    VInfo[id][Speedometer][4] = TextDrawCreate(507.666595, 369.185180, "999 KM/H");
+    TextDrawLetterSize(VInfo[id][Speedometer][4], 0.600332, 1.600000);
+    TextDrawAlignment(VInfo[id][Speedometer][4], 2);
+    TextDrawColor(VInfo[id][Speedometer][4], -1);
+    TextDrawSetShadow(VInfo[id][Speedometer][4], 0);
+    TextDrawSetOutline(VInfo[id][Speedometer][4], 0);
+    TextDrawBackgroundColor(VInfo[id][Speedometer][4], 51);
+    TextDrawFont(VInfo[id][Speedometer][4], 3);
+    TextDrawSetProportional(VInfo[id][Speedometer][4], 1);
+    VInfo[id][Speedometer][5] = TextDrawCreate(414.666259, 401.955780, "9.999 KM");
+    TextDrawLetterSize(VInfo[id][Speedometer][5], 0.400999, 1.400887);
+    TextDrawAlignment(VInfo[id][Speedometer][5], 1);
+    TextDrawColor(VInfo[id][Speedometer][5], -86);
+    TextDrawSetShadow(VInfo[id][Speedometer][5], 0);
+    TextDrawSetOutline(VInfo[id][Speedometer][5], 1);
+    TextDrawBackgroundColor(VInfo[id][Speedometer][5], 51);
+    TextDrawFont(VInfo[id][Speedometer][5], 3);
+    TextDrawSetProportional(VInfo[id][Speedometer][5], 1);
+    return 1;
+}
+
 /*      [ УДАЛЕНИЕ ТРАНСПОРТА ]      */
 /*      [ DELETING A TRANSPORT ]      */
 stock VehicleDestroy(vehicleid)
@@ -56,16 +121,19 @@ stock VehicleDestroy(vehicleid)
             Vehicle_Count--;
             VInfo[v][ID] = 0;
             VInfo[v][Model] = 0;
-            VInfo[v][Position][0] = 0.0;
-            VInfo[v][Position][1] = 0.0;
-            VInfo[v][Position][2] = 0.0;
-            VInfo[v][Rotation] = 0.0;
+            VInfo[v][SpawnPosition][0] = 0.0;
+            VInfo[v][SpawnPosition][1] = 0.0;
+            VInfo[v][SpawnPosition][2] = 0.0;
+            VInfo[v][SpawnRotation] = 0.0;
             VInfo[v][Color1] = 0;
             VInfo[v][Color2] = 0;
             VInfo[v][Fuel] = 0.0;
             VInfo[v][Health] = 0.0;
+            VInfo[v][Speed] = 0.0;
             if(IsValidDynamic3DTextLabel(VInfo[v][Description]))
                 DestroyDynamic3DTextLabel(VInfo[v][Description]);
+            for(new speedometer = 0; speedometer < 6; speedometer++)
+                TextDrawDestroy(VInfo[v][Speedometer][speedometer]);
             VInfo[v][IsEngine] = false;
             VInfo[v][IsLights] = false;
             VInfo[v][IsDoorsClosed] = false;
@@ -109,6 +177,18 @@ stock VehicleDoorManagement(vehicleid)
                 VInfo[v][IsDoorsClosed] = !VInfo[v][IsDoorsClosed];
                 GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
                 SetVehicleParamsEx(vehicleid, engine, lights, alarm, VInfo[v][IsDoorsClosed], bonnet, boot, objective);
+                TextDrawColor(VInfo[v][Speedometer][1], (VInfo[v][IsDoorsClosed] ? (C_F_RED) : (C_F_GREEN)));
+                for(new p = 0; p < MAX_PLAYERS; p++)
+                {
+                    if(IsPlayerInAnyVehicle(p))
+                    {
+                        if(GetPlayerVehicleID(p) == vehicleid && GetPlayerVehicleSeat(p) == 0)
+                        {
+                            TextDrawsUpdateForServer(p, VInfo[v][Speedometer][1], _, (VInfo[v][IsDoorsClosed] ? (C_F_RED) : (C_F_GREEN)));
+                            break;
+                        }
+                    }
+                }
                 return true;
             }
         }
@@ -131,6 +211,67 @@ stock VehicleGetDoorValue(vehicleid)
         }
     }
     return false;
+}
+
+/*      [ ПОЛУЧИТЬ ЗНАЧЕНИЕ ДВИГАТЕЛЯ У ТРАНСПОРТА ]      */
+/*      [ GET THE ENGINE VALUE OF A TRANSPORT ]      */
+stock VehicleGetEngineValue(vehicleid)
+{
+    if(VehicleFindID(vehicleid))
+    {
+        for(new v = 0; v < MAX_VEHICLES; v++)
+        {
+            if(VInfo[v][ID] == vehicleid)
+            {
+                return VInfo[v][IsEngine];
+            }
+        }
+    }
+    return false;
+}
+
+/*      [ ПОЛУЧИТЬ ЗНАЧЕНИЕ ФАР У ТРАНСПОРТА ]      */
+/*      [ GET THE VALUE OF THE TRANSPORT LIGHTS ]      */
+stock VehicleGetLightsValue(vehicleid)
+{
+    if(VehicleFindID(vehicleid))
+    {
+        for(new v = 0; v < MAX_VEHICLES; v++)
+        {
+            if(VInfo[v][ID] == vehicleid)
+            {
+                return VInfo[v][IsLights];
+            }
+        }
+    }
+    return false;
+}
+
+/*      [ ПОЛУЧИТЬ СКОРОСТЬ ТРАНСПОРТА ]      */
+/*      [ GET THE SPEED OF TRANSPORT ]      */
+stock VehicleGetSpeedValue(vehicleid)
+{
+    if(VehicleFindID(vehicleid))
+    {
+        for(new v = 0; v < MAX_VEHICLES; v++)
+        {
+            if(VInfo[v][ID] == vehicleid)
+            {
+                return VInfo[v][Speed];
+            }
+        }
+    }
+    return 1;
+}
+
+/*      [ ВЫСЧИТАТЬ СКОРОСТЬ ТРАНСПОРТА ]      */
+/*      [ CALCULATE THE SPEED OF TRANSPORT ]      */
+stock VehicleCalculateSpeedValue(id)
+{
+    new Float:velocity[3];
+    GetVehicleVelocity(VInfo[id][ID], velocity[0], velocity[1], velocity[2]);
+    VInfo[id][Speed] = floatsqroot(floatpower(floatabs(velocity[0]), 2.0) + floatpower(velocity[1], 2.0) + floatpower(velocity[2], 2.0)) * 100.3;
+    return 1;
 }
 
 /*      [ СМЕНА ЦВЕТА ТРАНСПОРТА ]      */
@@ -176,7 +317,7 @@ stock VehiclePrintAllInfo(playerid)
         for(new v = 0; v < MAX_VEHICLES; v++)
         {
             if(VInfo[v][ID] != 0)
-                SCMf(playerid, -1, ""NOTIF_INFO" "C_WHITE"[%d] Model: "C_GRAY"%d "C_WHITE"| X: "C_GRAY"%f"C_WHITE", Y: "C_GRAY"%f"C_WHITE", Z: "C_GRAY"%f", VInfo[v][ID], VInfo[v][Model], VInfo[v][Position][0], VInfo[v][Position][1], VInfo[v][Position][2]);
+                SCMf(playerid, -1, ""NOTIF_INFO" "C_WHITE"[%d] Model: "C_GRAY"%d "C_WHITE"| X: "C_GRAY"%f"C_WHITE", Y: "C_GRAY"%f"C_WHITE", Z: "C_GRAY"%f", VInfo[v][ID], VInfo[v][Model], VInfo[v][SpawnPosition][0], VInfo[v][SpawnPosition][1], VInfo[v][SpawnPosition][2]);
         }
         SCMf(playerid, -1, ""NOTIF_INFO" "C_WHITE"На сервере %d единиц созданного транспорта.", Vehicle_Count);
     }
@@ -198,7 +339,7 @@ stock VehicleKeyStateChange(playerid, newkeys)
                 GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
                 switch(newkeys)
                 {
-                    case KEY_ACTION: // L. ALT
+                    case KEY_ACTION: // L. CTRL
                     {
                         for(new v = 0; v < MAX_VEHICLES; v++)
                         {
@@ -206,11 +347,12 @@ stock VehicleKeyStateChange(playerid, newkeys)
                             {
                                 VInfo[v][IsEngine] = !VInfo[v][IsEngine];
                                 SetVehicleParamsEx(vehicleid, VInfo[v][IsEngine], VInfo[v][IsLights], alarm, VInfo[v][IsDoorsClosed], bonnet, boot, objective);
+                                TextDrawsUpdateForServer(playerid, VInfo[v][Speedometer][2], _, (VInfo[v][IsEngine] ? (C_F_GREEN) : (C_F_RED)));
                             }
                         }
                     }
                     
-                    case KEY_FIRE: // L. CTRL
+                    case KEY_FIRE: // L. ALT
                     {
                         for(new v = 0; v < MAX_VEHICLES; v++)
                         {
@@ -218,8 +360,34 @@ stock VehicleKeyStateChange(playerid, newkeys)
                             {
                                 VInfo[v][IsLights] = !VInfo[v][IsLights];
                                 SetVehicleParamsEx(vehicleid, VInfo[v][IsEngine], VInfo[v][IsLights], alarm, VInfo[v][IsDoorsClosed], bonnet, boot, objective);
+                                TextDrawsUpdateForServer(playerid, VInfo[v][Speedometer][3], _, (VInfo[v][IsEngine] ? (C_F_GREEN) : (C_F_RED)));
                             }
                         }
+                    }
+                }
+            }
+        }
+    }
+    return 1;
+}
+
+stock VehicleStateChange(playerid, newstate, oldstate)
+{
+    if(oldstate == PLAYER_STATE_ONFOOT && newstate == PLAYER_STATE_DRIVER || newstate == PLAYER_STATE_PASSENGER)
+    {
+        CInfo[playerid][PInfo[playerid][CharacterSelect]][IsVehicle] = true;
+        if(GetPlayerVehicleSeat(playerid) == 0)
+        {
+            new vehicleid = GetPlayerVehicleID(playerid);
+            if(VehicleFindID(vehicleid))
+            {
+                for(new v = 0; v < MAX_VEHICLES; v++)
+                {
+                    if(VInfo[v][ID] == vehicleid)
+                    {
+                        for(new speedometer = 0; speedometer < 6; speedometer++)
+                            TextDrawShowForPlayer(playerid, VInfo[v][Speedometer][speedometer]);
+                        break;
                     }
                 }
             }
