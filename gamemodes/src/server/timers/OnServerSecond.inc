@@ -10,8 +10,11 @@ function TimerOnServerSecond()
         PayDayLaunch();
 
     // Обновление скорости транспорта | Updating the speed of transport
-    for(new vehicle = 0; vehicle < MAX_VEHICLES; vehicle++)
-        VehicleCalculateSpeedValue(vehicle);
+    if(Vehicle_Count > 0)
+    {
+        for(new vehicle = 0; vehicle < MAX_VEHICLES; vehicle++)
+            VehicleCalculateSpeedValue(vehicle);
+    }
 
     return STimerInfo[Second] = SetTimer("TimerOnServerSecond", 1000, false);
 }
