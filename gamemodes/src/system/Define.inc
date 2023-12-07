@@ -42,10 +42,6 @@
 #define MAX_AFK_TIME_SET            (60) // Время после которого игрок будет входить в AFK (в секундах) | The time after which the player will enter AFK (in seconds)
 #define MAX_AFK_TIME_WARNING        (60) // Время после которого будет выводиться предупреждение (в секундах) | The time after which the warning will be displayed (in seconds)
 
-/*      [ ВРЕМЯ ]      */
-/*      [ TIME ]      */
-#define MAX_TIME_UPDATE_TIME        (60) // Время обновления времени суток (в секундах) | Time of day update time (in seconds)
-
 /*      [ ДЕНЬГИ ]      */
 /*      [ MONEY ]      */
 #define MAX_TIME_UPDATE_MONEY       (60) // Время обновления денег у игрока (в секундах) | The player's money update time (in seconds)

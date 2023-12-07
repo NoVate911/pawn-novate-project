@@ -19,6 +19,7 @@ stock PayDayLaunch()
     printf("%s Текущее время %02d:%02d.", DEBUG_INFO, TInfo[Hour], TInfo[Minute]);
     foreach(new i : Player)
     {
+        TimeSetPlayer(i);
         if(PInfo[i][IsLogged])
         {
             ChatClear(i, false, 1);
@@ -31,9 +32,7 @@ stock PayDayLaunch()
                 MoneyGive(i, 500);
             }
             else
-            {
-                SCM(i, -1, "Для получения зарплаты нельзя находиться в AFK");
-            }
+                SCM(i, -1, "Для получения зарплаты нельзя находиться в AFK.");
             SCM(i, -1, "");
             SCM(i, -1, "====================");
             ChatClear(i, false, 1);

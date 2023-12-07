@@ -19,8 +19,6 @@ new STimerInfo[ServerTimerInfo];
 /*      [ TIME VARIABLES FOR THE SERVER ]      */
 enum TimeInfo
 {
-    TimeOfDayTime,
-
     Hour,
     Minute,
     Second
