@@ -30,6 +30,7 @@ stock VehicleCreate(vehicleid, Float:x, Float:y, Float:z, Float:rotation, color1
                 VInfo[v][Fuel] = fuel;
                 VInfo[v][Health] = 1000.0;
                 VInfo[v][Speed] = 0.0;
+                VInfo[v][Mileage] = 0.0;
                 vw = GetVehicleVirtualWorld(vehicle);
                 if(isAdmin)
                     VInfo[v][Description] = CreateDynamic3DTextLabel("ADMIN CAR", C_F_RED, x, y, z+0.5, 10.0, _, vehicle, _, vw);
@@ -98,7 +99,9 @@ stock VehicleCreateSpeedometer(id)
     TextDrawBackgroundColor(VInfo[id][Speedometer][4], 51);
     TextDrawFont(VInfo[id][Speedometer][4], 3);
     TextDrawSetProportional(VInfo[id][Speedometer][4], 1);
-    VInfo[id][Speedometer][5] = TextDrawCreate(414.666259, 401.955780, "9.999 KM");
+    new string[7+(-2+8)];
+    format(string, sizeof(string), "%.0f KM", VInfo[id][Mileage]);
+    VInfo[id][Speedometer][5] = TextDrawCreate(414.666259, 401.955780, string);
     TextDrawLetterSize(VInfo[id][Speedometer][5], 0.400999, 1.400887);
     TextDrawAlignment(VInfo[id][Speedometer][5], 1);
     TextDrawColor(VInfo[id][Speedometer][5], -86);
@@ -130,6 +133,7 @@ stock VehicleDestroy(vehicleid)
             VInfo[v][Fuel] = 0.0;
             VInfo[v][Health] = 0.0;
             VInfo[v][Speed] = 0.0;
+            VInfo[v][Mileage] = 0.0;
             if(IsValidDynamic3DTextLabel(VInfo[v][Description]))
                 DestroyDynamic3DTextLabel(VInfo[v][Description]);
             for(new speedometer = 0; speedometer < 6; speedometer++)
@@ -264,13 +268,19 @@ stock VehicleGetSpeedValue(vehicleid)
     return 1;
 }
 
-/*      [ ВЫСЧИТАТЬ СКОРОСТЬ ТРАНСПОРТА ]      */
-/*      [ CALCULATE THE SPEED OF TRANSPORT ]      */
+/*      [ ВЫСЧИТАТЬ СКОРОСТЬ И ПРОБЕГ ТРАНСПОРТА ]      */
+/*      [ CALCULATE THE SPEED AND MILEAGE OF THE TRANSPORT ]      */
 stock VehicleCalculateSpeedValue(id)
 {
     new Float:velocity[3];
     GetVehicleVelocity(VInfo[id][ID], velocity[0], velocity[1], velocity[2]);
     VInfo[id][Speed] = floatsqroot(floatpower(floatabs(velocity[0]), 2.0) + floatpower(velocity[1], 2.0) + floatpower(velocity[2], 2.0)) * 100.3;
+    new Float:mileage = (VInfo[id][Speed] / 8.6) / 300;
+    if(VInfo[id][Speed] > 0.0)
+    {
+        if(mileage > 0.0)
+            VInfo[id][Mileage] += mileage;
+    }
     return 1;
 }
 

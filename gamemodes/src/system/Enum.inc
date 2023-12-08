@@ -11,6 +11,7 @@ enum VehicleInfo
     Float:Fuel,
     Float:Health,
     Float:Speed,
+    Float:Mileage,
     Text3D:Description,
     Text:Speedometer[6],
     
