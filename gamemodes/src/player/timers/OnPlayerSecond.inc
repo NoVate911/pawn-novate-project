@@ -42,18 +42,19 @@ function TimerOnPlayerSecond(playerid)
             {
                 if(GetPlayerVehicleSeat(playerid) == 0)
                 {
-                    new vehicleid = GetPlayerVehicleID(playerid);
+                    new id = VehicleGetArrayID(GetPlayerVehicleID(playerid));
                     new speed_string[9+(-2+3)], mileage_string[7+(-2+8)];
-                    new id = VehicleGetArrayID(vehicleid);
                     format(speed_string, sizeof(speed_string), "%.0f KM/H", VInfo[id][Speed]);
                     TextDrawsUpdateForPlayer(playerid, PTDInfo[playerid][Speedometer][4], speed_string);
                     format(mileage_string, sizeof(mileage_string), "%.0f KM", VInfo[id][Mileage]);
                     TextDrawsUpdateForPlayer(playerid, PTDInfo[playerid][Speedometer][5], mileage_string);
+                    if(!VInfo[id][IsUsed])
+                        VInfo[id][IsUsed] = true;
                 }
             }
             else
             {
-                if(IsValidPlayerTextDraw(playerid, PTDInfo[playerid][Speedometer][0]))
+                if(IsValidPlayerTextDraw(playerid, PTDInfo[playerid][Speedometer][4]))
                     VehicleHideSpeedometerForPlayer(playerid);
             }
         }

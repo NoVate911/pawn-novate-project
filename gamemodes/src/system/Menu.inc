@@ -9,8 +9,7 @@ new const StringsMenu[2][] = {
 
 dCreate:DlgPlayerMenu(playerid)
 {
-    new temp[26+(-2+2)+(-2+(MAX_PLAYER_NAME*2))];
-    new string[sizeof(temp)*sizeof(StringsMenu)];
+    new temp[26+(-2+2)+(-2+(MAX_PLAYER_NAME*2))], string[sizeof(temp)*sizeof(StringsMenu)];
     for(new i = 0; i < sizeof(StringsMenu); i++)
     {
         format(temp, sizeof(temp), ""C_GRAY"[%d] "C_WHITE"%s\n", i+1, StringsMenu[i]);

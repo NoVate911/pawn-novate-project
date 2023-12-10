@@ -1,4 +1,4 @@
-cmd:alogin(playerid, params[]) // Войти под Администратором | Log in as an Administrator
+cmd:adminlogin(playerid, params[]) // Войти под Администратором | Log in as an Administrator
 {
     if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
     {
@@ -6,7 +6,7 @@ cmd:alogin(playerid, params[]) // Войти под Администраторо
             return 1;
 
         if(sscanf(params, "d", params[0]))
-            return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE""COMMAND_INVALID"", "alogin [пароль]");
+            return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE""COMMAND_INVALID"", "adminlogin [пароль]");
 
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
             return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Вы уже авторизированы в системе.");
@@ -38,8 +38,9 @@ cmd:alogin(playerid, params[]) // Войти под Администраторо
         SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""COMMAND_NOT_FOUND"");
     return 1;
 }
+alias:adminlogin("alogin")
 
-cmd:alogout(playerid)
+cmd:adminlogout(playerid)
 {
     if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
     {
@@ -62,6 +63,7 @@ cmd:alogout(playerid)
         SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""COMMAND_NOT_FOUND"");
     return 1;
 }
+alias:adminlogout("alogout")
 
 cmd:createvehicle(playerid, params[]) // Создать транспорт | Create a transport
 {
@@ -73,7 +75,7 @@ cmd:createvehicle(playerid, params[]) // Создать транспорт | Cre
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
             if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] < 3)
-                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У Вас недостаточно прав для выполнения данной команды.");
+                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_MISSING_ADMIN_LEVEL"");
 
             if(sscanf(params, "dd", params[0], params[1]))
                 return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE""COMMAND_INVALID"", "createvehicle [ID] [ID модели транспорта]");
@@ -114,7 +116,7 @@ cmd:removevehicle(playerid, params[]) // Удалить транспорт | Del
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
             if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] < 3)
-                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У Вас недостаточно прав для выполнения данной команды.");
+                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_MISSING_ADMIN_LEVEL"");
 
             new vehicle = 0;
             if(sscanf(params, "d", params[0]))
@@ -167,7 +169,7 @@ cmd:fixvehicle(playerid, params[]) // Починить транспорт | Repa
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
             if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] < 3)
-                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У Вас недостаточно прав для выполнения данной команды.");
+                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_MISSING_ADMIN_LEVEL"");
 
             new vehicle = 0;
             if(sscanf(params, "d", params[0]))
@@ -220,7 +222,7 @@ cmd:vehiclelock(playerid, params[]) // Управление замком тра�
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
             if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] < 3)
-                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У Вас недостаточно прав для выполнения данной команды.");
+                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_MISSING_ADMIN_LEVEL"");
 
             new vehicle = 0;
             if(sscanf(params, "d", params[0]))
@@ -273,7 +275,7 @@ cmd:vehiclecolor(playerid, params[]) // Смена цвета транспорт
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
             if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] < 3)
-                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У Вас недостаточно прав для выполнения данной команды.");
+                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_MISSING_ADMIN_LEVEL"");
 
             if(sscanf(params, "ddd", params[0], params[1], params[2]))
                 return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE""COMMAND_INVALID"", "vehiclecolor [ID транспорта] [ID цвета] [ID цвета]");
@@ -318,7 +320,7 @@ cmd:vehiclelist(playerid) // Вывести весь созданный тран
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
             if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] < 3)
-                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У Вас недостаточно прав для выполнения данной команды.");
+                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_MISSING_ADMIN_LEVEL"");
 
             VehiclePrintAllInfo(playerid);
         }
@@ -339,7 +341,7 @@ cmd:vehiclegoto(playerid, params[]) // Переместиться к транс�
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
             if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] < 3)
-                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У Вас недостаточно прав для выполнения данной команды.");
+                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_MISSING_ADMIN_LEVEL"");
 
             if(sscanf(params, "dd", params[0], params[1]))
                 return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE""COMMAND_INVALID"", "vehiclegoto [ID] [ID транспорта]");
@@ -383,7 +385,7 @@ cmd:vehiclegethere(playerid, params[]) // Переместить транспо�
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
             if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] < 3)
-                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У Вас недостаточно прав для выполнения данной команды.");
+                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_MISSING_ADMIN_LEVEL"");
 
             if(sscanf(params, "dd", params[0], params[1]))
                 return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE""COMMAND_INVALID"", "vehiclegethere [ID] [ID транспорта]");
@@ -427,7 +429,7 @@ cmd:clearchat(playerid)
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
             if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] < 4)
-                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У Вас недостаточно прав для выполнения данной команды.");
+                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_MISSING_ADMIN_LEVEL"");
 
             ChatClear(playerid, true);
             new message_admin[49+(-2+MAX_PLAYER_NAME)+(-2+MAX_PLAYER_NAME)+(-2+4)];
@@ -452,7 +454,7 @@ cmd:hp(playerid, params[]) // Выдать игроку здоровье | Give 
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
             if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] < 3)
-                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У Вас недостаточно прав для выполнения данной команды.");
+                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_MISSING_ADMIN_LEVEL"");
 
             if(sscanf(params, "dd", params[0], params[1]))
                 return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE""COMMAND_INVALID"", "hp [ID] [Количество]");
@@ -490,7 +492,7 @@ cmd:armour(playerid, params[]) // Выдать игроку броню | Give th
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
             if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] < 3)
-                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У Вас недостаточно прав для выполнения данной команды.");
+                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_MISSING_ADMIN_LEVEL"");
 
             if(sscanf(params, "dd", params[0], params[1]))
                 return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE""COMMAND_INVALID"", "armour [ID] [Количество]");
@@ -528,7 +530,7 @@ cmd:settime(playerid, params[]) // Установить время | Set the tim
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
             if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] < 4)
-                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У Вас недостаточно прав для выполнения данной команды.");
+                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_MISSING_ADMIN_LEVEL"");
 
             if(sscanf(params, "dd", params[0], params[1]))
                 return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE""COMMAND_INVALID"", "settime [Час] [Минута]");
@@ -563,7 +565,7 @@ cmd:resettime(playerid) // Восстановить время | Restore time
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
             if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] < 4)
-                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У Вас недостаточно прав для выполнения данной команды.");
+                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_MISSING_ADMIN_LEVEL"");
         
             TimeSet();
             TInfo[IsChanged] = false;
@@ -589,7 +591,7 @@ cmd:setadmin(playerid, params[]) // Выдать игроку права Адм�
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
             if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] < 6)
-                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У Вас недостаточно прав для выполнения данной команды.");
+                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_MISSING_ADMIN_LEVEL"");
 
             if(sscanf(params, "d", params[0]))
                 return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE""COMMAND_INVALID"", "setadmin [ID]");
@@ -631,7 +633,7 @@ cmd:takeadmin(playerid, params[]) // Забрать права Админист�
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
             if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] < 6)
-                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У Вас недостаточно прав для выполнения данной команды.");
+                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_MISSING_ADMIN_LEVEL"");
 
             if(sscanf(params, "d", params[0]))
                 return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE""COMMAND_INVALID"", "takeadmin [ID]");
@@ -677,7 +679,7 @@ cmd:kick(playerid, params[]) // Кикнуть игрока с сервера | 
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
             if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] < 2)
-                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У Вас недостаточно прав для выполнения данной команды.");
+                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_MISSING_ADMIN_LEVEL"");
 
             if(sscanf(params, "ds[48]", params[0], params[1]))
                 return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE""COMMAND_INVALID"", "kick [ID] (причина)");
@@ -713,7 +715,7 @@ cmd:setskin(playerid, params[]) // Выдать постоянный скин и
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
             if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] < 4)
-                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У Вас недостаточно прав для выполнения данной команды.");
+                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_MISSING_ADMIN_LEVEL"");
 
             if(sscanf(params, "dd", params[0], params[1]))
                 return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE""COMMAND_INVALID"", "setskin [ID] [ID скина]");
@@ -754,7 +756,7 @@ cmd:settempskin(playerid, params[]) // Выдать временный скин 
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
             if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] < 4)
-                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У Вас недостаточно прав для выполнения данной команды.");
+                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_MISSING_ADMIN_LEVEL"");
 
             if(sscanf(params, "dd", params[0], params[1]))
                 return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE""COMMAND_INVALID"", "settempskin [ID] [ID скина]");
@@ -794,7 +796,7 @@ cmd:payday(playerid) // Запустить зарплату (PayDay) | Launch Sa
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
             if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] < 5)
-                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У Вас недостаточно прав для выполнения данной команды.");
+                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_MISSING_ADMIN_LEVEL"");
 
             PayDayLaunch();
             new message_admin[53+(-2+MAX_PLAYER_NAME)+(-2+MAX_PLAYER_NAME)+(-2+4)];
@@ -818,7 +820,7 @@ cmd:goto(playerid, params[]) // Телепортироваться к игрок
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
             if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] < 4)
-                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У Вас недостаточно прав для выполнения данной команды.");
+                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_MISSING_ADMIN_LEVEL"");
 
             if(sscanf(params, "d", params[0]))
                 return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE""COMMAND_INVALID"", "goto [ID]");
@@ -863,7 +865,7 @@ cmd:gethere(playerid, params[]) // Телепортировать игрока �
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
             if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] < 4)
-                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У Вас недостаточно прав для выполнения данной команды.");
+                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_MISSING_ADMIN_LEVEL"");
 
             if(sscanf(params, "d", params[0]))
                 return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE""COMMAND_INVALID"", "gethere [ID]");
@@ -914,7 +916,7 @@ cmd:spec(playerid, params[]) // Следить за игроком | Follow the 
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
             if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] < 2)
-                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У Вас недостаточно прав для выполнения данной команды.");
+                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_MISSING_ADMIN_LEVEL"");
 
             if(sscanf(params, "d", params[0]))
             {
@@ -979,7 +981,7 @@ cmd:tpcoord(playerid, params[0]) // Телепорт по координатам
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
             if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] < 2)
-                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У Вас недостаточно прав для выполнения данной команды.");
+                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_MISSING_ADMIN_LEVEL"");
 
             new Float:x, Float:y, Float:z;
             if(sscanf(params, "fff", x, y, z))
@@ -1006,7 +1008,7 @@ cmd:setinterior(playerid, params[]) // Установить интерьер | I
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
             if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] < 2)
-                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У Вас недостаточно прав для выполнения данной команды.");
+                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_MISSING_ADMIN_LEVEL"");
 
             if(sscanf(params, "dd", params[0], params[1]))
                 return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE""COMMAND_INVALID"", "setinterior [ID] [INTERIOR]");
@@ -1042,7 +1044,7 @@ cmd:resetinterior(playerid, params[]) // Восстановить интерье
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
             if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] < 2)
-                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У Вас недостаточно прав для выполнения данной команды.");
+                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_MISSING_ADMIN_LEVEL"");
 
             if(sscanf(params, "d", params[0]))
                 return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE""COMMAND_INVALID"", "resetinterior [ID]");
@@ -1075,7 +1077,7 @@ cmd:setvirtualworld(playerid, params[]) // Установить виртуаль
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
             if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] < 2)
-                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У Вас недостаточно прав для выполнения данной команды.");
+                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_MISSING_ADMIN_LEVEL"");
 
             if(sscanf(params, "dd", params[0], params[1]))
                 return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE""COMMAND_INVALID"", "setvirtualworld [ID] [VIRTUAL WORLD]");
@@ -1111,7 +1113,7 @@ cmd:resetvirtualworld(playerid, params[]) // Восстановить вирту
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
             if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] < 2)
-                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У Вас недостаточно прав для выполнения данной команды.");
+                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_MISSING_ADMIN_LEVEL"");
 
             if(sscanf(params, "d", params[0]))
                 return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE""COMMAND_INVALID"", "resetvirtualworld [ID]");
@@ -1144,7 +1146,7 @@ cmd:spawn(playerid, params[]) // Заспавнить игрока | Wake up the
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
             if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] < 2)
-                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У Вас недостаточно прав для выполнения данной команды.");
+                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_MISSING_ADMIN_LEVEL"");
 
             if(sscanf(params, "d", params[0]))
                 return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE""COMMAND_INVALID"", "spawn [ID]");
@@ -1180,7 +1182,7 @@ cmd:freeze(playerid, params[]) // Заморозить игрока | Freeze the
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
             if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] < 3)
-                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У Вас недостаточно прав для выполнения данной команды.");
+                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_MISSING_ADMIN_LEVEL"");
 
             if(sscanf(params, "d", params[0]))
                 return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE""COMMAND_INVALID"", "freeze [ID]");
@@ -1254,7 +1256,7 @@ cmd:giveweapon(playerid, params[])
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
             if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] < 4)
-                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У Вас недостаточно прав для выполнения данной команды.");
+                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_MISSING_ADMIN_LEVEL"");
 
             if(sscanf(params, "dd", params[0], params[1]))
                 return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE""COMMAND_INVALID"", "giveweapon [ID] [WEAPON ID]");
@@ -1269,9 +1271,9 @@ cmd:giveweapon(playerid, params[])
                 return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Неверный ID оружия. Диапазон: от 1 до 46.");
 
             if(!(1 <= params[1] <= 15))
-                GivePlayerWeapon(params[0], params[1], 1);
-            else
                 GivePlayerWeapon(params[0], params[1], 777);
+            else
+                GivePlayerWeapon(params[0], params[1], 1);
             new message_admin[69+(-2+MAX_PLAYER_NAME)+(-2+MAX_PLAYER_NAME)+(-2+4)+(-2+MAX_PLAYER_NAME)+(-2+MAX_PLAYER_NAME)+(-2+4)+(-2+2)];
             format(message_admin, sizeof(message_admin), ""C_LIGHTGRAY"Администратор %s %s(%d) выдал %s %s(%d) оружие (ID: %d).", CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], params[1]);
             ChatSendMessageToAdmin(message_admin);
@@ -1295,7 +1297,7 @@ cmd:vehiclerespawnall(playerid)
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
             if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] < 4)
-                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У Вас недостаточно прав для выполнения данной команды.");
+                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_MISSING_ADMIN_LEVEL"");
 
             if(VehicleCount > 0)
             {
@@ -1319,3 +1321,87 @@ cmd:vehiclerespawnall(playerid)
     return 1;
 }
 alias:vehiclerespawnall("vehrespawnall", "vehicleresall", "vehresall")
+
+cmd:adminhelp(playerid, params[])
+{
+    if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
+    {
+        if(CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand] > 0)
+            return 1;
+
+        if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
+        {
+            if(sscanf(params, "d", params[0]))
+                return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE""COMMAND_INVALID"", "adminhelp [Уровень]");
+
+            if(!(MIN_ADMIN_LEVEL <= params[0] <= CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel]))
+                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Неверный уровень Администратора. Диапазон: от %d до %d.", MIN_ADMIN_LEVEL, CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel]);
+
+            if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsDialogActive])
+                return 1;
+
+            SCM(playerid, -1, ""NOTIF_WARNING" "C_WHITE"В разработке.");
+        }
+        else
+            SCM(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Авторизуйтесь в системе (/adminlogin) для просмотра доступных команд.");
+    }
+    else
+        SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""COMMAND_NOT_FOUND"");
+    return 1;
+}
+alias:adminhelp("ahelp")
+
+/*      [ ========== ========== ========== ========== ========== ]      */
+
+dCreate:DlgAdminHelp(playerid)
+{
+    new level[25+(-2+2)], avaliableLevels[sizeof(level)*MAX_ADMIN_LEVEL];
+    // new commandsLevel[570], avaliableCommands[sizeof(commandsLevel)*2];
+    for(new adminLevel = 0; adminLevel < CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel]; adminLevel++)
+    {
+        format(level, sizeof(level), ""C_LIGHTGRAY"%d уровень\n", adminLevel+1);
+        strcat(avaliableLevels, level, sizeof(avaliableLevels));
+        // switch(adminLevel)
+        // {
+        //     case 1:
+        //     {
+        //         format(level, sizeof(level), "1 уровень");
+        //         format(commandsLevel, sizeof(commandsLevel), ""C_WHITE"1 уровень:\n\
+        //         "C_LIGHTGRAY"/adminlogin - войти в систему.\n\
+        //         "C_LIGHTGRAY"/adminlogout - выйти из системы.\n\
+        //         "C_LIGHTGRAY"/adminhelp - посмотреть список доступных команд.\n\n");
+        //         strcat(avaliableCommands, commandsLevel, sizeof(avaliableCommands));
+        //     }
+        //     case 2:
+        //     {
+        //         format(commandsLevel, sizeof(commandsLevel), ""C_WHITE"2 уровень:\n\
+        //         "C_LIGHTGRAY"/kick - кикнуть игрока.\n\
+        //         "C_LIGHTGRAY"/spec - режим слежки за игроком.\n\
+        //         "C_LIGHTGRAY"/tpcoord - телепорт по координатам.\n\
+        //         "C_LIGHTGRAY"/setinterior - установить интерьер.\n\
+        //         "C_LIGHTGRAY"/resetinterior - восстановить интерьер.\n\
+        //         "C_LIGHTGRAY"/setvirtualworld - установить виртуальный мир.\n\
+        //         "C_LIGHTGRAY"/resetvirtualworld - восстановить виртуальный мир.\n\
+        //         "C_LIGHTGRAY"/spawn - заспавнить игрока.");
+        //         strcat(avaliableCommands, commandsLevel, sizeof(avaliableCommands));
+        //     }
+        // }
+    }
+    static const message[] = "\
+    "C_WHITE"Выберите уровень:\n\
+    %s";
+    new string[sizeof(message)+(-2+sizeof(avaliableLevels))];
+    format(string, sizeof(string), message, avaliableLevels);
+    return Dialog_Open(playerid, Dialog:DlgAdminHelp, DIALOG_STYLE_LIST, ""C_GRAY"Помощь "C_BLACK"| "C_WHITE"Команды Администрации", string, "Выбрать", "Закрыть");
+}
+
+dResponse:DlgAdminHelp(playerid)
+{
+    if(response)
+    {
+        SCMf(playerid, -1, ""NOTIF_INFO" "C_WHITE"Вы выбрали %d уровень Администратора.", listitem+1);
+    }
+    else
+        CInfo[playerid][PInfo[playerid][CharacterSelect]][IsDialogActive] = false;
+    return 1;
+}

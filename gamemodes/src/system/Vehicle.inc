@@ -35,7 +35,10 @@ stock VehicleCreate(vehicleid, Float:x, Float:y, Float:z, Float:rotation, color1
                     VInfo[v][Description] = CreateDynamic3DTextLabel("ADMIN CAR", C_F_RED, x, y, z+0.5, 10.0, _, vehicle, _, GetVehicleVirtualWorld(vehicle));
                 VInfo[v][VirtualWorld] = GetVehicleVirtualWorld(vehicle);
                 VInfo[v][IsUsed] = false;
-                VInfo[v][IsEngine] = false;
+                if(VehicleIsControlled(VInfo[v][Model]))
+                    VInfo[v][IsEngine] = false;
+                else
+                    VInfo[v][IsEngine] = true;
                 VInfo[v][IsLights] = false;
                 VInfo[v][IsDoorsClosed] = false;
                 SetVehicleHealth(vehicle, VInfo[v][Health]);
@@ -109,6 +112,8 @@ stock VehicleDoorManagement(vehicleid)
     {
         new engine = 0, lights = 0, alarm = 0, doors = 0, bonnet = 0, boot = 0, objective = 0;
         new id = VehicleGetArrayID(vehicleid);
+        if(!VehicleIsControlled(VInfo[id][Model]))
+            return false;
         VInfo[id][IsDoorsClosed] = !VInfo[id][IsDoorsClosed];
         GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
         SetVehicleParamsEx(vehicleid, VInfo[id][IsEngine], VInfo[id][IsLights], alarm, VInfo[id][IsDoorsClosed], bonnet, boot, objective);
@@ -224,6 +229,7 @@ stock VehicleGetArrayID(vehicleid)
 stock VehicleRespawn(bool:isUsed = false)
 {
     new count = 0, needCount = VehicleCount;
+    new engine = 0, lights = 0, alarm = 0, doors = 0, bonnet = 0, boot = 0, objective = 0;
     if(!isUsed)
         needCount = 0;
     for(new v = 0; v < MAX_VEHICLES; v++)
@@ -232,6 +238,9 @@ stock VehicleRespawn(bool:isUsed = false)
         {
             SetVehiclePos(VInfo[v][ID], VInfo[v][SpawnPosition][0], VInfo[v][SpawnPosition][1], VInfo[v][SpawnPosition][2]);
             SetVehicleZAngle(VInfo[v][ID], VInfo[v][SpawnRotation]);
+            VInfo[v][IsEngine] = false;
+            VInfo[v][IsLights] = false;
+            VInfo[v][IsDoorsClosed] = true;
         }
         else
         {
@@ -239,15 +248,29 @@ stock VehicleRespawn(bool:isUsed = false)
             {
                 SetVehiclePos(VInfo[v][ID], VInfo[v][SpawnPosition][0], VInfo[v][SpawnPosition][1], VInfo[v][SpawnPosition][2]);
                 SetVehicleZAngle(VInfo[v][ID], VInfo[v][SpawnRotation]);
+                VInfo[v][IsEngine] = false;
+                VInfo[v][IsLights] = false;
+                VInfo[v][IsDoorsClosed] = true;
                 needCount++;
             }
         }
+        GetVehicleParamsEx(VInfo[v][ID], engine, lights, alarm, doors, bonnet, boot, objective);
+        SetVehicleParamsEx(VInfo[v][ID], VInfo[v][IsEngine], VInfo[v][IsLights], alarm, VInfo[v][IsDoorsClosed], bonnet, boot, objective);
         count++;
     }
     if(count == needCount)
         return true;
     else
         return false;
+}
+
+/*      [ ПРОВЕРЯЕМ ТРАНСПОРТ НА ВОЗМОЖНОСТЬ УПРАВЛЕНИЯ (двигатель, фары и другое) ]      */
+/*      [ WE CHECK THE TRANSPORT FOR THE POSSIBILITY OF CONTROL (engine, headlights, etc.) ]      */
+stock VehicleIsControlled(modelid)
+{
+    if(modelid == 509 || modelid == 481 || modelid == 510)
+        return false;
+    return true;
 }
 
 /*      [ ВЫВЕСТИ ВЕСЬ ТРАНСПОРТ ]      */
@@ -272,12 +295,15 @@ stock VehiclePrintAllInfo(playerid)
 
 /*      [ ПОКАЗАТЬ СПИДОМЕТР ТРАНСПОРТА ДЛЯ ИГРОКА ]      */
 /*      [ SHOW THE SPEEDOMETER OF THE TRANSPORT FOR THE PLAYER ]      */
-stock VehicleShowSpeedometerForPlayer(playerid)
+stock VehicleShowSpeedometerForPlayer(playerid, vehicleid)
 {
     if(GetPlayerVehicleSeat(playerid) == 0)
     {
         for(new speedometer = 0; speedometer < 6; speedometer++)
             PlayerTextDrawShow(playerid, PTDInfo[playerid][Speedometer][speedometer]);
+        TextDrawsUpdateForPlayer(playerid, PTDInfo[playerid][Speedometer][1], _, (VInfo[vehicleid][IsDoorsClosed] ? (C_F_RED) : (C_F_GREEN)));
+        TextDrawsUpdateForPlayer(playerid, PTDInfo[playerid][Speedometer][2], _, (VInfo[vehicleid][IsEngine] ? (C_F_GREEN) : (C_F_RED)));
+        TextDrawsUpdateForPlayer(playerid, PTDInfo[playerid][Speedometer][3], _, (VInfo[vehicleid][IsLights] ? (C_F_GREEN) : (C_F_RED)));
         return true;
     }
     return false;
@@ -307,21 +333,24 @@ stock VehicleKeyStateChange(playerid, newkeys)
             if(VehicleFindID(vehicleid))
             {
                 new id = VehicleGetArrayID(vehicleid);
-                GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
-                switch(newkeys)
+                if(VehicleIsControlled(VInfo[id][Model]))
                 {
-                    case KEY_ACTION: // L. CTRL
+                    GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
+                    switch(newkeys)
                     {
-                        VInfo[id][IsEngine] = !VInfo[id][IsEngine];
-                        SetVehicleParamsEx(vehicleid, VInfo[id][IsEngine], VInfo[id][IsLights], alarm, VInfo[id][IsDoorsClosed], bonnet, boot, objective);
-                        TextDrawsUpdateForPlayer(playerid, PTDInfo[playerid][Speedometer][2], _, (VInfo[id][IsEngine] ? (C_F_GREEN) : (C_F_RED)));
-                    }
-                    
-                    case KEY_FIRE: // L. ALT
-                    {
-                        VInfo[id][IsLights] = !VInfo[id][IsLights];
-                        SetVehicleParamsEx(vehicleid, VInfo[id][IsEngine], VInfo[id][IsLights], alarm, VInfo[id][IsDoorsClosed], bonnet, boot, objective);
-                        TextDrawsUpdateForPlayer(playerid, PTDInfo[playerid][Speedometer][3], _, (VInfo[id][IsLights] ? (C_F_GREEN) : (C_F_RED)));
+                        case KEY_ACTION: // L. CTRL
+                        {
+                            VInfo[id][IsEngine] = !VInfo[id][IsEngine];
+                            SetVehicleParamsEx(vehicleid, VInfo[id][IsEngine], VInfo[id][IsLights], alarm, VInfo[id][IsDoorsClosed], bonnet, boot, objective);
+                            TextDrawsUpdateForPlayer(playerid, PTDInfo[playerid][Speedometer][2], _, (VInfo[id][IsEngine] ? (C_F_GREEN) : (C_F_RED)));
+                        }
+                        
+                        case KEY_FIRE: // L. ALT
+                        {
+                            VInfo[id][IsLights] = !VInfo[id][IsLights];
+                            SetVehicleParamsEx(vehicleid, VInfo[id][IsEngine], VInfo[id][IsLights], alarm, VInfo[id][IsDoorsClosed], bonnet, boot, objective);
+                            TextDrawsUpdateForPlayer(playerid, PTDInfo[playerid][Speedometer][3], _, (VInfo[id][IsLights] ? (C_F_GREEN) : (C_F_RED)));
+                        }
                     }
                 }
             }
@@ -337,7 +366,8 @@ stock VehicleStateChange(playerid, newstate, oldstate)
         new id = VehicleGetArrayID(GetPlayerVehicleID(playerid));
         CInfo[playerid][PInfo[playerid][CharacterSelect]][IsVehicle] = true;
         VInfo[id][IsUsed] = true;
-        VehicleShowSpeedometerForPlayer(playerid);
+        if(VehicleIsControlled(VInfo[id][Model]))
+            VehicleShowSpeedometerForPlayer(playerid, id);
     }
     return 1;
 }
