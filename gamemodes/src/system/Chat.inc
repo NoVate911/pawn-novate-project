@@ -14,7 +14,7 @@ stock ChatClear(playerid, bool:global = false, count = 50)
 
 /*      [ ОТПРАВКА СООБЩЕНИЙ В ЧАТ АДМИНИСТРАЦИИ ]      */
 /*      [ SENDING MESSAGES TO THE ADMINISTRATION CHAT ]      */
-stock ChatSendMessageToAdmin(message[], adminLevel = 0, bool:isAdmin = true)
+stock ChatSendMessageToAdmin(message[], adminLevel = 0, bool:isAdmin = true, bool:isPrefix = true)
 {
     foreach(new i : Player)
     {
@@ -25,7 +25,12 @@ stock ChatSendMessageToAdmin(message[], adminLevel = 0, bool:isAdmin = true)
                 if(CInfo[i][PInfo[i][CharacterSelect]][IsAdmin])
                 {
                     if(CInfo[i][PInfo[i][CharacterSelect]][AdminLevel] > adminLevel)
-                        SCMf(i, -1, ""NOTIF_ADMIN" %s", message);
+                    {
+                        if(isPrefix)
+                            SCMf(i, -1, ""NOTIF_ADMIN" %s", message);
+                        else
+                            SCMf(i, -1, "%s", message);
+                    }
                 }
             }
             else
@@ -33,7 +38,12 @@ stock ChatSendMessageToAdmin(message[], adminLevel = 0, bool:isAdmin = true)
                 if(!CInfo[i][PInfo[i][CharacterSelect]][IsAdmin])
                 {
                     if(CInfo[i][PInfo[i][CharacterSelect]][AdminLevel] > adminLevel)
-                        SCMf(i, -1, ""NOTIF_ADMIN" %s", message);
+                    {
+                        if(isPrefix)
+                            SCMf(i, -1, ""NOTIF_ADMIN" %s", message);
+                        else
+                            SCMf(i, -1, "%s", message);
+                    }
                 }
             }
         }

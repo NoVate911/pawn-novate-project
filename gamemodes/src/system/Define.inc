@@ -49,3 +49,12 @@
 /*      [ ЗАРПЛАТА ]      */
 /*      [ PAYDAY ]      */
 #define MAX_PAYDAY_BENEFIT          (500) // Пособие по безработице | Unemployment benefits
+
+/*      [ ДИАЛОГИ ]      */
+/*      [ DIALOGUES ]      */
+#define MAX_DELAY_OPENING_DIALOG    (2) // Максимальное время задержки открытия диалога (в секундах) | The maximum delay time for opening a dialog (in seconds)
+
+/*      [ АВТОШКОЛА ]      */
+/*      [ DRIVING SCHOOL ]      */
+#define MAX_DRIVING_SCHOOL          (1) // Максимальное количество автошкол | The maximum number of driving schools
+#define MAX_DRIVING_SCHOOL_LICENSES (2) // Максимальное количество лицензий | Maximum number of licenses

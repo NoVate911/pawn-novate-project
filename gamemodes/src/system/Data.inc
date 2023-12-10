@@ -68,9 +68,10 @@ stock DataClearCharacterInfo(playerid)
         CInfo[playerid][i][IsVehicle] = false;
         CInfo[playerid][i][DelaySendMessage] = 0;
         CInfo[playerid][i][DelaySendCommand] = 0;
+        CInfo[playerid][i][DelayOpeningDialog] = 0;
 
         CInfo[playerid][i][ID] = 0;
-        CInfo[playerid][i][Login] = EOS;
+        CInfo[playerid][i][AccountID] = 0;
         CInfo[playerid][i][FirstName] = EOS;
         CInfo[playerid][i][LastName] = EOS;
         CInfo[playerid][i][FullName] = EOS;
@@ -107,10 +108,10 @@ stock DataClearCharacterInfo(playerid)
 /*      [ WE RESET THE INFORMATION ABOUT THE OBSERVATION AT THE ADMINISTRATOR ]      */
 stock DataClearAdminSpectateInfo(playerid)
 {
-    ASInfo[playerid][Toggle] = false;
+    PAdminSpectateInfo[playerid][IsToggle] = false;
     for(new pos = 0; pos < 3; pos++)
-        ASInfo[playerid][Position][pos] = 0.0;
-    ASInfo[playerid][Rotation] = 0.0;
+        PAdminSpectateInfo[playerid][Position][pos] = 0.0;
+    PAdminSpectateInfo[playerid][Rotation] = 0.0;
     return 1;
 }
 
@@ -118,7 +119,8 @@ stock DataClearAdminSpectateInfo(playerid)
 /*      [ WE RESET THE INFORMATION ABOUT THE WORK OF THE LOADER FROM THE PLAYER ]      */
 stock DataClearPlayerWorksInfo(playerid)
 {
-    DestroyDynamicCP(PWInfo[playerid][Checkpoint]);
+    if(IsValidDynamicCP(PWInfo[playerid][Checkpoint]))
+        DestroyDynamicCP(PWInfo[playerid][Checkpoint]);
     PWInfo[playerid][LoaderMovedBoxCount] = 0;
     PWInfo[playerid][LoaderIsPickup] = false;
     PWInfo[playerid][FarmerMovedHayCount] = 0;
@@ -135,9 +137,26 @@ stock DataClearPlayerWorksInfo(playerid)
 /*      [ WE RESET THE INFORMATION ABOUT THE PLAYER INTERFACE ]      */
 stock DataClearPlayerTextDrawInfo(playerid)
 {
-    PlayerTextDrawDestroy(playerid, PTDInfo[playerid][Notification]);
-    // for(new speedometer = 0; speedometer < 6; speedometer++)
-    //     PlayerTextDrawDestroy(playerid, PTDInfo[playerid][Speedometer][speedometer]);
+    if(IsValidPlayerTextDraw(playerid, PTDInfo[playerid][Notification]))
+        PlayerTextDrawDestroy(playerid, PTDInfo[playerid][Notification]);
+    return 1;
+}
+
+/*      [ ОБНУЛЯЕМ ИНФОРМАЦИЮ О ЛИЦЕНЗИЯХ У ПЕРСОНАЖА ]      */
+/*      [ WE RESET THE INFORMATION ABOUT THE LICENSES OF THE CHARACTER ]      */
+stock DataClearCharacterLicenseInfo(playerid)
+{
+    CLicenseInfo[playerid][SchoolID] = 0;
+    CLicenseInfo[playerid][SelectedCategory] = 0;
+    CLicenseInfo[playerid][IsStarted] = false;
+    CLicenseInfo[playerid][VehicleID] = 0;
+    if(IsValidDynamicCP(CLicenseInfo[playerid][Checkpoint]))
+        DestroyDynamicCP(CLicenseInfo[playerid][Checkpoint]);
+    CLicenseInfo[playerid][CurrentCheckpoint] = 0;
+
+    CLicenseInfo[playerid][ID] = 0;
+    CLicenseInfo[playerid][CharacterID] = 0;
+    CLicenseInfo[playerid][IsDriver] = false;
     return 1;
 }
 
@@ -167,7 +186,7 @@ stock DataGetCharacterInfo(playerid)
     for(new i = 0; i < PInfo[playerid][CharactersCount]; i++)
     {
         cache_get_value_name_int(i, "id", CInfo[playerid][i][ID]);
-        cache_get_value_name(i, "login", CInfo[playerid][i][Login], MAX_PLAYER_NAME);
+        cache_get_value_name_int(i, "accountID", CInfo[playerid][i][AccountID]);
         cache_get_value_name(i, "firstName", CInfo[playerid][i][FirstName], MAX_PLAYER_NAME);
         cache_get_value_name(i, "lastName", CInfo[playerid][i][LastName], MAX_PLAYER_NAME);
         cache_get_value_name_int(i, "age", CInfo[playerid][i][Age]);
@@ -196,6 +215,16 @@ stock DataGetCharacterInfo(playerid)
     return 1;
 }
 
+/*      [ ПОЛУЧАЕМ ДАННЫЕ О ЛИЦЕНЗИЯХ ПЕРСОНАЖА ИЗ БАЗЫ ДАННЫХ ]      */
+/*      [ WE GET DATA ABOUT THE CHARACTER'S LICENSES FROM THE DATABASE ]      */
+stock DataGetCharacterLicenseInfo(playerid)
+{
+    cache_get_value_name_int(0, "id", CLicenseInfo[playerid][ID]);
+    cache_get_value_name_int(0, "characterID", CLicenseInfo[playerid][CharacterID]);
+    cache_get_value_name_int(0, "driver", CLicenseInfo[playerid][IsDriver]);
+    return 1;
+}
+
 /*      [ ЗАПИСЫВАЕМ ДАННЫЕ АККАУНТА В БАЗУ ДАННЫХ ]      */
 /*      [ WE RECORD THE ACCOUNT DATA IN THE DATABASE ]      */
 stock DataSetPlayerInfo(playerid)
@@ -218,9 +247,20 @@ stock DataSetCharacterInfo(playerid)
     GetPlayerHealth(playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Health]);
     GetPlayerArmour(playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Armour]);
 
-    static const query[] = "UPDATE characters SET level = '%d', exp = '%d', expTime = '%d', positionX = '%f', positionY = '%f', positionZ = '%f', rotation = '%f', interior = '%d', vw = '%d', health = '%f', armour = '%f', adminLevel = '%d', adminPassword = '%d', money = '%d' WHERE login = '%s' LIMIT 1";
-    new mysql[sizeof(query)+(-2+3)+(-2+3)+(-2+4)+(-2+8)+(-2+8)+(-2+8)+(-2+8)+(-2+3)+(-2+10)+(-2+3)+(-2+3)+(-2+2)+(-2+4)+(-2+9)+(-2+MAX_PLAYER_NAME)];
-    mysql_format(SInfo[MySQL], mysql, sizeof(mysql), query, CInfo[playerid][PInfo[playerid][CharacterSelect]][Level], CInfo[playerid][PInfo[playerid][CharacterSelect]][Exp], CInfo[playerid][PInfo[playerid][CharacterSelect]][ExpTime], CInfo[playerid][PInfo[playerid][CharacterSelect]][Position][0], CInfo[playerid][PInfo[playerid][CharacterSelect]][Position][1], CInfo[playerid][PInfo[playerid][CharacterSelect]][Position][2], CInfo[playerid][PInfo[playerid][CharacterSelect]][Rotation], CInfo[playerid][PInfo[playerid][CharacterSelect]][Interior], CInfo[playerid][PInfo[playerid][CharacterSelect]][VirtualWorld], CInfo[playerid][PInfo[playerid][CharacterSelect]][Health], CInfo[playerid][PInfo[playerid][CharacterSelect]][Armour], CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel], CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminPassword], CInfo[playerid][PInfo[playerid][CharacterSelect]][Money], CInfo[playerid][PInfo[playerid][CharacterSelect]][Login]);
+    static const query[] = "UPDATE characters SET level = '%d', exp = '%d', expTime = '%d', positionX = '%f', positionY = '%f', positionZ = '%f', rotation = '%f', interior = '%d', vw = '%d', health = '%f', armour = '%f', adminLevel = '%d', adminPassword = '%d', money = '%d' WHERE id = '%d' LIMIT 1";
+    new mysql[sizeof(query)+(-2+3)+(-2+3)+(-2+4)+(-2+8)+(-2+8)+(-2+8)+(-2+8)+(-2+3)+(-2+10)+(-2+3)+(-2+3)+(-2+2)+(-2+4)+(-2+9)+(-2+11)];
+    mysql_format(SInfo[MySQL], mysql, sizeof(mysql), query, CInfo[playerid][PInfo[playerid][CharacterSelect]][Level], CInfo[playerid][PInfo[playerid][CharacterSelect]][Exp], CInfo[playerid][PInfo[playerid][CharacterSelect]][ExpTime], CInfo[playerid][PInfo[playerid][CharacterSelect]][Position][0], CInfo[playerid][PInfo[playerid][CharacterSelect]][Position][1], CInfo[playerid][PInfo[playerid][CharacterSelect]][Position][2], CInfo[playerid][PInfo[playerid][CharacterSelect]][Rotation], CInfo[playerid][PInfo[playerid][CharacterSelect]][Interior], CInfo[playerid][PInfo[playerid][CharacterSelect]][VirtualWorld], CInfo[playerid][PInfo[playerid][CharacterSelect]][Health], CInfo[playerid][PInfo[playerid][CharacterSelect]][Armour], CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel], CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminPassword], CInfo[playerid][PInfo[playerid][CharacterSelect]][Money], CInfo[playerid][PInfo[playerid][CharacterSelect]][ID]);
     mysql_query(SInfo[MySQL], mysql, false);
+    return 1;
+}
+
+/*      [ ЗАПИСЫВАЕМ ДАННЫЕ О ЛИЦЕНЗИЯХ ПЕРСОНАЖА В БАЗУ ДАННЫХ ]      */
+/*      [ WE RECORD THE DATA ABOUT THE CHARACTER'S LICENSES IN THE DATABASE ]      */
+stock DataSetCharacterLicenseInfo(playerid)
+{
+    static const update_query[] = "UPDATE licenses SET driver = '%d' WHERE id = '%d' LIMIT 1";
+    new update_mysql[sizeof(update_query)+(-2+1)+(-2+11)];
+    mysql_format(SInfo[MySQL], update_mysql, sizeof(update_mysql), update_query, CLicenseInfo[playerid][IsDriver], CLicenseInfo[playerid][ID]);
+    mysql_query(SInfo[MySQL], update_mysql, false);
     return 1;
 }

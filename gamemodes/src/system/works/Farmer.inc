@@ -33,6 +33,7 @@ stock WorkFarmerLVKeyStateChange(playerid, newkeys)
 
                     ApplyDynamicActorAnimation(WInfo[WORK_FARMER_LV_ID][ActorID], "PED", "IDLE_CHAT", 4.1, 0, 1, 1, 1, 1);
                     CInfo[playerid][PInfo[playerid][CharacterSelect]][IsDialogActive] = true;
+                    CInfo[playerid][PInfo[playerid][CharacterSelect]][DelayOpeningDialog] = MAX_DELAY_OPENING_DIALOG;
                     if(!CInfo[playerid][PInfo[playerid][CharacterSelect]][Working])
                         Dialog_Show(playerid, Dialog:DlgWorkFarmerLVInvite);
                     else

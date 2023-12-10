@@ -30,10 +30,10 @@ new const SkinsFemale[9][2] = { // Женские | Female
 /*      [ DISPLAYS THE CHARACTER SELECTION ]      */
 stock PlayerCharacterShow(playerid)
 {
-    static const query[] = "SELECT id,login,firstName,lastName,age,sex,race,skin,level,exp,expTime,positionX,positionY,positionZ,rotation,interior,vw,health,armour,adminLevel,adminPassword,money,regIP,lastIP,regDate,lastDate FROM characters WHERE login = '%s' LIMIT %d";
-    new mysql[sizeof(query)+(-2+MAX_PLAYER_NAME)+(-2+1)];
-    mysql_format(SInfo[MySQL], mysql, sizeof(mysql), query, PInfo[playerid][Nick], MAX_CHARACTERS);
-    new Cache:cache = mysql_query(SInfo[MySQL], mysql, true);
+    static const characters_query[] = "SELECT id,accountID,firstName,lastName,age,sex,race,skin,level,exp,expTime,positionX,positionY,positionZ,rotation,interior,vw,health,armour,adminLevel,adminPassword,money,regIP,lastIP,regDate,lastDate FROM characters WHERE accountID = '%d' LIMIT %d";
+    new characters_mysql[sizeof(characters_query)+(-2+11)+(-2+1)];
+    mysql_format(SInfo[MySQL], characters_mysql, sizeof(characters_mysql), characters_query, PInfo[playerid][ID], MAX_CHARACTERS);
+    new Cache:characters_cache = mysql_query(SInfo[MySQL], characters_mysql, true);
     cache_get_row_count(PInfo[playerid][CharactersCount]);
     if(PInfo[playerid][CharactersCount])
     {
@@ -42,7 +42,7 @@ stock PlayerCharacterShow(playerid)
     }
     else
         Dialog_Show(playerid, Dialog:DlgCharCreateFirstName);
-    return cache_delete(cache);
+    return cache_delete(characters_cache);
 }
 
 /*      [ ========== ========== ========== ========== ========== ]      */
@@ -82,10 +82,23 @@ dResponse:DlgCharList(playerid)
             format(CInfo[playerid][PInfo[playerid][CharacterSelect]][LastDate], 22, "%s / %s", date, time);
             GetPlayerIp(playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], 16);
 
-            static const query[] = "UPDATE characters SET lastIP = '%s', lastDate = '%s' WHERE login = '%s' LIMIT 1";
-            new mysql[sizeof(query)+(-2+16)+(-2+22)+(-2+MAX_PLAYER_NAME)];
-            mysql_format(SInfo[MySQL], mysql, sizeof(mysql), query, CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastDate], CInfo[playerid][PInfo[playerid][CharacterSelect]][Login]);
-            mysql_query(SInfo[MySQL], mysql, false);
+            static const characters_query[] = "UPDATE characters SET lastIP = '%s', lastDate = '%s' WHERE id = '%d' LIMIT 1";
+            new characters_mysql[sizeof(characters_query)+(-2+16)+(-2+22)+(-2+11)];
+            mysql_format(SInfo[MySQL], characters_mysql, sizeof(characters_mysql), characters_query, CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastDate], CInfo[playerid][PInfo[playerid][CharacterSelect]][ID]);
+            mysql_query(SInfo[MySQL], characters_mysql, false);
+
+            static const licenses_select_query[] = "SELECT id FROM licenses WHERE characterID = '%d' LIMIT 1";
+            new licenses_select_mysql[sizeof(licenses_select_query)+(-2+11)];
+            mysql_format(SInfo[MySQL], licenses_select_mysql, sizeof(licenses_select_mysql), licenses_select_query, CInfo[playerid][PInfo[playerid][CharacterSelect]][ID]);
+            new Cache:licenses_select_cache = mysql_query(SInfo[MySQL], licenses_select_mysql, true);
+            if(!cache_num_rows())
+            {
+                static const licenses_insert_query[] = "INSERT INTO licenses (characterID) VALUE ('%d')";
+                new licenses_insert_mysql[sizeof(licenses_insert_query)+(-2+11)];
+                mysql_format(SInfo[MySQL], licenses_insert_mysql, sizeof(licenses_insert_mysql), licenses_insert_query, CInfo[playerid][PInfo[playerid][CharacterSelect]][ID]);
+                mysql_query(SInfo[MySQL], licenses_insert_mysql, false);
+            }
+            cache_delete(licenses_select_cache);
         }
     }
     else
@@ -283,10 +296,10 @@ dResponse:DlgCharCreateRace(playerid)
         else if(CInfo[playerid][0][Sex] == 1)
             CInfo[playerid][0][Skin] = SkinsFemale[skinID][random(2)];
 
-        static const query[] = "INSERT INTO characters (login,firstName,lastName,age,sex,race,skin,regIP,lastIP,regDate,lastDate) VALUES ('%s','%s','%s','%d','%d','%d','%d','%s','%s','%s','%s')";
-        new mysql[sizeof(query)+(-2+MAX_PLAYER_NAME)+(-2+MAX_PLAYER_NAME)+(-2+MAX_PLAYER_NAME)+(-2+2)+(-2+1)+(-2+1)+(-2+3)+(-2+16)+(-2+16)+(-2+22)+(-2+22)];
-        mysql_format(SInfo[MySQL], mysql, sizeof(mysql), query, PInfo[playerid][Nick], CInfo[playerid][0][FirstName], CInfo[playerid][0][LastName], CInfo[playerid][0][Age], CInfo[playerid][0][Sex], CInfo[playerid][0][Race], CInfo[playerid][0][Skin], CInfo[playerid][0][RegIP], CInfo[playerid][0][LastIP], CInfo[playerid][0][RegDate], CInfo[playerid][0][LastDate]);
-        new Cache:cache = mysql_query(SInfo[MySQL], mysql, true);
+        static const character_query[] = "INSERT INTO characters (accountID,firstName,lastName,age,sex,race,skin,regIP,lastIP,regDate,lastDate) VALUES ('%d','%s','%s','%d','%d','%d','%d','%s','%s','%s','%s')";
+        new character_mysql[sizeof(character_query)+(-2+MAX_PLAYER_NAME)+(-2+MAX_PLAYER_NAME)+(-2+MAX_PLAYER_NAME)+(-2+2)+(-2+1)+(-2+1)+(-2+3)+(-2+16)+(-2+16)+(-2+22)+(-2+22)];
+        mysql_format(SInfo[MySQL], character_mysql, sizeof(character_mysql), character_query, PInfo[playerid][ID], CInfo[playerid][0][FirstName], CInfo[playerid][0][LastName], CInfo[playerid][0][Age], CInfo[playerid][0][Sex], CInfo[playerid][0][Race], CInfo[playerid][0][Skin], CInfo[playerid][0][RegIP], CInfo[playerid][0][LastIP], CInfo[playerid][0][RegDate], CInfo[playerid][0][LastDate]);
+        new Cache:character_cache = mysql_query(SInfo[MySQL], character_mysql, true);
         if(cache_num_results())
             PlayerCharacterShow(playerid);
         else
@@ -294,7 +307,7 @@ dResponse:DlgCharCreateRace(playerid)
             SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"При создании персонажа произошла ошибка. Обратитесь к Администрации!");
             KickPlayer(playerid, _, "Ошибка");
         }
-        cache_delete(cache);
+        cache_delete(character_cache);
     }
     return 1;
 }

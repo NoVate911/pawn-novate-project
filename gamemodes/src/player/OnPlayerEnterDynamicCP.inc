@@ -10,6 +10,7 @@ public OnPlayerEnterDynamicCP(playerid, checkpointid)
             WorkLoaderLVEnterDynamicCP(playerid, checkpointid);
             WorkFarmerLVEnterDynamicCP(playerid, checkpointid);
             WorkDiverLVEnterDynamicCP(playerid, checkpointid);
+            DrivingSchoolEnterDynamicCP(playerid, checkpointid);
         }
     }
     return 1;

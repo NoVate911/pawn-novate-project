@@ -16,14 +16,14 @@ public OnPlayerConnect(playerid)
     GetPlayerName(playerid, PInfo[playerid][Nick], MAX_PLAYER_NAME);
     foreach(new p : Player)
     {
-        if(strcmp(PInfo[p][Nick], PInfo[playerid][Nick]) == 0)
+        if(strcmp(PInfo[playerid][Nick], PInfo[p][Nick]) == 0)
         {
             if(PInfo[p][IsConnection])
                 return KickPlayer(playerid, _, "Игрок на сервере");
         }
     }
-
-    return PTimerInfo[playerid][Authorization] = SetTimerEx("TimerOnPlayerConnect", 200, false, "i", playerid);
+    PTimerInfo[playerid][Authorization] = SetTimerEx("TimerOnPlayerConnect", 1000, false, "i", playerid);
+    return 1;
 }
 
 /*      [ ========== ========== ========== ========== ========== ]      */
@@ -38,12 +38,10 @@ function TimerOnPlayerConnect(playerid)
     WeatherSetPlayer(playerid);
     ChatClear(playerid);
     TogglePlayerSpectating(playerid, true);
-    SetPlayerVirtualWorld(playerid, playerid + 1000);
+    SetPlayerVirtualWorld(playerid, playerid+1000);
     AnimationsPreload(playerid);
-
     InterpolateCameraPos(playerid, Positions_Camera_Connect[0][0], Positions_Camera_Connect[0][1], Positions_Camera_Connect[0][2], Positions_Camera_Connect[1][0], Positions_Camera_Connect[1][1], Positions_Camera_Connect[1][2], 120000);
     InterpolateCameraLookAt(playerid, Positions_Camera_Connect[2][0], Positions_Camera_Connect[2][1], Positions_Camera_Connect[2][2], Positions_Camera_Connect[2][0], Positions_Camera_Connect[2][1], Positions_Camera_Connect[2][2], 120000);
-
     static const query[] = "SELECT nick FROM accounts WHERE nick = '%s' LIMIT 1";
     new mysql[sizeof(query)+(-2+MAX_PLAYER_NAME)];
     mysql_format(SInfo[MySQL], mysql, sizeof(mysql), query, PInfo[playerid][Nick]);
@@ -60,5 +58,6 @@ function TimerOnPlayerConnect(playerid)
         Dialog_Show(playerid, Dialog:DlgAuthRegPassword);
     }
     cache_delete(cache);
-    return PTimerInfo[playerid][Second] = SetTimerEx("TimerOnPlayerSecond", 1000, false, "i", playerid);
+    PTimerInfo[playerid][Second] = SetTimerEx("TimerOnPlayerSecond", 1000, false, "i", playerid);
+    return 1;
 }

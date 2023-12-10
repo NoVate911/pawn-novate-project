@@ -19,6 +19,8 @@ new STimerInfo[ServerTimerInfo];
 /*      [ TIME VARIABLES FOR THE SERVER ]      */
 enum TimeInfo
 {
+    bool:IsChanged,
+
     Hour,
     Minute,
     Second
@@ -32,3 +34,12 @@ enum PayDayInfo
     bool:IsPassed
 }
 new PDInfo[PayDayInfo];
+
+/*      [ ПЕРЕМЕННЫЕ АВТОШКОЛЫ ]      */
+/*      [ VARIABLE DRIVING SCHOOLS ]      */
+enum DrivingSchoolInfo
+{
+    STREAMER_TAG_PICKUP:BeginningPickup, // Чекпоинт начала сдачи экзамена | The checkpoint for the start of the exam
+    STREAMER_TAG_3D_TEXT_LABEL:Beginning3DText, // Текст начала сдачи экзамена | The text of the beginning of the exam
+}
+new DSchoolInfo[MAX_DRIVING_SCHOOL][DrivingSchoolInfo];

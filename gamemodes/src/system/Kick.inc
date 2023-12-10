@@ -9,13 +9,15 @@ stock KickPlayer(playerid, author[]="Сервер", reason[]="Неизвестн
         Dialog_Show(playerid, Dialog:DlgKick);
     ChatClear(playerid);
     SCM(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Для отключения от сервера, используйте "C_YELLOW"/q"C_WHITE".");
-    return PTimerInfo[playerid][Kicks] = SetTimerEx("TimerOnPlayerKick", 200, false, "i", playerid);
+    PTimerInfo[playerid][Kicks] = SetTimerEx("TimerOnPlayerKick", 200, false, "i", playerid);
+    return 1;
 }
 
 function TimerOnPlayerKick(playerid)
 {
     Kick(playerid);
-    return KillTimer(PTimerInfo[playerid][Kicks]);
+    KillTimer(PTimerInfo[playerid][Kicks]);
+    return 1;
 }
 
 /*      [ ========== ========== ========== ========== ========== ]      */

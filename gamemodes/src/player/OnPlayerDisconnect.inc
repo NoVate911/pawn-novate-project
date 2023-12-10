@@ -14,16 +14,18 @@ public OnPlayerDisconnect(playerid, reason)
 
         DataSetPlayerInfo(playerid);
         DataSetCharacterInfo(playerid);
+        DataSetCharacterLicenseInfo(playerid);
+        DataClearPlayerAFKInfo(playerid);
+        DataClearAdminSpectateInfo(playerid);
+        DataClearPlayerWorksInfo(playerid);
+        DataClearCharacterLicenseInfo(playerid);
         printf("%s %s %s(%d) [%s:%s] отключился от сервера.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, PInfo[playerid][Nick], PInfo[playerid][LastIP]);
     }
 
     DataClearCharacterInfo(playerid);
-    DataClearPlayerInfo(playerid);
     DataClearPlayerTimerInfo(playerid);
     DataClearPlayerKickInfo(playerid);
-    DataClearPlayerAFKInfo(playerid);
-    DataClearAdminSpectateInfo(playerid);
-    DataClearPlayerWorksInfo(playerid);
     DataClearPlayerTextDrawInfo(playerid);
+    DataClearPlayerInfo(playerid);
     return 1;
 }

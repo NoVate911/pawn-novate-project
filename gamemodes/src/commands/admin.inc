@@ -20,7 +20,7 @@ cmd:alogin(playerid, params[]) // Войти под Администраторо
                 format(message_admin, sizeof(message_admin), ""C_LIGHTGRAY"Администратор %s %s(%d) авторизовался в системе.", CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid);
                 ChatSendMessageToAdmin(message_admin);
                 SCM(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы авторизовались в системе.");
-                printf("%s Администратор %s %s(%d) [%s:%s] авторизовался в системе.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP]);
+                printf("%s Администратор %s %s(%d) [%s:%s] авторизовался в системе.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, PInfo[playerid][Nick], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP]);
             }
             else
             {
@@ -28,7 +28,7 @@ cmd:alogin(playerid, params[]) // Войти под Администраторо
                 new message_admin[72+(-2+MAX_PLAYER_NAME)+(-2+MAX_PLAYER_NAME)+(-2+4)];
                 format(message_admin, sizeof(message_admin), ""C_LIGHTGRAY"Администратор %s %s(%d) попытался авторизоваться в системе.", CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid);
                 ChatSendMessageToAdmin(message_admin);
-                printf("%s Администратор %s %s(%d) [%s:%s] попытался авторизоваться в системе.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP]);
+                printf("%s Администратор %s %s(%d) [%s:%s] попытался авторизоваться в системе.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, PInfo[playerid][Nick], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP]);
             }
         }
         else
@@ -53,7 +53,7 @@ cmd:alogout(playerid)
             format(message_admin, sizeof(message_admin), ""C_LIGHTGRAY"Администратор %s %s(%d) покинул пост.", CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid);
             ChatSendMessageToAdmin(message_admin);
             SCM(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы покинули пост Администратора.");
-            printf("%s Администратор %s %s(%d) [%s:%s] покинул пост.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP]);
+            printf("%s Администратор %s %s(%d) [%s:%s] покинул пост.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, PInfo[playerid][Nick], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP]);
         }
         else
             SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Вы не авторизированы, как Администратор.");
@@ -90,12 +90,12 @@ cmd:createvehicle(playerid, params[]) // Создать транспорт | Cre
             new Float:x, Float:y, Float:z, Float:rotation;
             GetPlayerPos(params[0], x, y, z);
             GetPlayerFacingAngle(params[0], rotation);
-            new vehicle = VehicleCreate(params[1], x, y+2, z, rotation, random(255), random(255));
+            new vehicle = VehicleCreate(params[1], x, y+2.0, z, rotation, random(255), random(255));
             SCMf(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Транспорт был создан (ID: %d).", vehicle);
             new message_admin[63+(-2+MAX_PLAYER_NAME)+(-2+MAX_PLAYER_NAME)+(-2+4)+(-2+4)];
             format(message_admin, sizeof(message_admin), ""C_LIGHTGRAY"Администратор %s %s(%d) создал транспорт (ID: %d).", CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, vehicle);
             ChatSendMessageToAdmin(message_admin);
-            printf("%s Администратор %s %s(%d) [%s:%s] создал транспорт (ID: %d) для %s %s(%d) [%s:%s].", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], vehicle, CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][Login], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP]);
+            printf("%s Администратор %s %s(%d) [%s:%s] создал транспорт (ID: %d) для %s %s(%d) [%s:%s].", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, PInfo[playerid][Nick], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], vehicle, CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], PInfo[params[0]][Nick], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP]);
         }
     }
     else
@@ -142,12 +142,12 @@ cmd:removevehicle(playerid, params[]) // Удалить транспорт | Del
                 format(message_admin, sizeof(message_admin), ""C_LIGHTGRAY"Администратор %s %s(%d) удалил транспорт (ID: %d).", CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, vehicle);
                 ChatSendMessageToAdmin(message_admin);
                 SCMf(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Транспорт был удалён (ID: %d).", vehicle);
-                printf("%s Администратор %s %s(%d) [%s:%s] удалил транспорт (ID: %d).", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], vehicle);
+                printf("%s Администратор %s %s(%d) [%s:%s] удалил транспорт (ID: %d).", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, PInfo[playerid][Nick], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], vehicle);
             }
             else
             {
                 SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"При удалении транспорта произошла ошибка.");
-                printf("%s Администратор %s %s(%d) [%s:%s] попытался удалить транспорт.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP]);
+                printf("%s Администратор %s %s(%d) [%s:%s] попытался удалить транспорт.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, PInfo[playerid][Nick], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP]);
             }
         }
     }
@@ -195,12 +195,12 @@ cmd:fixvehicle(playerid, params[]) // Починить транспорт | Repa
                 format(message_admin, sizeof(message_admin), ""C_LIGHTGRAY"Администратор %s %s(%d) починил транспорт (ID: %d).", CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, vehicle);
                 ChatSendMessageToAdmin(message_admin);
                 SCMf(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Транспорт был починен (ID: %d).", vehicle);
-                printf("%s Администратор %s %s(%d) [%s:%s] починил транспорт (ID: %d).", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], vehicle);
+                printf("%s Администратор %s %s(%d) [%s:%s] починил транспорт (ID: %d).", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, PInfo[playerid][Nick], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], vehicle);
             }
             else
             {
                 SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"При починки транспорта произошла ошибка.");
-                printf("%s Администратор %s %s(%d) [%s:%s] попытался починить транспорт.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP]);
+                printf("%s Администратор %s %s(%d) [%s:%s] попытался починить транспорт.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, PInfo[playerid][Nick], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP]);
             }
         }
     }
@@ -248,12 +248,12 @@ cmd:vehiclelock(playerid, params[]) // Управление замком тра�
                 format(message_admin, sizeof(message_admin), ""C_LIGHTGRAY"Администратор %s %s(%d) %s двери транспорта (ID: %d).", CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, (VehicleGetDoorValue(vehicle)) ? ("закрыт") : ("открыт"), vehicle);
                 ChatSendMessageToAdmin(message_admin);
                 SCMf(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Транспорт был %s (ID: %d).", (VehicleGetDoorValue(vehicle)) ? ("закрыт") : ("открыт"), vehicle);
-                printf("%s Администратор %s %s(%d) [%s:%s] %s транспорт (ID: %d).", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], (VehicleGetDoorValue(vehicle)) ? ("закрыт") : ("открыт"), vehicle);
+                printf("%s Администратор %s %s(%d) [%s:%s] %s транспорт (ID: %d).", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, PInfo[playerid][Nick], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], (VehicleGetDoorValue(vehicle)) ? ("закрыт") : ("открыт"), vehicle);
             }
             else
             {
                 SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"При управлением дверьми транспорта произошла ошибка.");
-                printf("%s Администратор %s %s(%d) [%s:%s] попытался открыть/закрыть транспорт.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP]);
+                printf("%s Администратор %s %s(%d) [%s:%s] попытался открыть/закрыть транспорт.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, PInfo[playerid][Nick], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP]);
             }
         }
     }
@@ -290,12 +290,12 @@ cmd:vehiclecolor(playerid, params[]) // Смена цвета транспорт
                     format(message_admin, sizeof(message_admin), ""C_LIGHTGRAY"Администратор %s %s(%d) перекрасил транспорт (ID: %d).", CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, vehicle);
                     ChatSendMessageToAdmin(message_admin);
                     SCMf(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Транспорт был перекрашен (ID: %d).", vehicle);
-                    printf("%s Администратор %s %s(%d) [%s:%s] перекрасил транспорт (ID: %d).", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], vehicle);
+                    printf("%s Администратор %s %s(%d) [%s:%s] перекрасил транспорт (ID: %d).", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, PInfo[playerid][Nick], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], vehicle);
                 }
                 else
                 {
                     SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"При перекраске транспорта произошла ошибка.");
-                    printf("%s Администратор %s %s(%d) [%s:%s] попытался перекрасить транспорт.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP]);
+                    printf("%s Администратор %s %s(%d) [%s:%s] попытался перекрасить транспорт.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, PInfo[playerid][Nick], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP]);
                 }
             }
             else
@@ -361,7 +361,7 @@ cmd:vehiclegoto(playerid, params[]) // Переместиться к транс�
                 ChatSendMessageToAdmin(message_admin);
                 SCMf(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы телепортировали %s %s(%d) к транспорту (ID: %d).", CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], params[1]);
                 SCMf(params[0], -1, ""NOTIF_SUCCESS" "C_WHITE"Вы были телепортированы к транспорту (ID: %d).", params[1]);
-                printf("%s Администратор %s %s(%d) [%s:%s] телепортировал %s %s(%d) [%s:%s] к транспорту (ID: %d).", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][Login], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP], params[1]);
+                printf("%s Администратор %s %s(%d) [%s:%s] телепортировал %s %s(%d) [%s:%s] к транспорту (ID: %d).", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, PInfo[playerid][Nick], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], PInfo[params[0]][Nick], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP], params[1]);
             }
             else
                 SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Транспорт с данным ID не найден.");
@@ -405,7 +405,7 @@ cmd:vehiclegethere(playerid, params[]) // Переместить транспо�
                 ChatSendMessageToAdmin(message_admin);
                 SCMf(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы телепортировали транспорт (ID: %d) к %s %s(%d).", params[1], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0]);
                 SCMf(params[0], -1, ""NOTIF_SUCCESS" "C_WHITE"Транспорт (ID: %d) был телепортирован к Вам.", params[1]);
-                printf("%s Администратор %s %s(%d) [%s:%s] телепортировал транспорт (ID: %d) к %s %s(%d) [%s:%s].", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], params[1], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][Login], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP]);
+                printf("%s Администратор %s %s(%d) [%s:%s] телепортировал транспорт (ID: %d) к %s %s(%d) [%s:%s].", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, PInfo[playerid][Nick], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], params[1], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], PInfo[params[0]][Nick], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP]);
             }
             else
                 SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Транспорт с данным ID не найден.");
@@ -434,7 +434,7 @@ cmd:clearchat(playerid)
             format(message_admin, sizeof(message_admin), ""C_LIGHTGRAY"Администратор %s %s(%d) очистил чат.", CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid);
             ChatSendMessageToAdmin(message_admin);
             SCMTA(-1, ""NOTIF_WARNING" "C_WHITE"Чат был очищен Администратором. Приятной игры!");
-            printf("%s Администратор %s %s(%d) [%s:%s] очистил глобальный чат.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP]);
+            printf("%s Администратор %s %s(%d) [%s:%s] очистил глобальный чат.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, PInfo[playerid][Nick], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP]);
         }
     }
     else
@@ -460,6 +460,9 @@ cmd:hp(playerid, params[]) // Выдать игроку здоровье | Give 
             if(!PInfo[params[0]][IsLogged])
                 return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_FOUND"");
 
+            if(params[0] != playerid && CInfo[params[0]][PInfo[params[0]][CharacterSelect]][AdminLevel] >= CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel])
+                return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_VALID"");
+
             if(!(10 <= params[1] <= 100))
                 return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Уровень здоровья не может быть меньше 10 и выше 100 единиц.");
 
@@ -469,7 +472,7 @@ cmd:hp(playerid, params[]) // Выдать игроку здоровье | Give 
             ChatSendMessageToAdmin(message_admin);
             SCMf(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы установили %s %s(%d) здоровье на %d единиц.", CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], params[1]);
             SCMf(params[0], -1, ""NOTIF_SUCCESS" "C_WHITE"Администратор установил уровень здоровья на %d единиц.", params[1]);
-            printf("%s Администратор %s %s(%d) [%s:%s] установил %d единиц здоровья для %s %s(%d) [%s:%s].", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], params[1], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][Login], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP]);
+            printf("%s Администратор %s %s(%d) [%s:%s] установил %d единиц здоровья для %s %s(%d) [%s:%s].", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, PInfo[playerid][Nick], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], params[1], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], PInfo[params[0]][Nick], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP]);
         }
     }
     else
@@ -495,6 +498,9 @@ cmd:armour(playerid, params[]) // Выдать игроку броню | Give th
             if(!PInfo[params[0]][IsLogged])
                 return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_FOUND"");
 
+            if(params[0] != playerid && CInfo[params[0]][PInfo[params[0]][CharacterSelect]][AdminLevel] >= CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel])
+                return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_VALID"");
+
             if(!(0 <= params[1] <= 100))
                 return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Уровень брони не может быть меньше 0 и выше 100 единиц.");
 
@@ -504,7 +510,7 @@ cmd:armour(playerid, params[]) // Выдать игроку броню | Give th
             ChatSendMessageToAdmin(message_admin);
             SCMf(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы установили %s %s(%d) броню на %d единиц.", CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], params[1]);
             SCMf(params[0], -1, ""NOTIF_SUCCESS" "C_WHITE"Администратор установил уровень брони на %d единиц.", params[1]);
-            printf("%s Администратор %s %s(%d) [%s:%s] установил %d единиц брони для %s %s(%d) [%s:%s].", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], params[1], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][Login], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP]);
+            printf("%s Администратор %s %s(%d) [%s:%s] установил %d единиц брони для %s %s(%d) [%s:%s].", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, PInfo[playerid][Nick], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], params[1], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], PInfo[params[0]][Nick], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP]);
         }
     }
     else
@@ -512,7 +518,7 @@ cmd:armour(playerid, params[]) // Выдать игроку броню | Give th
     return 1;
 }
 
-cmd:settime(playerid, params[])
+cmd:settime(playerid, params[]) // Установить время | Set the time
 {
     if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
     {
@@ -534,11 +540,12 @@ cmd:settime(playerid, params[])
                 return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Неверно указаны минуты. Диапазон: от 0 до 59.");
         
             TimeSet(true, params[0], params[1]);
-            new message_admin[62+(-2+MAX_PLAYER_NAME)+(-2+MAX_PLAYER_NAME)+(-2+4)+(-2+2)+(-2+2)];
-            format(message_admin, sizeof(message_admin), ""C_LIGHTGRAY"Администратор %s %s(%d) установил время на %d:%d.", CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, params[0], params[1]);
+            TInfo[IsChanged] = true;
+            new message_admin[66+(-2+MAX_PLAYER_NAME)+(-2+MAX_PLAYER_NAME)+(-2+4)+(-2+2)+(-2+2)];
+            format(message_admin, sizeof(message_admin), ""C_LIGHTGRAY"Администратор %s %s(%d) установил время на %02d:%02d.", CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, params[0], params[1]);
             ChatSendMessageToAdmin(message_admin);
-            SCMf(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы изменили время суток на %d:%d", params[0], params[1]);
-            printf("%s Администратор %s %s(%d) [%s:%s] изменил время суток на %d:%d", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], params[0], params[1]);
+            SCMf(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы изменили время суток на %02d:%02d", params[0], params[1]);
+            printf("%s Администратор %s %s(%d) [%s:%s] изменил время суток на %02d:%02d", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, PInfo[playerid][Nick], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], params[0], params[1]);
         }
     }
     else
@@ -546,7 +553,7 @@ cmd:settime(playerid, params[])
     return 1;
 }
 
-cmd:resettime(playerid)
+cmd:resettime(playerid) // Восстановить время | Restore time
 {
     if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
     {
@@ -559,11 +566,12 @@ cmd:resettime(playerid)
                 return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У Вас недостаточно прав для выполнения данной команды.");
         
             TimeSet();
+            TInfo[IsChanged] = false;
             new message_admin[55+(-2+MAX_PLAYER_NAME)+(-2+MAX_PLAYER_NAME)+(-2+4)];
             format(message_admin, sizeof(message_admin), ""C_LIGHTGRAY"Администратор %s %s(%d) восстановил время.", CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid);
             ChatSendMessageToAdmin(message_admin);
             SCM(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы восстановили время суток.");
-            printf("%s Администратор %s %s(%d) [%s:%s] восстановил время суток.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP]);
+            printf("%s Администратор %s %s(%d) [%s:%s] восстановил время суток.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, PInfo[playerid][Nick], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP]);
         }
     }
     else
@@ -599,12 +607,12 @@ cmd:setadmin(playerid, params[]) // Выдать игроку права Адм�
                 SCMf(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы выдали %s %s(%d) права Администратора.", CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0]);
                 SCM(params[0], -1, ""NOTIF_SUCCESS" "C_WHITE"Вам были выданы права Администратора.");
                 SCM(params[0], -1, ""NOTIF_SUCCESS" "C_WHITE"Стандартный пароль установлен на "C_GREEN"\"1234\""C_WHITE". Для смены обратитесь к старшему Администратору.");
-                printf("%s Администратор %s %s(%d) [%s:%s] выдал %s %s(%d) [%s:%s] права Администратора.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][Login], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP]);
+                printf("%s Администратор %s %s(%d) [%s:%s] выдал %s %s(%d) [%s:%s] права Администратора.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, PInfo[playerid][Nick], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], PInfo[params[0]][Nick], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP]);
             }
             else
             {
                 SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У данного игрока уже есть права Администратора.");
-                printf("%s Администратор %s %s(%d) [%s:%s] попытался выдать %s %s(%d) [%s:%s] права Администратора.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][Login], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP]);
+                printf("%s Администратор %s %s(%d) [%s:%s] попытался выдать %s %s(%d) [%s:%s] права Администратора.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, PInfo[playerid][Nick], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], PInfo[params[0]][Nick], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP]);
             }
         }
     }
@@ -634,7 +642,7 @@ cmd:takeadmin(playerid, params[]) // Забрать права Админист�
             if(params[0] == playerid)
                 return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_ME"");
 
-            if(CInfo[params[0]][PInfo[params[0]][CharacterSelect]][AdminLevel] > CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel])
+            if(params[0] != playerid && CInfo[params[0]][PInfo[params[0]][CharacterSelect]][AdminLevel] >= CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel])
                 return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_VALID"");
 
             if(CInfo[params[0]][PInfo[params[0]][CharacterSelect]][AdminLevel] > 0)
@@ -644,13 +652,13 @@ cmd:takeadmin(playerid, params[]) // Забрать права Админист�
                 format(message_admin, sizeof(message_admin), ""C_LIGHTGRAY"Администратор %s %s(%d) забрал у %s %s(%d) права Администратора.", CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0]);
                 ChatSendMessageToAdmin(message_admin);
                 SCMf(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы забрали у %s %s(%d) права Администратора.", CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0]);
-                printf("%s Администратор %s %s(%d) [%s:%s] забрал у %s %s(%d) [%s:%s] права Администратора.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][Login], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP]);
+                printf("%s Администратор %s %s(%d) [%s:%s] забрал у %s %s(%d) [%s:%s] права Администратора.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, PInfo[playerid][Nick], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], PInfo[params[0]][Nick], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP]);
                 KickPlayer(params[0], CInfo[playerid][PInfo[playerid][CharacterSelect]][FullName], "Снятие с Администратора");
             }
             else
             {
                 SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У данного игрока и так нет прав Администратора.");
-                printf("%s Администратор %s %s(%d) [%s:%s] попытался забрать у %s %s(%d) [%s:%s] права Администратора.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][Login], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP]);
+                printf("%s Администратор %s %s(%d) [%s:%s] попытался забрать у %s %s(%d) [%s:%s] права Администратора.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, PInfo[playerid][Nick], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], PInfo[params[0]][Nick], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP]);
             }
         }
     }
@@ -680,13 +688,13 @@ cmd:kick(playerid, params[]) // Кикнуть игрока с сервера | 
             if(params[0] == playerid)
                 return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_ME"");
 
-            if(CInfo[params[0]][PInfo[params[0]][CharacterSelect]][AdminLevel] > CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel])
+            if(params[0] != playerid && CInfo[params[0]][PInfo[params[0]][CharacterSelect]][AdminLevel] >= CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel])
                 return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_VALID"");
 
             new message[45+(-2+MAX_PLAYER_NAME)+(-2+MAX_PLAYER_NAME)+(-2+MAX_PLAYER_NAME)+(-2+MAX_PLAYER_NAME)+(-2+MAX_PLAYER_NAME*2)];
             format(message, sizeof(message), ""C_RED"Администратор %s %s кикнул %s %s. Причина: %s", CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[1]);
             ChatSendGlobalMessage(message);
-            printf("%s Администратор %s %s(%d) [%s:%s] кикнул %s %s(%d) [%s:%s]. Причина: %s", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][Login], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP], params[1]);
+            printf("%s Администратор %s %s(%d) [%s:%s] кикнул %s %s(%d) [%s:%s]. Причина: %s", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, PInfo[playerid][Nick], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], PInfo[params[0]][Nick], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP], params[1]);
             KickPlayer(params[0], CInfo[playerid][PInfo[playerid][CharacterSelect]][FullName], params[1]);
         }
     }
@@ -713,7 +721,7 @@ cmd:setskin(playerid, params[]) // Выдать постоянный скин и
             if(!PInfo[params[0]][IsLogged])
                 return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_FOUND"");
 
-            if(CInfo[params[0]][PInfo[params[0]][CharacterSelect]][AdminLevel] > CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel])
+            if(params[0] != playerid && CInfo[params[0]][PInfo[params[0]][CharacterSelect]][AdminLevel] >= CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel])
                 return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_VALID"");
 
             if(!(0 <= params[1] <= 311))
@@ -728,7 +736,7 @@ cmd:setskin(playerid, params[]) // Выдать постоянный скин и
             format(message_admin, sizeof(message_admin), ""C_LIGHTGRAY"Администратор %s %s(%d) установил %s %s(%d) постоянный скин (ID: %d).", CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][Skin]);
             ChatSendMessageToAdmin(message_admin);
             SCMf(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы установили %s %s(%d) постоянный скин (ID: %d).", CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][Skin]);
-            printf("%s Администратор %s %s(%d) [%s:%s] установил %s %s(%d) [%s:%s] постоянный скин (ID: %d).", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][Login], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][Skin]);
+            printf("%s Администратор %s %s(%d) [%s:%s] установил %s %s(%d) [%s:%s] постоянный скин (ID: %d).", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, PInfo[playerid][Nick], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], PInfo[params[0]][Nick], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][Skin]);
         }
     }
     else
@@ -754,7 +762,7 @@ cmd:settempskin(playerid, params[]) // Выдать временный скин 
             if(!PInfo[params[0]][IsLogged])
                 return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_FOUND"");
 
-            if(CInfo[params[0]][PInfo[params[0]][CharacterSelect]][AdminLevel] > CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel])
+            if(params[0] != playerid && CInfo[params[0]][PInfo[params[0]][CharacterSelect]][AdminLevel] >= CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel])
                 return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_VALID"");
 
             if(!(0 <= params[1] <= 311))
@@ -768,7 +776,7 @@ cmd:settempskin(playerid, params[]) // Выдать временный скин 
             format(message_admin, sizeof(message_admin), ""C_LIGHTGRAY"Администратор %s %s(%d) установил %s %s(%d) временный скин (ID: %d).", CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], params[1]);
             ChatSendMessageToAdmin(message_admin);
             SCMf(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы установили %s %s(%d) временный скин (ID: %d).", CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], params[1]);
-            printf("%s Администратор %s %s(%d) [%s:%s] установил %s %s(%d) [%s:%s] временный скин (ID: %d).", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][Login], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP], params[1]);
+            printf("%s Администратор %s %s(%d) [%s:%s] установил %s %s(%d) [%s:%s] временный скин (ID: %d).", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, PInfo[playerid][Nick], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], PInfo[params[0]][Nick], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP], params[1]);
         }
     }
     else
@@ -792,7 +800,7 @@ cmd:payday(playerid) // Запустить зарплату (PayDay) | Launch Sa
             new message_admin[53+(-2+MAX_PLAYER_NAME)+(-2+MAX_PLAYER_NAME)+(-2+4)];
             format(message_admin, sizeof(message_admin), ""C_LIGHTGRAY"Администратор %s %s(%d) запустил PayDay.", CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid);
             ChatSendMessageToAdmin(message_admin);
-            printf("%s Администратор %s %s(%d) [%s:%s] запустил PayDay.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP]);
+            printf("%s Администратор %s %s(%d) [%s:%s] запустил PayDay.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, PInfo[playerid][Nick], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP]);
         }
     }
     else
@@ -821,6 +829,9 @@ cmd:goto(playerid, params[]) // Телепортироваться к игрок
             if(params[0] == playerid)
                 return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_ME"");
 
+            if(params[0] != playerid && CInfo[params[0]][PInfo[params[0]][CharacterSelect]][AdminLevel] >= CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel])
+                return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_VALID"");
+
             new Float:x, Float:y, Float:z, Float:a, interior, vw;
             GetPlayerPos(params[0], x, y, z);
             GetPlayerFacingAngle(params[0], a);
@@ -834,7 +845,7 @@ cmd:goto(playerid, params[]) // Телепортироваться к игрок
             format(message_admin, sizeof(message_admin), ""C_LIGHTGRAY"Администратор %s %s(%d) телепортировался к %s %s(%d).", CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0]);
             ChatSendMessageToAdmin(message_admin);
             SCMf(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы телепортировались к %s %s(%d).", CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0]);
-            printf("%s Администратор %s %s(%d) [%s:%s] телепортировался к %s %s(%d) [%s:%s].", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][Login], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP]);
+            printf("%s Администратор %s %s(%d) [%s:%s] телепортировался к %s %s(%d) [%s:%s].", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, PInfo[playerid][Nick], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], PInfo[params[0]][Nick], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP]);
         }
     }
     else
@@ -863,6 +874,9 @@ cmd:gethere(playerid, params[]) // Телепортировать игрока �
             if(params[0] == playerid)
                 return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_ME"");
 
+            if(params[0] != playerid && CInfo[params[0]][PInfo[params[0]][CharacterSelect]][AdminLevel] >= CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel])
+                return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_VALID"");
+
             new Float:x, Float:y, Float:z, Float:a, interior, vw;
             GetPlayerPos(playerid, x, y, z);
             GetPlayerFacingAngle(playerid, a);
@@ -876,7 +890,7 @@ cmd:gethere(playerid, params[]) // Телепортировать игрока �
             format(message_admin, sizeof(message_admin), ""C_LIGHTGRAY"Администратор %s %s(%d) телепортировал %s %s(%d) к себе.", CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0]);
             ChatSendMessageToAdmin(message_admin);
             SCMf(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы телепортировали %s %s(%d) к себе.", CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0]);
-            printf("%s Администратор %s %s(%d) [%s:%s] телепортировал %s %s(%d) [%s:%s] к себе.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][Login], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP]);
+            printf("%s Администратор %s %s(%d) [%s:%s] телепортировал %s %s(%d) [%s:%s] к себе.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, PInfo[playerid][Nick], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], PInfo[params[0]][Nick], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP]);
         }
     }
     else
@@ -898,13 +912,13 @@ cmd:spec(playerid, params[]) // Следить за игроком | Follow the 
 
             if(sscanf(params, "d", params[0]))
             {
-                if(ASInfo[playerid][Toggle])
+                if(PAdminSpectateInfo[playerid][IsToggle])
                 {
-                    ASInfo[playerid][Toggle] = false;
+                    PAdminSpectateInfo[playerid][IsToggle] = false;
                     TogglePlayerSpectating(playerid, false);
                     SpawnPlayer(playerid);
-                    SetPlayerPos(playerid, ASInfo[playerid][Position][0], ASInfo[playerid][Position][1], ASInfo[playerid][Position][2]+1.0);
-                    SetPlayerFacingAngle(playerid, ASInfo[playerid][Rotation]);
+                    SetPlayerPos(playerid, PAdminSpectateInfo[playerid][Position][0], PAdminSpectateInfo[playerid][Position][1], PAdminSpectateInfo[playerid][Position][2]+1.0);
+                    SetPlayerFacingAngle(playerid, PAdminSpectateInfo[playerid][Rotation]);
                     return SetCameraBehindPlayer(playerid);
                 }
 
@@ -917,13 +931,16 @@ cmd:spec(playerid, params[]) // Следить за игроком | Follow the 
             if(params[0] == playerid)
                 return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_ME"");
 
+            if(params[0] != playerid && CInfo[params[0]][PInfo[params[0]][CharacterSelect]][AdminLevel] >= CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel])
+                return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_VALID"");
+
             new interior, vw;
             interior = GetPlayerInterior(params[0]);
             vw = GetPlayerVirtualWorld(params[0]);
-            if(!ASInfo[playerid][Toggle])
+            if(!PAdminSpectateInfo[playerid][IsToggle])
             {
-                GetPlayerPos(playerid, ASInfo[playerid][Position][0], ASInfo[playerid][Position][1], ASInfo[playerid][Position][2]);
-                GetPlayerFacingAngle(playerid, ASInfo[playerid][Rotation]);
+                GetPlayerPos(playerid, PAdminSpectateInfo[playerid][Position][0], PAdminSpectateInfo[playerid][Position][1], PAdminSpectateInfo[playerid][Position][2]);
+                GetPlayerFacingAngle(playerid, PAdminSpectateInfo[playerid][Rotation]);
             }
             TogglePlayerSpectating(playerid, true);
             SetPlayerInterior(playerid, interior);
@@ -937,7 +954,7 @@ cmd:spec(playerid, params[]) // Следить за игроком | Follow the 
             }
             else
                 PlayerSpectatePlayer(playerid, params[0]);
-            ASInfo[playerid][Toggle] = true;
+            PAdminSpectateInfo[playerid][IsToggle] = true;
         }
     }
     else
@@ -946,7 +963,7 @@ cmd:spec(playerid, params[]) // Следить за игроком | Follow the 
 }
 alias:spec("sp")
 
-cmd:tpcoord(playerid, params[0])
+cmd:tpcoord(playerid, params[0]) // Телепорт по координатам | Teleport by coordinates
 {
     if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
     {
@@ -964,7 +981,7 @@ cmd:tpcoord(playerid, params[0])
 
             SetPlayerPos(playerid, x, y, z);
             SCMf(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы телепортировались по координатам (%.2f, %.2f, %.2f).", x, y, z);
-            printf("%s Администратор %s %s(%d) [%s:%s] телепортировался по координатам: %.2f, %.2f, %.2f.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], x, y, z);
+            printf("%s Администратор %s %s(%d) [%s:%s] телепортировался по координатам: %.2f, %.2f, %.2f.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, PInfo[playerid][Nick], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], x, y, z);
         }
     }
     else
@@ -973,7 +990,7 @@ cmd:tpcoord(playerid, params[0])
 }
 alias:tpcoord("tpc")
 
-cmd:setinterior(playerid, params[])
+cmd:setinterior(playerid, params[]) // Установить интерьер | Install the interior
 {
     if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
     {
@@ -991,7 +1008,7 @@ cmd:setinterior(playerid, params[])
             if(!PInfo[params[0]][IsLogged])
                 return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_FOUND"");
 
-            if(CInfo[params[0]][PInfo[params[0]][CharacterSelect]][AdminLevel] > CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel])
+            if(params[0] != playerid && CInfo[params[0]][PInfo[params[0]][CharacterSelect]][AdminLevel] >= CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel])
                 return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_VALID"");
 
             if(!(0 <= params[1] <= 256))
@@ -1000,7 +1017,7 @@ cmd:setinterior(playerid, params[])
             SetPlayerInterior(params[0], params[1]);
             SCMf(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы переместили %s %s(%d) в %d интерьер.", CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], params[1]);
             SCMf(params[0], -1, ""NOTIF_SUCCESS" "C_WHITE"Администратор переместил Вас в %d интерьер.", params[1]);
-            printf("%s Администратор %s %s(%d) [%s:%s] переместил %s %s(%d) [%s:%s] в %d интерьер.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][Login], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP], params[1]);
+            printf("%s Администратор %s %s(%d) [%s:%s] переместил %s %s(%d) [%s:%s] в %d интерьер.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, PInfo[playerid][Nick], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], PInfo[params[0]][Nick], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP], params[1]);
         }
     }
     else
@@ -1009,7 +1026,7 @@ cmd:setinterior(playerid, params[])
 }
 alias:setinterior("setint")
 
-cmd:resetinterior(playerid, params[])
+cmd:resetinterior(playerid, params[]) // Восстановить интерьер | To restore the interior
 {
     if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
     {
@@ -1027,13 +1044,13 @@ cmd:resetinterior(playerid, params[])
             if(!PInfo[params[0]][IsLogged])
                 return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_FOUND"");
 
-            if(CInfo[params[0]][PInfo[params[0]][CharacterSelect]][AdminLevel] > CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel])
+            if(params[0] != playerid && CInfo[params[0]][PInfo[params[0]][CharacterSelect]][AdminLevel] >= CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel])
                 return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_VALID"");
 
             SetPlayerInterior(params[0], 0);
             SCMf(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы восстановили %s %s(%d) интерьер.", CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0]);
             SCM(params[0], -1, ""NOTIF_SUCCESS" "C_WHITE"Администратор восстановил Ваш интерьер.");
-            printf("%s Администратор %s %s(%d) [%s:%s] восстановил %s %s(%d) [%s:%s] интерьер.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][Login], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP]);
+            printf("%s Администратор %s %s(%d) [%s:%s] восстановил %s %s(%d) [%s:%s] интерьер.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, PInfo[playerid][Nick], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], PInfo[params[0]][Nick], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP]);
         }
     }
     else
@@ -1042,7 +1059,7 @@ cmd:resetinterior(playerid, params[])
 }
 alias:resetinterior("resetint")
 
-cmd:setvirtualworld(playerid, params[])
+cmd:setvirtualworld(playerid, params[]) // Установить виртуальный мир | Set up a virtual world
 {
     if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
     {
@@ -1060,7 +1077,7 @@ cmd:setvirtualworld(playerid, params[])
             if(!PInfo[params[0]][IsLogged])
                 return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_FOUND"");
 
-            if(CInfo[params[0]][PInfo[params[0]][CharacterSelect]][AdminLevel] > CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel])
+            if(params[0] != playerid && CInfo[params[0]][PInfo[params[0]][CharacterSelect]][AdminLevel] >= CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel])
                 return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_VALID"");
 
             if(!(0 <= params[1] <= 2147483647))
@@ -1069,7 +1086,7 @@ cmd:setvirtualworld(playerid, params[])
             SetPlayerVirtualWorld(params[0], params[1]);
             SCMf(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы переместили %s %s(%d) в %d виртуальный мир.", CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], params[1]);
             SCMf(params[0], -1, ""NOTIF_SUCCESS" "C_WHITE"Администратор переместил Вас в %d виртуальный мир.", params[1]);
-            printf("%s Администратор %s %s(%d) [%s:%s] переместил %s %s(%d) [%s:%s] в %d виртуальный мир.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][Login], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP], params[1]);
+            printf("%s Администратор %s %s(%d) [%s:%s] переместил %s %s(%d) [%s:%s] в %d виртуальный мир.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, PInfo[playerid][Nick], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], PInfo[params[0]][Nick], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP], params[1]);
         }
     }
     else
@@ -1078,7 +1095,7 @@ cmd:setvirtualworld(playerid, params[])
 }
 alias:setvirtualworld("setvw")
 
-cmd:resetvirtualworld(playerid, params[])
+cmd:resetvirtualworld(playerid, params[]) // Восстановить виртуальный мир | Restore the virtual world
 {
     if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
     {
@@ -1096,13 +1113,13 @@ cmd:resetvirtualworld(playerid, params[])
             if(!PInfo[params[0]][IsLogged])
                 return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_FOUND"");
 
-            if(CInfo[params[0]][PInfo[params[0]][CharacterSelect]][AdminLevel] > CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel])
+            if(params[0] != playerid && CInfo[params[0]][PInfo[params[0]][CharacterSelect]][AdminLevel] >= CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel])
                 return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_VALID"");
 
             SetPlayerVirtualWorld(params[0], 0);
             SCMf(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы восстановили %s %s(%d) виртуальный мир.", CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0]);
             SCM(params[0], -1, ""NOTIF_SUCCESS" "C_WHITE"Администратор восстановил Ваш виртуальный мир.");
-            printf("%s Администратор %s %s(%d) [%s:%s] восстановил %s %s(%d) [%s:%s] виртуальный мир.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][Login], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP]);
+            printf("%s Администратор %s %s(%d) [%s:%s] восстановил %s %s(%d) [%s:%s] виртуальный мир.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, PInfo[playerid][Nick], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], PInfo[params[0]][Nick], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP]);
         }
     }
     else
@@ -1111,7 +1128,7 @@ cmd:resetvirtualworld(playerid, params[])
 }
 alias:resetvirtualworld("resetvw")
 
-cmd:spawn(playerid, params[])
+cmd:spawn(playerid, params[]) // Заспавнить игрока | Wake up the player
 {
     if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
     {
@@ -1129,7 +1146,7 @@ cmd:spawn(playerid, params[])
             if(!PInfo[params[0]][IsLogged])
                 return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_FOUND"");
 
-            if(CInfo[params[0]][PInfo[params[0]][CharacterSelect]][AdminLevel] > CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel])
+            if(params[0] != playerid && CInfo[params[0]][PInfo[params[0]][CharacterSelect]][AdminLevel] >= CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel])
                 return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_VALID"");
 
             SetPlayerPos(params[0], PositionsSpawn[random(MAX_POSITIONS_SPAWN)][0], PositionsSpawn[random(MAX_POSITIONS_SPAWN)][1], PositionsSpawn[random(MAX_POSITIONS_SPAWN)][2]);
@@ -1139,7 +1156,7 @@ cmd:spawn(playerid, params[])
             SetPlayerVirtualWorld(params[0], 0);
             SCMf(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы заспавнили %s %s(%d).", CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0]);
             SCM(params[0], -1, ""NOTIF_SUCCESS" "C_WHITE"Вы были заспанены Администратором.");
-            printf("%s Администратор %s %s(%d) [%s:%s] заспавнил %s %s(%d) [%s:%s].", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][Login], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP]);
+            printf("%s Администратор %s %s(%d) [%s:%s] заспавнил %s %s(%d) [%s:%s].", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, PInfo[playerid][Nick], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], PInfo[params[0]][Nick], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP]);
         }
     }
     else
@@ -1147,7 +1164,7 @@ cmd:spawn(playerid, params[])
     return 1;
 }
 
-cmd:freeze(playerid, params[]) // Телепортировать игрока к себе | Teleport the player to yourself
+cmd:freeze(playerid, params[]) // Заморозить игрока | Freeze the player
 {
     if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
     {
@@ -1168,7 +1185,7 @@ cmd:freeze(playerid, params[]) // Телепортировать игрока к
             if(params[0] == playerid)
                 return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_ME"");
 
-            if(CInfo[params[0]][PInfo[params[0]][CharacterSelect]][AdminLevel] > CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel])
+            if(params[0] != playerid && CInfo[params[0]][PInfo[params[0]][CharacterSelect]][AdminLevel] >= CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel])
                 return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_VALID"");
 
             FreezePlayer(playerid, false);
@@ -1177,7 +1194,84 @@ cmd:freeze(playerid, params[]) // Телепортировать игрока к
             ChatSendMessageToAdmin(message_admin);
             SCMf(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы %s %s %s(%d).", (CInfo[params[0]][PInfo[params[0]][CharacterSelect]][IsFrozen] ? ("заморозили") : ("разморозили")), CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0]);
             SCMf(params[0], -1, ""NOTIF_SUCCESS" "C_WHITE"Вы были %s Администратором.", (CInfo[params[0]][PInfo[params[0]][CharacterSelect]][IsFrozen] ? ("заморожены") : ("разморожены")));
-            printf("%s Администратор %s %s(%d) [%s:%s] %s %s %s(%d) [%s:%s].", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], (CInfo[params[0]][PInfo[params[0]][CharacterSelect]][IsFrozen] ? ("заморозил") : ("разморозил")), CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][Login], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP]);
+            printf("%s Администратор %s %s(%d) [%s:%s] %s %s %s(%d) [%s:%s].", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, PInfo[playerid][Nick], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], (CInfo[params[0]][PInfo[params[0]][CharacterSelect]][IsFrozen] ? ("заморозил") : ("разморозил")), CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], PInfo[params[0]][Nick], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP]);
+        }
+    }
+    else
+        SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""COMMAND_NOT_FOUND"");
+    return 1;
+}
+
+cmd:adminchat(playerid, params[]) // Отправка сообщения в чат Администрации | Sending a message to the Administration chat
+{
+    if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
+    {
+        if(CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand] > 0)
+            return 1;
+
+        if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
+        {
+            if(sscanf(params, "s[128]", params[0]))
+                return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE""COMMAND_INVALID"", "adminchat (текст)");
+
+            new message[128];
+            if(strlen(params[0]) > 46)
+            {
+                new first[37+(-2+MAX_PLAYER_NAME)+(-2+MAX_PLAYER_NAME)+(-2+4)+(-2+2)+(-2+47)], second[17+(-2+113)];
+                strmid(message, params[0], 47, 128, 128);
+                strdel(params[0], 47, 128);
+                format(first, sizeof(first), ""C_LIGHTGRAY"%s %s(%d) [%d LVL]: %s..", CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel], params[0]);
+                ChatSendMessageToAdmin(first);
+                format(second, sizeof(second), ""C_LIGHTGRAY"..%s", message);
+                ChatSendMessageToAdmin(second, _, _, false);
+            }
+            else
+            {
+                format(message, sizeof(message), ""C_LIGHTGRAY"%s %s(%d) [%d LVL]: %s", CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel], params[0]);
+                ChatSendMessageToAdmin(message);
+            }
+        }
+    }
+    else
+        SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""COMMAND_NOT_FOUND"");
+    return 1;
+}
+alias:adminchat("achat", "ac")
+
+cmd:giveweapon(playerid, params[])
+{
+    if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
+    {
+        if(CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand] > 0)
+            return 1;
+
+        if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
+        {
+            if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] < 4)
+                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У Вас недостаточно прав для выполнения данной команды.");
+
+            if(sscanf(params, "dd", params[0], params[1]))
+                return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE""COMMAND_INVALID"", "giveweapon [ID] [WEAPON ID]");
+
+            if(!PInfo[params[0]][IsLogged])
+                return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_FOUND"");
+
+            if(params[0] != playerid && CInfo[params[0]][PInfo[params[0]][CharacterSelect]][AdminLevel] >= CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel])
+                return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_VALID"");
+
+            if(!(1 <= params[1] <= 46))
+                return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Неверный ID оружия. Диапазон: от 1 до 46.");
+
+            if(!(1 <= params[1] <= 15))
+                GivePlayerWeapon(params[0], params[1], 1);
+            else
+                GivePlayerWeapon(params[0], params[1], 777);
+            new message_admin[69+(-2+MAX_PLAYER_NAME)+(-2+MAX_PLAYER_NAME)+(-2+4)+(-2+MAX_PLAYER_NAME)+(-2+MAX_PLAYER_NAME)+(-2+4)+(-2+2)];
+            format(message_admin, sizeof(message_admin), ""C_LIGHTGRAY"Администратор %s %s(%d) выдал %s %s(%d) оружие (ID: %d).", CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], params[1]);
+            ChatSendMessageToAdmin(message_admin);
+            SCMf(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы выдали %s %s(%d) оружие (ID: %d).", CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], params[1]);
+            SCMf(params[0], -1, ""NOTIF_SUCCESS" "C_WHITE"Администратор выдал Вам оружие (ID: %d).", params[1]);
+            printf("%s Администратор %s %s(%d) [%s:%s] выдал %s %s(%d) [%s:%s] оружие (ID: %d).", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, PInfo[playerid][Nick], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][FirstName], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastName], params[0], PInfo[params[0]][Nick], CInfo[params[0]][PInfo[params[0]][CharacterSelect]][LastIP], params[1]);
         }
     }
     else

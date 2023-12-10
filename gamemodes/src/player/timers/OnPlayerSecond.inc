@@ -21,6 +21,8 @@ function TimerOnPlayerSecond(playerid)
                 CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendMessage]--;
             if(CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand] > 0)
                 CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand]--;
+            if(CInfo[playerid][PInfo[playerid][CharacterSelect]][DelayOpeningDialog] > 0)
+                CInfo[playerid][PInfo[playerid][CharacterSelect]][DelayOpeningDialog]--;
 
             // Проверка на деньги | Checking for money
             if(CInfo[playerid][PInfo[playerid][CharacterSelect]][MoneyTime] <= 0)
@@ -57,5 +59,6 @@ function TimerOnPlayerSecond(playerid)
             }
         }
     }
-    return PTimerInfo[playerid][Second] = SetTimerEx("TimerOnPlayerSecond", 1000, false, "i", playerid);
+    PTimerInfo[playerid][Second] = SetTimerEx("TimerOnPlayerSecond", 1000, false, "i", playerid);
+    return 1;
 }

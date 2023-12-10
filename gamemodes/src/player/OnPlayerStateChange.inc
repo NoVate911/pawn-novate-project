@@ -6,6 +6,7 @@ public OnPlayerStateChange(playerid, newstate, oldstate)
     if(PInfo[playerid][IsLogged])
     {
         VehicleStateChange(playerid, newstate, oldstate);
+        DrivingSchoolStateChange(playerid, newstate, oldstate);
     }
     return 1;
 }

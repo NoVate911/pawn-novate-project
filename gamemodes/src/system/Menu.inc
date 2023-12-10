@@ -1,6 +1,6 @@
 /*      [ ПУНКТЫ В МЕНЮ ]      */
 /*      [ MENU ITEMS ]      */
-new const Strings_Menu[2][] = {
+new const StringsMenu[2][] = {
     "Статистика",
     "Настройки"
 };
@@ -10,10 +10,10 @@ new const Strings_Menu[2][] = {
 dCreate:DlgPlayerMenu(playerid)
 {
     new temp[26+(-2+2)+(-2+(MAX_PLAYER_NAME*2))];
-    new string[sizeof(temp)*sizeof(Strings_Menu)];
-    for(new i = 0; i < sizeof(Strings_Menu); i++)
+    new string[sizeof(temp)*sizeof(StringsMenu)];
+    for(new i = 0; i < sizeof(StringsMenu); i++)
     {
-        format(temp, sizeof(temp), ""C_GRAY"[%d] "C_WHITE"%s\n", i+1, Strings_Menu[i]);
+        format(temp, sizeof(temp), ""C_GRAY"[%d] "C_WHITE"%s\n", i+1, StringsMenu[i]);
         strcat(string, temp, sizeof(string));
     }
     return Dialog_Open(playerid, Dialog:DlgPlayerMenu, DIALOG_STYLE_LIST, ""C_WHITE"Меню", string, "Выбрать", "Выход");
@@ -25,12 +25,11 @@ dResponse:DlgPlayerMenu(playerid)
     {
         switch(listitem)
         {
-            case 0: Dialog_Show(playerid, Dialog:DlgMenuStats);
+            case 0: return Dialog_Show(playerid, Dialog:DlgMenuStats);
             default: SCM(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Данный раздел находится в разработке.");
         }
     }
-    else
-        CInfo[playerid][PInfo[playerid][CharacterSelect]][IsDialogActive] = false;
+    CInfo[playerid][PInfo[playerid][CharacterSelect]][IsDialogActive] = false;
     return 1;
 }
 

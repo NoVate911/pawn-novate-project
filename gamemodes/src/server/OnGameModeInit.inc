@@ -5,6 +5,7 @@ public OnGameModeInit()
     STimerInfo[Second] = SetTimer("TimerOnServerSecond", 1000, false);
     VehicleInit();
     WorksInit();
+    DrivingSchoolInit();
     TextDrawsCreateForServer();
     TimeSet();
     WeatherSet();

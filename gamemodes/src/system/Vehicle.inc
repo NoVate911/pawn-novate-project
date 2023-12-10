@@ -272,16 +272,20 @@ stock VehicleGetSpeedValue(vehicleid)
 /*      [ CALCULATE THE SPEED AND MILEAGE OF THE TRANSPORT ]      */
 stock VehicleCalculateSpeedValue(id)
 {
-    new Float:velocity[3];
-    GetVehicleVelocity(VInfo[id][ID], velocity[0], velocity[1], velocity[2]);
-    VInfo[id][Speed] = floatsqroot(floatpower(floatabs(velocity[0]), 2.0) + floatpower(velocity[1], 2.0) + floatpower(velocity[2], 2.0)) * 100.3;
-    new Float:mileage = (VInfo[id][Speed] / 8.6) / 300;
-    if(VInfo[id][Speed] > 0.0)
+    if(VInfo[id][ID] != 0)
     {
-        if(mileage > 0.0)
-            VInfo[id][Mileage] += mileage;
+        new Float:velocity[3];
+        GetVehicleVelocity(VInfo[id][ID], velocity[0], velocity[1], velocity[2]);
+        VInfo[id][Speed] = floatsqroot(floatpower(floatabs(velocity[0]), 2.0) + floatpower(velocity[1], 2.0) + floatpower(velocity[2], 2.0)) * 100.3;
+        new Float:mileage = (VInfo[id][Speed] / 8.6) / 300;
+        if(VInfo[id][Speed] > 0.0)
+        {
+            if(mileage > 0.0)
+                VInfo[id][Mileage] += mileage;
+        }
+        return true;
     }
-    return 1;
+    return false;
 }
 
 /*      [ СМЕНА ЦВЕТА ТРАНСПОРТА ]      */
@@ -316,13 +320,25 @@ stock VehicleFindID(vehicleid)
     return false;
 }
 
+/*      [ ПОЛУЧЕНИЕ НОМЕРА МАССИВА В КОТОРОМ ХРАНИТСЯ ТРАНСПОРТ ]      */
+/*      [ GETTING THE NUMBER OF THE ARRAY WHERE THE TRANSPORT IS STORED ]      */
+stock VehicleGetArrayID(vehicleid)
+{
+    for(new v = 0; v < MAX_VEHICLES; v++)
+    {
+        if(VInfo[v][ID] == vehicleid)
+            return v;
+    }
+    return 0;
+}
+
 /*      [ ВЫВЕСТИ ВЕСЬ ТРАНСПОРТ ]      */
 /*      [ WITHDRAW ALL TRANSPORT ]      */
 stock VehiclePrintAllInfo(playerid)
 {
     if(Vehicle_Count > 0)
     {
-        printf("%s %s %s(%d) [%s:%s] запросил информацию о транспорте на сервере.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Login], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP]);
+        printf("%s %s %s(%d) [%s:%s] запросил информацию о транспорте на сервере.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, PInfo[playerid][Nick], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP]);
         ChatClear(playerid, _, 1);
         for(new v = 0; v < MAX_VEHICLES; v++)
         {
@@ -334,6 +350,34 @@ stock VehiclePrintAllInfo(playerid)
     else
         SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"На сервере нет ни одной единицы созданного транспорта.");
     return 0;
+}
+
+/*      [ ПОКАЗАТЬ СПИДОМЕТР ТРАНСПОРТА ДЛЯ ИГРОКА ]      */
+/*      [ SHOW THE SPEEDOMETER OF THE TRANSPORT FOR THE PLAYER ]      */
+stock VehicleShowSpeedometerForPlayer(playerid, vehicleid)
+{
+    if(GetPlayerVehicleSeat(playerid) == 0)
+    {
+        new id = VehicleGetArrayID(vehicleid);
+        for(new speedometer = 0; speedometer < 6; speedometer++)
+            TextDrawShowForPlayer(playerid, VInfo[id][Speedometer][speedometer]);
+        return true;
+    }
+    return false;
+}
+
+/*      [ СКРЫТЬ СПИДОМЕТР ТРАНСПОРТА ДЛЯ ИГРОКА ]      */
+/*      [ HIDE THE TRANSPORT SPEEDOMETER FOR THE PLAYER ]      */
+stock VehicleHideSpeedometerForPlayer(playerid, vehicleid)
+{
+    if(GetPlayerVehicleSeat(playerid) == 0)
+    {
+        new id = VehicleGetArrayID(vehicleid);
+        for(new speedometer = 0; speedometer < 6; speedometer++)
+            TextDrawHideForPlayer(playerid, VInfo[id][Speedometer][speedometer]);
+        return true;
+    }
+    return false;
 }
 
 stock VehicleKeyStateChange(playerid, newkeys)
@@ -386,22 +430,7 @@ stock VehicleStateChange(playerid, newstate, oldstate)
     if(oldstate == PLAYER_STATE_ONFOOT && newstate == PLAYER_STATE_DRIVER || newstate == PLAYER_STATE_PASSENGER)
     {
         CInfo[playerid][PInfo[playerid][CharacterSelect]][IsVehicle] = true;
-        if(GetPlayerVehicleSeat(playerid) == 0)
-        {
-            new vehicleid = GetPlayerVehicleID(playerid);
-            if(VehicleFindID(vehicleid))
-            {
-                for(new v = 0; v < MAX_VEHICLES; v++)
-                {
-                    if(VInfo[v][ID] == vehicleid)
-                    {
-                        for(new speedometer = 0; speedometer < 6; speedometer++)
-                            TextDrawShowForPlayer(playerid, VInfo[v][Speedometer][speedometer]);
-                        break;
-                    }
-                }
-            }
-        }
+        VehicleShowSpeedometerForPlayer(playerid, GetPlayerVehicleID(playerid));
     }
     return 1;
 }

@@ -31,14 +31,14 @@ CREATE TABLE IF NOT EXISTS `accounts` (
   `regDate` varchar(21) DEFAULT '1999.01.01 / 00:00:00',
   `lastDate` varchar(21) DEFAULT '1999.01.01 / 00:00:00',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- Р­РєСЃРїРѕСЂС‚РёСЂСѓРµРјС‹Рµ РґР°РЅРЅС‹Рµ РЅРµ РІС‹РґРµР»РµРЅС‹.
 
 -- Р”Р°РјРї СЃС‚СЂСѓРєС‚СѓСЂС‹ РґР»СЏ С‚Р°Р±Р»РёС†Р° samp-novateproject.characters
 CREATE TABLE IF NOT EXISTS `characters` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `login` varchar(24) DEFAULT 'NoVate',
+  `accountID` int(11) DEFAULT NULL,
   `firstName` varchar(24) DEFAULT 'Jony',
   `lastName` varchar(24) DEFAULT 'Quatro',
   `age` int(2) DEFAULT 18,
@@ -63,6 +63,16 @@ CREATE TABLE IF NOT EXISTS `characters` (
   `lastIP` varchar(15) DEFAULT '0.0.0.0',
   `regDate` varchar(21) DEFAULT '1999.01.01 / 00:00:00',
   `lastDate` varchar(21) DEFAULT '1999.01.01 / 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- Р­РєСЃРїРѕСЂС‚РёСЂСѓРµРјС‹Рµ РґР°РЅРЅС‹Рµ РЅРµ РІС‹РґРµР»РµРЅС‹.
+
+-- Р”Р°РјРї СЃС‚СЂСѓРєС‚СѓСЂС‹ РґР»СЏ С‚Р°Р±Р»РёС†Р° samp-novateproject.licenses
+CREATE TABLE IF NOT EXISTS `licenses` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `characterID` int(11) DEFAULT NULL,
+  `driver` int(1) DEFAULT 0,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 

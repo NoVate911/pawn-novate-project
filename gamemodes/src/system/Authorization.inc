@@ -10,6 +10,13 @@ new const Float:PositionsSpawn[MAX_POSITIONS_SPAWN][4] = { // X, Y, Z, Rotation
 /*      [ THE APPEARANCE OF THE PLAYER AFTER AUTHENTICATION ]      */
 stock PlayerSpawnAfterAuthorization(playerid)
 {
+    static const licenses_query[] = "SELECT id,characterID,driver FROM licenses WHERE characterID = '%d' LIMIT 1";
+    new licenses_mysql[sizeof(licenses_query)+(-2+11)];
+    mysql_format(SInfo[MySQL], licenses_mysql, sizeof(licenses_mysql), licenses_query, CInfo[playerid][PInfo[playerid][CharacterSelect]][ID]);
+    new Cache:licenses_cache = mysql_query(SInfo[MySQL], licenses_mysql, true);
+    if(cache_num_rows())
+        DataGetCharacterLicenseInfo(playerid);
+    cache_delete(licenses_cache);
     TogglePlayerSpectating(playerid, false);
     ObjectsRemoveForPlayer(playerid);
     ObjectsCreateForPlayer(playerid);
@@ -70,9 +77,9 @@ dResponse:DlgAuthLogPassword(playerid)
         {
             strmid(PInfo[playerid][Password], inputtext, 0, strlen(inputtext), MAX_PASSWORD_LEN);
 
-            static const query[] = "SELECT email,regIP,lastIP,regDate,lastDate FROM accounts WHERE password = md5('%s') LIMIT 1";
-            new mysql[sizeof(query)+(-2+MAX_PASSWORD_LEN)];
-            mysql_format(SInfo[MySQL], mysql, sizeof(mysql), query, PInfo[playerid][Password]);
+            static const query[] = "SELECT id,email,donate,regIP,lastIP,regDate,lastDate FROM accounts WHERE nick = '%s' AND password = md5('%s') LIMIT 1";
+            new mysql[sizeof(query)+(-2+MAX_PLAYER_NAME)+(-2+MAX_PASSWORD_LEN)];
+            mysql_format(SInfo[MySQL], mysql, sizeof(mysql), query, PInfo[playerid][Nick], PInfo[playerid][Password]);
             new Cache:cache = mysql_query(SInfo[MySQL], mysql, true);
             if(cache_num_rows())
             {
@@ -89,7 +96,6 @@ dResponse:DlgAuthLogPassword(playerid)
             else
             {
                 PInfo[playerid][AuthorizationCountTry]--;
-                
                 if(PInfo[playerid][AuthorizationCountTry] < 0)
                     KickPlayer(playerid, _, "Много попыток входа");
                 else

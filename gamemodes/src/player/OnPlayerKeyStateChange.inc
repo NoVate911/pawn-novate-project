@@ -7,6 +7,9 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
     {
         if(!CInfo[playerid][PInfo[playerid][CharacterSelect]][IsDialogActive])
         {
+            if(CInfo[playerid][PInfo[playerid][CharacterSelect]][DelayOpeningDialog] > 0)
+                return 1;
+
             if(GetPlayerState(playerid) == PLAYER_STATE_ONFOOT) // Анти-баннихоп | Anti-bannyhop
             {
                 if(!CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
@@ -23,6 +26,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
             WorkLoaderLVKeyStateChange(playerid, newkeys);
             WorkFarmerLVKeyStateChange(playerid, newkeys);
             WorkDiverLVKeyStateChange(playerid, newkeys);
+            DrivingSchoolKeyStateChange(playerid, newkeys);
         }
     }
     return 1;

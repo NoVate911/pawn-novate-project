@@ -71,6 +71,7 @@ main(){}
 #include "./src/system/Money.inc"
 #include "./src/system/Freeze.inc"
 #include "./src/system/Notification.inc"
+#include "./src/system/DrivingSchool.inc"
 #include "./src/system/works/Loader.inc"
 #include "./src/system/works/Farmer.inc"
 #include "./src/system/works/Diver.inc"
@@ -94,6 +95,7 @@ main(){}
 #include "./src/player/OnPlayerEnterDynamicCP.inc"
 #include "./src/player/OnPlayerStateChange.inc"
 #include "./src/player/OnPlayerExitVehicle.inc"
+#include "./src/player/OnPlayerEnterDynamicRaceCP.inc"
 
 /*    [ КОМАНДЫ ]    */
 /*    [ COMMANDS ]    */

@@ -55,6 +55,16 @@ enum PlayerAFKInfo
 }
 new PAFKInfo[MAX_PLAYERS][PlayerAFKInfo];
 
+/*      [ ПЕРЕМЕННЫЕ АДМИНИСТРАТОРА ПРИ НАБЛЮДЕНИИ ]      */
+/*      [ ADMINISTRATOR VARIABLES DURING MONITORING ]      */
+enum PlayerAdminSpectateInfo
+{
+    bool:IsToggle,
+    Float:Position[3],
+    Float:Rotation,
+}
+new PAdminSpectateInfo[MAX_PLAYERS][PlayerAdminSpectateInfo];
+
 /*      [ ПЕРЕМЕННЫЕ ДЛЯ ПЕРСОНАЖА ]      */
 /*      [ VARIABLES FOR THE CHARACTER ]      */
 enum CharacterInfo
@@ -65,9 +75,10 @@ enum CharacterInfo
     bool:IsVehicle,
     DelaySendMessage,
     DelaySendCommand,
+    DelayOpeningDialog,
 
     ID,
-    Login[MAX_PLAYER_NAME],
+    AccountID,
     FirstName[MAX_PLAYER_NAME],
     LastName[MAX_PLAYER_NAME],
     FullName[MAX_PLAYER_NAME],
@@ -98,12 +109,19 @@ enum CharacterInfo
 }
 new CInfo[MAX_PLAYERS][MAX_CHARACTERS][CharacterInfo];
 
-/*      [ ПЕРЕМЕННЫЕ АДМИНИСТРАТОРА ПРИ НАБЛЮДЕНИИ ]      */
-/*      [ ADMINISTRATOR VARIABLES DURING MONITORING ]      */
-enum AdminSpectateInfo
+/*      [ ПЕРЕМЕННЫЕ С ЛИЦЕНЗИЯМИ ПЕРСОНАЖА ]      */
+/*      [ VARIABLES WITH CHARACTER LICENSES ]      */
+enum CharacterLicenseInfo
 {
-    bool:Toggle,
-    Float:Position[3],
-    Float:Rotation,
+    SchoolID,
+    SelectedCategory,
+    bool:IsStarted,
+    VehicleID,
+    STREAMER_TAG_CP:Checkpoint,
+    CurrentCheckpoint,
+
+    ID,
+    CharacterID,
+    bool:IsDriver,
 }
-new ASInfo[MAX_PLAYERS][AdminSpectateInfo];
+new CLicenseInfo[MAX_PLAYERS][CharacterLicenseInfo];
