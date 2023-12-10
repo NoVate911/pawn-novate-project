@@ -28,6 +28,7 @@ public OnPlayerDisconnect(playerid, reason)
         DataClearAdminSpectateInfo(playerid);
         DataClearPlayerWorksInfo(playerid);
         DataClearCharacterLicenseInfo(playerid);
+        DataClearPlayerDialogInfo(playerid);
         printf("%s %s %s(%d) [%s:%s] отключился от сервера.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, PInfo[playerid][Nick], PInfo[playerid][LastIP]);
     }
 

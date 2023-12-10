@@ -25,10 +25,15 @@ dResponse:DlgPlayerMenu(playerid)
         switch(listitem)
         {
             case 0: return Dialog_Show(playerid, Dialog:DlgMenuStats);
-            default: SCM(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Данный раздел находится в разработке.");
+            default:
+            {
+                PDialogInfo[playerid][IsActive] = false;
+                SCM(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Данный раздел находится в разработке.");
+            }
         }
     }
-    CInfo[playerid][PInfo[playerid][CharacterSelect]][IsDialogActive] = false;
+    else
+        PDialogInfo[playerid][IsActive] = false;
     return 1;
 }
 
@@ -51,6 +56,6 @@ dResponse:DlgMenuStats(playerid)
     if(response)
         Dialog_Show(playerid, Dialog:DlgPlayerMenu);
     else
-        CInfo[playerid][PInfo[playerid][CharacterSelect]][IsDialogActive] = false;
+        PDialogInfo[playerid][IsActive] = false;
     return 1;
 }

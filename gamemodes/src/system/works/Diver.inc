@@ -29,7 +29,7 @@ stock WorkDiverLVKeyStateChange(playerid, newkeys)
                 if(IsPlayerInRangeOfPoint(playerid, 2.0, WorkDiverLVPositionsInvite[0], WorkDiverLVPositionsInvite[1], WorkDiverLVPositionsInvite[2]))
                 {
                     ApplyDynamicActorAnimation(WInfo[WORK_DIVER_LV_ID][ActorID], "PED", "IDLE_CHAT", 4.1, 0, 1, 1, 1, 1);
-                    CInfo[playerid][PInfo[playerid][CharacterSelect]][IsDialogActive] = true;
+                    PDialogInfo[playerid][IsActive] = true;
                     CInfo[playerid][PInfo[playerid][CharacterSelect]][DelayOpeningDialog] = MAX_DELAY_OPENING_DIALOG;
                     if(!CInfo[playerid][PInfo[playerid][CharacterSelect]][Working])
                         Dialog_Show(playerid, Dialog:DlgWorkDiverLVInvite);
@@ -119,7 +119,7 @@ dCreate:DlgWorkDiverLVInvite(playerid)
 
 dResponse:DlgWorkDiverLVInvite(playerid)
 {
-    CInfo[playerid][PInfo[playerid][CharacterSelect]][IsDialogActive] = false;
+    PDialogInfo[playerid][IsActive] = false;
     if(response)
     {
         SetPlayerSkin(playerid, (CInfo[playerid][PInfo[playerid][CharacterSelect]][Sex] == 0 ? (WORK_DIVER_LV_MALE_SKIN_ID) : (WORK_DIVER_LV_FEMALE_SKIN_ID)));
@@ -148,7 +148,7 @@ dCreate:DlgWorkDiverLVUninvite(playerid)
 
 dResponse:DlgWorkDiverLVUninvite(playerid)
 {
-    CInfo[playerid][PInfo[playerid][CharacterSelect]][IsDialogActive] = false;
+    PDialogInfo[playerid][IsActive] = false;
     if(response)
     {
         SetPlayerSkin(playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Skin]);

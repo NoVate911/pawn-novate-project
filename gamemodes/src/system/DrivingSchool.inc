@@ -42,7 +42,7 @@ stock DrivingSchoolKeyStateChange(playerid, newkeys)
                 {
                     if(IsPlayerInRangeOfPoint(playerid, 2.0, DrivingSchoolPositionsBeginning[id][0], DrivingSchoolPositionsBeginning[id][1], DrivingSchoolPositionsBeginning[id][2]))
                     {
-                        CInfo[playerid][PInfo[playerid][CharacterSelect]][IsDialogActive] = true;
+                        PDialogInfo[playerid][IsActive] = true;
                         CInfo[playerid][PInfo[playerid][CharacterSelect]][DelayOpeningDialog] = MAX_DELAY_OPENING_DIALOG;
                         CLicenseInfo[playerid][SchoolID] = id;
                         Dialog_Show(playerid, Dialog:DlgDrivingSchoolLicenses);
@@ -156,7 +156,7 @@ dResponse:DlgDrivingSchoolLicenses(playerid)
         Dialog_Show(playerid, Dialog:DlgDrivingSchoolBeginning);
     }
     else
-        CInfo[playerid][PInfo[playerid][CharacterSelect]][IsDialogActive] = false;
+        PDialogInfo[playerid][IsActive] = false;
     return 1;
 }
 
@@ -173,7 +173,7 @@ dCreate:DlgDrivingSchoolBeginning(playerid)
 
 dResponse:DlgDrivingSchoolBeginning(playerid)
 {
-    CInfo[playerid][PInfo[playerid][CharacterSelect]][IsDialogActive] = false;
+    PDialogInfo[playerid][IsActive] = false;
     if(response)
     {
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][Money] < DrivingSchoolLicensesParams[CLicenseInfo[playerid][SelectedCategory]][0])

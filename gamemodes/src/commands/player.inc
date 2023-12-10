@@ -3,10 +3,10 @@ cmd:menu(playerid)
     if(CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand] > 0)
         return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Подождите %d секунд перед отправкой команды.", CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand]);
 
-    if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsDialogActive])
+    if(PDialogInfo[playerid][IsActive])
         return 1;
         
-    CInfo[playerid][PInfo[playerid][CharacterSelect]][IsDialogActive] = true;
+    PDialogInfo[playerid][IsActive] = true;
     return Dialog_Show(playerid, Dialog:DlgPlayerMenu);
 }
 alias:menu("mn")

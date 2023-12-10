@@ -5,7 +5,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 
     if(PInfo[playerid][IsLogged])
     {
-        if(!CInfo[playerid][PInfo[playerid][CharacterSelect]][IsDialogActive])
+        if(!PDialogInfo[playerid][IsActive])
         {
             if(CInfo[playerid][PInfo[playerid][CharacterSelect]][DelayOpeningDialog] > 0)
                 return 1;

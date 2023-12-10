@@ -56,6 +56,15 @@ stock DataClearPlayerAFKInfo(playerid)
     return 1;
 }
 
+/*      [ ОБНУЛЯЕМ ИНФОРМАЦИЮ О ДИАЛОГЕ ИГРОКА ]      */
+/*      [ WE RESET THE INFORMATION ABOUT THE PLAYER'S DIALOGUE ]      */
+stock DataClearPlayerDialogInfo(playerid)
+{
+    PDialogInfo[playerid][IsActive] = false;
+    PDialogInfo[playerid][AdminHelpLevel] = 0;
+    return 1;
+}
+
 /*      [ ОБНУЛЯЕМ ИНФОРМАЦИЮ О КИКЕ ИГРОКА ]      */
 /*      [ WE RESET THE INFORMATION ABOUT THE PLAYER'S KICK ]      */
 stock DataClearCharacterInfo(playerid)
@@ -63,7 +72,6 @@ stock DataClearCharacterInfo(playerid)
     for(new i = 0; i < PInfo[playerid][CharactersCount]; i++)
     {
         CInfo[playerid][i][IsSpawning] = false;
-        CInfo[playerid][i][IsDialogActive] = false;
         CInfo[playerid][i][IsFrozen] = false;
         CInfo[playerid][i][IsVehicle] = false;
         CInfo[playerid][i][DelaySendMessage] = 0;

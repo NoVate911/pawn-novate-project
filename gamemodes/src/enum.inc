@@ -65,12 +65,20 @@ enum PlayerAdminSpectateInfo
 }
 new PAdminSpectateInfo[MAX_PLAYERS][PlayerAdminSpectateInfo];
 
+/*      [ ПЕРЕМЕННЫЕ ДИАЛОГА ]      */
+/*      [ DIALOG VARIABLES ]      */
+enum PlayerDialogInfo
+{
+    bool:IsActive,
+    AdminHelpLevel, // Выбранный уровень Администратора при просмотре доступных команд | The selected Administrator level when viewing the available commands
+}
+new PDialogInfo[MAX_PLAYERS][PlayerDialogInfo];
+
 /*      [ ПЕРЕМЕННЫЕ ДЛЯ ПЕРСОНАЖА ]      */
 /*      [ VARIABLES FOR THE CHARACTER ]      */
 enum CharacterInfo
 {
     bool:IsSpawning,
-    bool:IsDialogActive,
     bool:IsFrozen,
     bool:IsVehicle,
     DelaySendMessage,

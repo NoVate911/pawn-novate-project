@@ -5,7 +5,7 @@ public OnPlayerEnterDynamicCP(playerid, checkpointid)
 
     if(PInfo[playerid][IsLogged])
     {
-        if(!CInfo[playerid][PInfo[playerid][CharacterSelect]][IsDialogActive])
+        if(!PDialogInfo[playerid][IsActive])
         {
             WorkLoaderLVEnterDynamicCP(playerid, checkpointid);
             WorkFarmerLVEnterDynamicCP(playerid, checkpointid);

@@ -32,7 +32,7 @@ stock WorkFarmerLVKeyStateChange(playerid, newkeys)
                         return SCM(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Для того, чтобы окончить работу нужно отнести сноп сена в амбар.");
 
                     ApplyDynamicActorAnimation(WInfo[WORK_FARMER_LV_ID][ActorID], "PED", "IDLE_CHAT", 4.1, 0, 1, 1, 1, 1);
-                    CInfo[playerid][PInfo[playerid][CharacterSelect]][IsDialogActive] = true;
+                    PDialogInfo[playerid][IsActive] = true;
                     CInfo[playerid][PInfo[playerid][CharacterSelect]][DelayOpeningDialog] = MAX_DELAY_OPENING_DIALOG;
                     if(!CInfo[playerid][PInfo[playerid][CharacterSelect]][Working])
                         Dialog_Show(playerid, Dialog:DlgWorkFarmerLVInvite);
@@ -102,7 +102,7 @@ dCreate:DlgWorkFarmerLVInvite(playerid)
 
 dResponse:DlgWorkFarmerLVInvite(playerid)
 {
-    CInfo[playerid][PInfo[playerid][CharacterSelect]][IsDialogActive] = false;
+    PDialogInfo[playerid][IsActive] = false;
     if(response)
     {
         SetPlayerSkin(playerid, (CInfo[playerid][PInfo[playerid][CharacterSelect]][Sex] == 0 ? (WORK_FARMER_LV_MALE_SKIN_ID) : (WORK_FARMER_LV_FEMALE_SKIN_ID)));
@@ -131,7 +131,7 @@ dCreate:DlgWorkFarmerLVUninvite(playerid)
 
 dResponse:DlgWorkFarmerLVUninvite(playerid)
 {
-    CInfo[playerid][PInfo[playerid][CharacterSelect]][IsDialogActive] = false;
+    PDialogInfo[playerid][IsActive] = false;
     if(response)
     {
         SetPlayerSkin(playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][Skin]);

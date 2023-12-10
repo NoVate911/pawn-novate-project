@@ -16,10 +16,11 @@ cmd:adminlogin(playerid, params[]) // Войти под Администрато
             if(params[0] == CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminPassword])
             {
                 CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin] = true;
-                new message_admin[61+(-2+MAX_PLAYER_NAME)+(-2+MAX_PLAYER_NAME)+(-2+4)];
-                format(message_admin, sizeof(message_admin), ""C_LIGHTGRAY"Администратор %s %s(%d) авторизовался в системе.", CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid);
+                new message_admin[70+(-2+MAX_PLAYER_NAME)+(-2+MAX_PLAYER_NAME)+(-2+4)+(-2+2)];
+                format(message_admin, sizeof(message_admin), ""C_LIGHTGRAY"Администратор %s %s(%d) [%d LVL] авторизовался в системе.", CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel]);
                 ChatSendMessageToAdmin(message_admin);
                 SCM(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы авторизовались в системе.");
+                SCM(playerid, -1, ""NOTIF_INFO" "C_WHITE"Для помощи по командам Администрации - /adminhelp.");
                 printf("%s Администратор %s %s(%d) [%s:%s] авторизовался в системе.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, PInfo[playerid][Nick], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP]);
             }
             else
@@ -40,7 +41,7 @@ cmd:adminlogin(playerid, params[]) // Войти под Администрато
 }
 alias:adminlogin("alogin")
 
-cmd:adminlogout(playerid)
+cmd:adminlogout(playerid) // Выйти из системы | Log out of the system
 {
     if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
     {
@@ -1331,16 +1332,19 @@ cmd:adminhelp(playerid, params[])
 
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
         {
-            if(sscanf(params, "d", params[0]))
-                return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE""COMMAND_INVALID"", "adminhelp [Уровень]");
-
-            if(!(MIN_ADMIN_LEVEL <= params[0] <= CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel]))
-                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Неверный уровень Администратора. Диапазон: от %d до %d.", MIN_ADMIN_LEVEL, CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel]);
-
-            if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsDialogActive])
+            if(PDialogInfo[playerid][IsActive])
                 return 1;
 
-            SCM(playerid, -1, ""NOTIF_WARNING" "C_WHITE"В разработке.");
+            if(sscanf(params, "d", params[0]))
+                Dialog_Show(playerid, Dialog:DlgAdminHelpList);
+            else
+            {
+                if(!(MIN_ADMIN_LEVEL <= params[0] <= CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel]))
+                    return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Неверный уровень Администратора. Диапазон: от %d до %d.", MIN_ADMIN_LEVEL, CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel]);
+                PDialogInfo[playerid][AdminHelpLevel] = params[0];
+                Dialog_Show(playerid, Dialog:DlgAdminHelp);
+            }
+            PDialogInfo[playerid][IsActive] = true;
         }
         else
             SCM(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Авторизуйтесь в системе (/adminlogin) для просмотра доступных команд.");
@@ -1351,57 +1355,176 @@ cmd:adminhelp(playerid, params[])
 }
 alias:adminhelp("ahelp")
 
+cmd:setweather(playerid, params[])
+{
+    if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
+    {
+        if(CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand] > 0)
+            return 1;
+
+        if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
+        {
+            if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] < 4)
+                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_MISSING_ADMIN_LEVEL"");
+
+            if(sscanf(params, "d", params[0]))
+                return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE""COMMAND_INVALID"", "setweather [ID погоды]");
+
+            if(!(0 <= params[0] <= 22))
+                return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Неверно указаны часы. Диапазон: от 0 до 22.");
+        
+            WeatherSet(true, params[0]);
+            new message_admin[61+(-2+MAX_PLAYER_NAME)+(-2+MAX_PLAYER_NAME)+(-2+4)+(-2+2)];
+            format(message_admin, sizeof(message_admin), ""C_LIGHTGRAY"Администратор %s %s(%d) изменил погоду (ID: %d).", CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, params[0]);
+            ChatSendMessageToAdmin(message_admin);
+            SCMf(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы изменили погоду (ID: %d).", params[0]);
+            printf("%s Администратор %s %s(%d) [%s:%s] изменил погоду (ID: %d).", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, PInfo[playerid][Nick], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP], params[0]);
+        }
+    }
+    else
+        SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""COMMAND_NOT_FOUND"");
+    return 1;
+}
+
+cmd:resetweather(playerid)
+{
+    if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
+    {
+        if(CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand] > 0)
+            return 1;
+
+        if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
+        {
+            if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] < 4)
+                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_MISSING_ADMIN_LEVEL"");
+        
+            WeatherSet();
+            new message_admin[56+(-2+MAX_PLAYER_NAME)+(-2+MAX_PLAYER_NAME)+(-2+4)];
+            format(message_admin, sizeof(message_admin), ""C_LIGHTGRAY"Администратор %s %s(%d) восстановил погоду.", CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid);
+            ChatSendMessageToAdmin(message_admin);
+            SCM(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы восстановили погоду.");
+            printf("%s Администратор %s %s(%d) [%s:%s] восстановил погоду.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, PInfo[playerid][Nick], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP]);
+        }
+    }
+    else
+        SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""COMMAND_NOT_FOUND"");
+    return 1;
+}
+
 /*      [ ========== ========== ========== ========== ========== ]      */
 
-dCreate:DlgAdminHelp(playerid)
+dCreate:DlgAdminHelpList(playerid)
 {
     new level[25+(-2+2)], avaliableLevels[sizeof(level)*MAX_ADMIN_LEVEL];
-    // new commandsLevel[570], avaliableCommands[sizeof(commandsLevel)*2];
-    for(new adminLevel = 0; adminLevel < CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel]; adminLevel++)
+    for(new i = 0; i < CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel]; i++)
     {
-        format(level, sizeof(level), ""C_LIGHTGRAY"%d уровень\n", adminLevel+1);
+        format(level, sizeof(level), ""C_WHITE"%d уровень\n", i+1);
         strcat(avaliableLevels, level, sizeof(avaliableLevels));
-        // switch(adminLevel)
-        // {
-        //     case 1:
-        //     {
-        //         format(level, sizeof(level), "1 уровень");
-        //         format(commandsLevel, sizeof(commandsLevel), ""C_WHITE"1 уровень:\n\
-        //         "C_LIGHTGRAY"/adminlogin - войти в систему.\n\
-        //         "C_LIGHTGRAY"/adminlogout - выйти из системы.\n\
-        //         "C_LIGHTGRAY"/adminhelp - посмотреть список доступных команд.\n\n");
-        //         strcat(avaliableCommands, commandsLevel, sizeof(avaliableCommands));
-        //     }
-        //     case 2:
-        //     {
-        //         format(commandsLevel, sizeof(commandsLevel), ""C_WHITE"2 уровень:\n\
-        //         "C_LIGHTGRAY"/kick - кикнуть игрока.\n\
-        //         "C_LIGHTGRAY"/spec - режим слежки за игроком.\n\
-        //         "C_LIGHTGRAY"/tpcoord - телепорт по координатам.\n\
-        //         "C_LIGHTGRAY"/setinterior - установить интерьер.\n\
-        //         "C_LIGHTGRAY"/resetinterior - восстановить интерьер.\n\
-        //         "C_LIGHTGRAY"/setvirtualworld - установить виртуальный мир.\n\
-        //         "C_LIGHTGRAY"/resetvirtualworld - восстановить виртуальный мир.\n\
-        //         "C_LIGHTGRAY"/spawn - заспавнить игрока.");
-        //         strcat(avaliableCommands, commandsLevel, sizeof(avaliableCommands));
-        //     }
-        // }
     }
     static const message[] = "\
-    "C_WHITE"Выберите уровень:\n\
+    "C_LIGHTGRAY"Выберите уровень:\n\
     %s";
     new string[sizeof(message)+(-2+sizeof(avaliableLevels))];
     format(string, sizeof(string), message, avaliableLevels);
-    return Dialog_Open(playerid, Dialog:DlgAdminHelp, DIALOG_STYLE_LIST, ""C_GRAY"Помощь "C_BLACK"| "C_WHITE"Команды Администрации", string, "Выбрать", "Закрыть");
+    return Dialog_Open(playerid, Dialog:DlgAdminHelpList, DIALOG_STYLE_LIST, ""C_GRAY"Помощь "C_BLACK"| "C_WHITE"Команды Администрации", string, "Выбрать", "Закрыть");
+}
+
+dResponse:DlgAdminHelpList(playerid)
+{
+    if(response)
+    {
+        if(listitem == 0)
+            return Dialog_Show(playerid, Dialog:DlgAdminHelpList);
+        PDialogInfo[playerid][AdminHelpLevel] = listitem;
+        Dialog_Show(playerid, Dialog:DlgAdminHelp);
+    }
+    else
+        PDialogInfo[playerid][IsActive] = false;
+    return 1;
+}
+
+dCreate:DlgAdminHelp(playerid)
+{
+    new header[58+(-2+2)];
+    format(header, sizeof(header), ""C_GRAY"Помощь "C_BLACK"| "C_WHITE"Администратор %d уровня", PDialogInfo[playerid][AdminHelpLevel]);
+    new avaliableCommands[643];
+    switch(PDialogInfo[playerid][AdminHelpLevel])
+    {
+        case 1:
+        {
+            format(avaliableCommands, sizeof(avaliableCommands), "\
+            /adminlogin - авторизация в системе.\n\
+            /adminlogout - деавторизация в системе.\n\
+            /adminhelp - просмотр доступных команд.");
+        }
+        case 2:
+        {
+            format(avaliableCommands, sizeof(avaliableCommands), "\
+            /kick - кикнуть игрока.\n\
+            /spec - следить за игроком.\n\
+            /tpcoord - телепортироваться по координатам.\n\
+            /setinterior - установить интерьер для игрока.\n\
+            /resetinterior - восстановить интерьер игроку.\n\
+            /setvirtualworld - установить виртуальный мир для игрока.\n\
+            /resetvirtualworld - восстановить виртуальный мир игроку.\n\
+            /spawn - заспавнить игрока.");
+        }
+        case 3:
+        {
+            format(avaliableCommands, sizeof(avaliableCommands), "\
+            /createvehicle - создать транспорт для игрока.\n\
+            /removevehicle - удалить транспорт.\n\
+            /fixvehicle - починить транспорт.\n\
+            /vehiclelock - открыть/закрыть транспорт.\n\
+            /vehiclecolor - изменить цвет транспорта.\n\
+            /vehiclelist - посмотреть весь заспавненный транспорт.\n\
+            /vehiclegoto - телепортироваться к транспорту.\n\
+            /vehiclegethere - телепортировать транспорт к себе.\n\
+            /hp - установить здоровье игроку.\n\
+            /armour - установить броню игроку.\n\
+            /freeze - заморозить/разморозить игрока.");
+        }
+        case 4:
+        {
+            format(avaliableCommands, sizeof(avaliableCommands), "\
+            /clearchat - очистить чат сервера.\n\
+            /settime - установить время на сервере.\n\
+            /resettime - восстановить время на сервере.\n\
+            /setskin - установить постоянный скин игроку.\n\
+            /settempskin - установить временный скин игроку.\n\
+            /goto - телепортироваться к игроку.\n\
+            /gethere - телепортировать игрока к себе.\n\
+            /giveweapon - выдать оружие игроку.\n\
+            /vehiclerespawnall - зареспавнить весь незанятый транспорт.\n\
+            /setweather - установить погоду на сервере.\n\
+            /resetweather - восстановить погоду на сервере.");
+        }
+        case 5:
+        {
+            format(avaliableCommands, sizeof(avaliableCommands), "\
+            /payday - запустить внеплановую зарплату.");
+        }
+        case 6:
+        {
+            format(avaliableCommands, sizeof(avaliableCommands), "\
+            /setadmin - выдать права Администратора игроку.\n\
+            /takeadmin - забрать права Администратора у игрока.");
+        }
+        default: format(avaliableCommands, sizeof(avaliableCommands), "Для данного уровня Администратора не найдено ни одной команды.");
+    }
+    static const message[] = "\
+    "C_WHITE"\n\\cДоступные команды:\n\n\
+    "C_LIGHTGRAY"%s\n\n";
+    new string[sizeof(message)+(-2+sizeof(avaliableCommands))];
+    format(string, sizeof(string), message, avaliableCommands);
+    return Dialog_Open(playerid, Dialog:DlgAdminHelp, DIALOG_STYLE_MSGBOX, header, string, "Закрыть", "Назад");
 }
 
 dResponse:DlgAdminHelp(playerid)
 {
     if(response)
-    {
-        SCMf(playerid, -1, ""NOTIF_INFO" "C_WHITE"Вы выбрали %d уровень Администратора.", listitem+1);
-    }
+        PDialogInfo[playerid][IsActive] = false;
     else
-        CInfo[playerid][PInfo[playerid][CharacterSelect]][IsDialogActive] = false;
+        Dialog_Show(playerid, Dialog:DlgAdminHelpList);
     return 1;
 }

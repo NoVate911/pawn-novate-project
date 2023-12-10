@@ -366,7 +366,7 @@ stock VehicleKeyStateChange(playerid, newkeys)
                         }
                         case KEY_YES: // Y
                         {
-                            CInfo[playerid][PInfo[playerid][CharacterSelect]][IsDialogActive] = true;
+                            PDialogInfo[playerid][IsActive] = true;
                             Dialog_Show(playerid, Dialog:DlgVehicleControll);
                         }
                     }
@@ -408,7 +408,7 @@ dCreate:DlgVehicleControll(playerid)
 
 dResponse:DlgVehicleControll(playerid)
 {
-    CInfo[playerid][PInfo[playerid][CharacterSelect]][IsDialogActive] = false;
+    PDialogInfo[playerid][IsActive] = false;
     if(response)
     {
         if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsVehicle])
