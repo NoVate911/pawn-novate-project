@@ -12,6 +12,15 @@ public OnPlayerDisconnect(playerid, reason)
             MoneyGive(playerid, PWInfo[playerid][DiverTotalTakenMarkCount] * WORK_DIVER_LV_PRICE_PER_MARK);
         }
 
+        if(IsPlayerInAnyVehicle(playerid))
+        {
+            if(GetPlayerVehicleSeat(playerid) == 0)
+            {
+                new id = VehicleGetArrayID(GetPlayerVehicleID(playerid));
+                VInfo[id][IsUsed] = false;
+            }
+        }
+
         DataSetPlayerInfo(playerid);
         DataSetCharacterInfo(playerid);
         DataSetCharacterLicenseInfo(playerid);

@@ -6,6 +6,8 @@ enum VehicleInfo
     Model,
     Float:SpawnPosition[3],
     Float:SpawnRotation,
+    Float:CurrentPosition[3],
+    Float:CurrentRotation,
     Color1,
     Color2,
     Float:Fuel,
@@ -13,14 +15,15 @@ enum VehicleInfo
     Float:Speed,
     Float:Mileage,
     Text3D:Description,
-    Text:Speedometer[6],
+    VirtualWorld,
     
+    bool:IsUsed,
     bool:IsEngine,
     bool:IsLights,
     bool:IsDoorsClosed
 }
 new VInfo[MAX_VEHICLES][VehicleInfo];
-new Vehicle_Count; // Количество созданного транспорта | Number of vehicles created
+new VehicleCount; // Количество созданного транспорта | Number of vehicles created
 
 /*      [ ПЕРЕМЕННЫЕ ИНТЕРФЕЙСА (сервер) ]      */
 /*      [ INTERFACE VARIABLES (server) ]      */
@@ -34,6 +37,7 @@ new TDInfo[TextDrawInfo];
 /*      [ INTERFACE VARIABLES (player) ]      */
 enum PlayerTextDrawInfo
 {
-    PlayerText:Notification
+    PlayerText:Notification,
+    PlayerText:Speedometer[6],
 }
 new PTDInfo[MAX_PLAYERS][PlayerTextDrawInfo];

@@ -4,6 +4,18 @@ public OnPlayerExitVehicle(playerid, vehicleid)
         return 1;
 
     CInfo[playerid][PInfo[playerid][CharacterSelect]][IsVehicle] = false;
-    VehicleHideSpeedometerForPlayer(playerid, vehicleid);
+    new id = VehicleGetArrayID(vehicleid);
+    if(GetPlayerVehicleSeat(playerid) == 0)
+    {
+        if(IsValidPlayerTextDraw(playerid, PTDInfo[playerid][Speedometer][0]))
+            VehicleHideSpeedometerForPlayer(playerid);
+        new Float:x, Float:y, Float:z;
+        GetVehiclePos(vehicleid, x, y, z);
+        VInfo[id][CurrentPosition][0] = x;
+        VInfo[id][CurrentPosition][1] = y;
+        VInfo[id][CurrentPosition][2] = z;
+        GetVehicleZAngle(vehicleid, VInfo[id][CurrentRotation]);
+        VInfo[id][IsUsed] = false;
+    }
     return 1;
 }

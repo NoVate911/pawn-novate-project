@@ -44,18 +44,17 @@ function TimerOnPlayerSecond(playerid)
                 {
                     new vehicleid = GetPlayerVehicleID(playerid);
                     new speed_string[9+(-2+3)], mileage_string[7+(-2+8)];
-                    for(new vehicle = 0; vehicle < MAX_VEHICLES; vehicle++)
-                    {
-                        if(VInfo[vehicle][ID] == vehicleid)
-                        {
-                            format(speed_string, sizeof(speed_string), "%.0f KM/H", VInfo[vehicle][Speed]);
-                            TextDrawsUpdateForServer(playerid, VInfo[vehicle][Speedometer][4], speed_string);
-                            format(mileage_string, sizeof(mileage_string), "%.0f KM", VInfo[vehicle][Mileage]);
-                            TextDrawsUpdateForServer(playerid, VInfo[vehicle][Speedometer][5], mileage_string);
-                            break;
-                        }
-                    }
+                    new id = VehicleGetArrayID(vehicleid);
+                    format(speed_string, sizeof(speed_string), "%.0f KM/H", VInfo[id][Speed]);
+                    TextDrawsUpdateForPlayer(playerid, PTDInfo[playerid][Speedometer][4], speed_string);
+                    format(mileage_string, sizeof(mileage_string), "%.0f KM", VInfo[id][Mileage]);
+                    TextDrawsUpdateForPlayer(playerid, PTDInfo[playerid][Speedometer][5], mileage_string);
                 }
+            }
+            else
+            {
+                if(IsValidPlayerTextDraw(playerid, PTDInfo[playerid][Speedometer][0]))
+                    VehicleHideSpeedometerForPlayer(playerid);
             }
         }
     }

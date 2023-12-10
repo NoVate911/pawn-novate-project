@@ -12,7 +12,7 @@ function TimerOnServerSecond()
         PayDayLaunch();
 
     // Обновление скорости транспорта | Updating the speed of transport
-    if(Vehicle_Count > 0)
+    if(VehicleCount > 0)
     {
         for(new vehicle = 0; vehicle < MAX_VEHICLES; vehicle++)
             VehicleCalculateSpeedValue(vehicle);

@@ -85,7 +85,7 @@ cmd:createvehicle(playerid, params[]) // Создать транспорт | Cre
                 return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Неверный ID транспорта. Диапазон: от 400 до 611.");
 
             if(IsPlayerInAnyVehicle(params[0]))
-                return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"Игрок находится в транспорте.");
+                return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_IN_VEHICLE"");
 
             new Float:x, Float:y, Float:z, Float:rotation;
             GetPlayerPos(params[0], x, y, z);
@@ -877,6 +877,12 @@ cmd:gethere(playerid, params[]) // Телепортировать игрока �
             if(params[0] != playerid && CInfo[params[0]][PInfo[params[0]][CharacterSelect]][AdminLevel] >= CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel])
                 return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_VALID"");
 
+            if(IsPlayerInAnyVehicle(params[0]))
+            {
+                if(GetPlayerVehicleSeat(playerid) == 0)
+                    return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_IN_VEHICLE"");
+            }
+
             new Float:x, Float:y, Float:z, Float:a, interior, vw;
             GetPlayerPos(playerid, x, y, z);
             GetPlayerFacingAngle(playerid, a);
@@ -1278,3 +1284,38 @@ cmd:giveweapon(playerid, params[])
         SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""COMMAND_NOT_FOUND"");
     return 1;
 }
+
+cmd:vehiclerespawnall(playerid)
+{
+    if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] > 0)
+    {
+        if(CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand] > 0)
+            return 1;
+
+        if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAdmin])
+        {
+            if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] < 4)
+                return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE"У Вас недостаточно прав для выполнения данной команды.");
+
+            if(VehicleCount > 0)
+            {
+                if(VehicleRespawn())
+                {
+                    new message_admin[74+(-2+MAX_PLAYER_NAME)+(-2+MAX_PLAYER_NAME)+(-2+4)];
+                    format(message_admin, sizeof(message_admin), ""C_LIGHTGRAY"Администратор %s %s(%d) зареспавнил весь незанятый транспорт.", CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid);
+                    ChatSendMessageToAdmin(message_admin);
+                    SCM(playerid, -1, ""NOTIF_SUCCESS" "C_WHITE"Вы зареспавнили весь незанятый транспорт.");
+                    printf("%s Администратор %s %s(%d) [%s:%s] зареспавнил весь незанятый транспорт.", DEBUG_INFO, CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, PInfo[playerid][Nick], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastIP]);
+                }
+                else
+                    SCM(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Ни один транспорт не был зареспавнен.");
+            }
+            else
+                SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE"На сервере нет ни одной единицы созданного транспорта.");
+        }
+    }
+    else
+        SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""COMMAND_NOT_FOUND"");
+    return 1;
+}
+alias:vehiclerespawnall("vehrespawnall", "vehicleresall", "vehresall")
