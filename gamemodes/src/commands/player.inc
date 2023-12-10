@@ -137,7 +137,26 @@ cmd:s(playerid, params[])
     if(GetPlayerState(playerid) == PLAYER_STATE_ONFOOT)
     {
         if(!CInfo[playerid][PInfo[playerid][CharacterSelect]][IsFrozen])
+        {
+            CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAnimation] = true;
             ApplyAnimation(playerid, "ON_LOOKERS", "shout_01", 4.1, 0, 0, 0, 0, 0, 1);
+        }
+    }
+    return 1;
+}
+
+cmd:animationstop(playerid)
+{
+    if(CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand] > 0)
+        return SCMf(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Подождите %d секунд перед отправкой команды.", CInfo[playerid][PInfo[playerid][CharacterSelect]][DelaySendCommand]);
+
+    if(GetPlayerState(playerid) == PLAYER_STATE_ONFOOT)
+    {
+        if(!CInfo[playerid][PInfo[playerid][CharacterSelect]][IsFrozen])
+        {
+            if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAnimation])
+                AnimationStop(playerid);
+        }
     }
     return 1;
 }

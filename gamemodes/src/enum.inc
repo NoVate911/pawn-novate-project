@@ -78,6 +78,7 @@ enum CharacterInfo
     DelayOpeningDialog,
     MoneyTime,
     PlayedHourTime,
+    bool:IsAnimation,
 
     ID,
     AccountID,

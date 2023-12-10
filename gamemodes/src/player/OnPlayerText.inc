@@ -39,6 +39,7 @@ public OnPlayerText(playerid, text[])
     {
         if(!CInfo[playerid][PInfo[playerid][CharacterSelect]][IsFrozen])
         {
+            CInfo[playerid][PInfo[playerid][CharacterSelect]][IsAnimation] = true; 
             ApplyAnimation(playerid, "PED", "IDLE_CHAT", 4.1, 0, 1, 1, 1, 1, 1);
             PTimerInfo[playerid][Animation] = SetTimerEx("TimerOnAnimationStop", 3200, false, "i", playerid);
         }

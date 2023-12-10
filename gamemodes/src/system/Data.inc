@@ -71,6 +71,7 @@ stock DataClearCharacterInfo(playerid)
         CInfo[playerid][i][DelayOpeningDialog] = 0;
         CInfo[playerid][i][MoneyTime] = 0;
         CInfo[playerid][i][PlayedHourTime] = 0;
+        CInfo[playerid][i][IsAnimation] = false;
 
         CInfo[playerid][i][ID] = 0;
         CInfo[playerid][i][AccountID] = 0;
