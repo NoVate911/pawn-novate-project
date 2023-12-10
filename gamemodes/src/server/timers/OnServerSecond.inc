@@ -15,7 +15,10 @@ function TimerOnServerSecond()
     if(VehicleCount > 0)
     {
         for(new vehicle = 0; vehicle < MAX_VEHICLES; vehicle++)
-            VehicleCalculateSpeedValue(vehicle);
+        {
+            if(VehicleIsControlled(VInfo[vehicle][Model]))
+                VehicleCalculateSpeedValue(vehicle);
+        }
     }
 
     return STimerInfo[Second] = SetTimer("TimerOnServerSecond", 1000, false);

@@ -29,7 +29,7 @@ stock PayDayLaunch()
             if(!PAFKInfo[p][IsTrue])
             {
                 if(CInfo[p][PInfo[p][CharacterSelect]][PlayedHourTime] < MAX_PAYDAY_PLAYED_HOUR)
-                    SCMf(p, -1, "Для получения зарплаты нужно отыграть %d минут.", MAX_PAYDAY_PLAYED_HOUR);
+                    SCMf(p, -1, "Для получения зарплаты нужно отыграть %d минут.", MAX_PAYDAY_PLAYED_HOUR/60);
                 else
                 {
                     SCMf(p, -1, "Пособие по безработице: %d$", MAX_PAYDAY_BENEFIT);

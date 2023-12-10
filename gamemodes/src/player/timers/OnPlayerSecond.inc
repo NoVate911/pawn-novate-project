@@ -44,14 +44,14 @@ function TimerOnPlayerSecond(playerid)
                 if(GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
                 {
                     new vehicleid = GetPlayerVehicleID(playerid);
-                    if(VehicleIsControlled(vehicleid))
+                    if(VehicleIsControlled(GetVehicleModel(vehicleid)))
                     {
                         new id = VehicleGetArrayID(vehicleid);
                         new speed_string[9+(-2+3)], mileage_string[7+(-2+8)];
                         format(speed_string, sizeof(speed_string), "%.0f KM/H", VInfo[id][Speed]);
                         TextDrawsUpdateForPlayer(playerid, PTDInfo[playerid][Speedometer][4], speed_string);
                         format(mileage_string, sizeof(mileage_string), "%.0f KM", VInfo[id][Mileage]);
-                        TextDrawsUpdateForPlayer(playerid, PTDInfo[playerid][Speedometer][5], mileage_string);
+                        TextDrawsUpdateForPlayer(playerid, PTDInfo[playerid][Speedometer][5], mileage_string, C_F_LIGHTGRAY);
                     }
                 }
             }

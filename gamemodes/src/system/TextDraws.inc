@@ -81,7 +81,7 @@ stock TextDrawsCreateForPlayer(playerid)
     PTDInfo[playerid][Speedometer][5] = CreatePlayerTextDraw(playerid, 414.666259, 401.955780, "0 KM");
     PlayerTextDrawLetterSize(playerid, PTDInfo[playerid][Speedometer][5], 0.400999, 1.400887);
     PlayerTextDrawAlignment(playerid, PTDInfo[playerid][Speedometer][5], 1);
-    PlayerTextDrawColor(playerid, PTDInfo[playerid][Speedometer][5], -86);
+    PlayerTextDrawColor(playerid, PTDInfo[playerid][Speedometer][5], C_F_LIGHTGRAY);
     PlayerTextDrawSetShadow(playerid, PTDInfo[playerid][Speedometer][5], 0);
     PlayerTextDrawSetOutline(playerid, PTDInfo[playerid][Speedometer][5], 1);
     PlayerTextDrawBackgroundColor(playerid, PTDInfo[playerid][Speedometer][5], 51);

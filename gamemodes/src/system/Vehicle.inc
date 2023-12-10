@@ -149,12 +149,34 @@ stock VehicleGetEngineValue(vehicleid)
     return VInfo[id][IsEngine];
 }
 
+/*      [ УСТАНОВИТЬ ЗНАЧЕНИЕ ДВИГАТЕЛЯ У ТРАНСПОРТА ]      */
+/*      [ SET THE VALUE OF THE VEHICLE'S ENGINE ]      */
+stock VehicleSetEngineValue(arrayid)
+{
+    new engine = 0, lights = 0, alarm = 0, doors = 0, bonnet = 0, boot = 0, objective = 0;
+    VInfo[arrayid][IsEngine] = !VInfo[arrayid][IsEngine];
+    GetVehicleParamsEx(VInfo[arrayid][ID], engine, lights, alarm, doors, bonnet, boot, objective);
+    SetVehicleParamsEx(VInfo[arrayid][ID], VInfo[arrayid][IsEngine], VInfo[arrayid][IsLights], alarm, VInfo[arrayid][IsDoorsClosed], bonnet, boot, objective);
+    return VInfo[arrayid][IsEngine];
+}
+
 /*      [ ПОЛУЧИТЬ ЗНАЧЕНИЕ ФАР У ТРАНСПОРТА ]      */
 /*      [ GET THE VALUE OF THE TRANSPORT LIGHTS ]      */
 stock VehicleGetLightsValue(vehicleid)
 {
     new id = VehicleGetArrayID(vehicleid);
     return VInfo[id][IsLights];
+}
+
+/*      [ УСТАНОВИТЬ ЗНАЧЕНИЕ ФАР У ТРАНСПОРТА ]      */
+/*      [ SET THE LIGHTING VALUE FOR VEHICLES ]      */
+stock VehicleSetLightsValue(arrayid)
+{
+    new engine = 0, lights = 0, alarm = 0, doors = 0, bonnet = 0, boot = 0, objective = 0;
+    VInfo[arrayid][IsLights] = !VInfo[arrayid][IsLights];
+    GetVehicleParamsEx(VInfo[arrayid][ID], engine, lights, alarm, doors, bonnet, boot, objective);
+    SetVehicleParamsEx(VInfo[arrayid][ID], VInfo[arrayid][IsEngine], VInfo[arrayid][IsLights], alarm, VInfo[arrayid][IsDoorsClosed], bonnet, boot, objective);
+    return VInfo[arrayid][IsLights];
 }
 
 /*      [ ПОЛУЧИТЬ СКОРОСТЬ ТРАНСПОРТА ]      */
@@ -321,29 +343,31 @@ stock VehicleKeyStateChange(playerid, newkeys)
     if(IsPlayerInAnyVehicle(playerid))
     {
         new const vehicleid = GetPlayerVehicleID(playerid);
-        new engine = 0, lights = 0, alarm = 0, doors = 0, bonnet = 0, boot = 0, objective = 0;
-        if(GetPlayerVehicleSeat(playerid) == 0) // Водитель | Driver
+        if(GetPlayerState(playerid) == PLAYER_STATE_DRIVER) // Водитель | Driver
         {
             if(VehicleFindID(vehicleid))
             {
                 new id = VehicleGetArrayID(vehicleid);
                 if(VehicleIsControlled(VInfo[id][Model]))
                 {
-                    GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
                     switch(newkeys)
                     {
                         case KEY_ACTION: // L. CTRL
                         {
-                            VInfo[id][IsEngine] = !VInfo[id][IsEngine];
-                            SetVehicleParamsEx(vehicleid, VInfo[id][IsEngine], VInfo[id][IsLights], alarm, VInfo[id][IsDoorsClosed], bonnet, boot, objective);
+                            if(VInfo[id][IsEngine] && VInfo[id][Speed] > 0.0)
+                                return NotificationShow(playerid, "STOP", C_F_RED, false);
+                            VehicleSetEngineValue(id);
                             TextDrawsUpdateForPlayer(playerid, PTDInfo[playerid][Speedometer][2], _, (VInfo[id][IsEngine] ? (C_F_GREEN) : (C_F_RED)));
                         }
-                        
                         case KEY_FIRE: // L. ALT
                         {
-                            VInfo[id][IsLights] = !VInfo[id][IsLights];
-                            SetVehicleParamsEx(vehicleid, VInfo[id][IsEngine], VInfo[id][IsLights], alarm, VInfo[id][IsDoorsClosed], bonnet, boot, objective);
+                            VehicleSetLightsValue(id);
                             TextDrawsUpdateForPlayer(playerid, PTDInfo[playerid][Speedometer][3], _, (VInfo[id][IsLights] ? (C_F_GREEN) : (C_F_RED)));
+                        }
+                        case KEY_YES: // Y
+                        {
+                            CInfo[playerid][PInfo[playerid][CharacterSelect]][IsDialogActive] = true;
+                            Dialog_Show(playerid, Dialog:DlgVehicleControll);
                         }
                     }
                 }
@@ -367,6 +391,46 @@ stock VehicleStateChange(playerid, newstate, oldstate)
     {
         CInfo[playerid][PInfo[playerid][CharacterSelect]][IsVehicle] = false;
         VehicleHideSpeedometerForPlayer(playerid);
+    }
+    return 1;
+}
+
+dCreate:DlgVehicleControll(playerid)
+{
+    new id = VehicleGetArrayID(GetPlayerVehicleID(playerid));
+    static const message[] = "\
+    "C_GRAY"[1] "C_WHITE"Двигатель %s\n\
+    "C_GRAY"[2] "C_WHITE"Освещение %s";
+    new string[sizeof(message)+(-2+15)+(-2+15)];
+    format(string, sizeof(string), message, (VInfo[id][IsEngine] ? (""C_GREEN"[Вкл.]") : (""C_RED"[Выкл.]")), (VInfo[id][IsLights] ? (""C_GREEN"[Вкл.]") : (""C_RED"[Выкл.]")));
+    return Dialog_Open(playerid, Dialog:DlgVehicleControll, DIALOG_STYLE_LIST, ""C_LIGHTGRAY"Транспорт "C_BLACK"| "C_WHITE"Управление", string, "Выбрать", "Закрыть");
+}
+
+dResponse:DlgVehicleControll(playerid)
+{
+    CInfo[playerid][PInfo[playerid][CharacterSelect]][IsDialogActive] = false;
+    if(response)
+    {
+        if(CInfo[playerid][PInfo[playerid][CharacterSelect]][IsVehicle])
+        {
+            new id = VehicleGetArrayID(GetPlayerVehicleID(playerid));
+            switch(listitem)
+            {
+                case 0:
+                {
+                    if(VInfo[id][IsEngine] && VInfo[id][Speed] > 0.0)
+                        return NotificationShow(playerid, "STOP", C_F_RED, false);
+                    VehicleSetEngineValue(id);
+                    TextDrawsUpdateForPlayer(playerid, PTDInfo[playerid][Speedometer][2], _, (VInfo[id][IsEngine] ? (C_F_GREEN) : (C_F_RED)));
+                }
+                case 1:
+                {
+                    VehicleSetLightsValue(id);
+                    TextDrawsUpdateForPlayer(playerid, PTDInfo[playerid][Speedometer][3], _, (VInfo[id][IsLights] ? (C_F_GREEN) : (C_F_RED)));
+                }
+                default: SCM(playerid, -1, ""NOTIF_WARNING" "C_WHITE"Данный раздел находится в разработке.");
+            }
+        }
     }
     return 1;
 }
