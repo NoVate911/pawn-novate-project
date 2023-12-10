@@ -76,6 +76,8 @@ enum CharacterInfo
     DelaySendMessage,
     DelaySendCommand,
     DelayOpeningDialog,
+    MoneyTime,
+    PlayedHourTime,
 
     ID,
     AccountID,
@@ -103,7 +105,6 @@ enum CharacterInfo
     AdminPassword,
     bool:IsAdmin,
     Money,
-    MoneyTime,
     bool:Working,
     WorkingType
 }

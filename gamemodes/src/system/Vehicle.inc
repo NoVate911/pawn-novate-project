@@ -238,6 +238,7 @@ stock VehicleRespawn(bool:isUsed = false)
         {
             SetVehiclePos(VInfo[v][ID], VInfo[v][SpawnPosition][0], VInfo[v][SpawnPosition][1], VInfo[v][SpawnPosition][2]);
             SetVehicleZAngle(VInfo[v][ID], VInfo[v][SpawnRotation]);
+            VInfo[v][IsUsed] = false;
             VInfo[v][IsEngine] = false;
             VInfo[v][IsLights] = false;
             VInfo[v][IsDoorsClosed] = true;
@@ -248,6 +249,7 @@ stock VehicleRespawn(bool:isUsed = false)
             {
                 SetVehiclePos(VInfo[v][ID], VInfo[v][SpawnPosition][0], VInfo[v][SpawnPosition][1], VInfo[v][SpawnPosition][2]);
                 SetVehicleZAngle(VInfo[v][ID], VInfo[v][SpawnRotation]);
+                VInfo[v][IsUsed] = false;
                 VInfo[v][IsEngine] = false;
                 VInfo[v][IsLights] = false;
                 VInfo[v][IsDoorsClosed] = true;
@@ -295,31 +297,23 @@ stock VehiclePrintAllInfo(playerid)
 
 /*      [ ПОКАЗАТЬ СПИДОМЕТР ТРАНСПОРТА ДЛЯ ИГРОКА ]      */
 /*      [ SHOW THE SPEEDOMETER OF THE TRANSPORT FOR THE PLAYER ]      */
-stock VehicleShowSpeedometerForPlayer(playerid, vehicleid)
+stock VehicleShowSpeedometerForPlayer(playerid, arrayid)
 {
-    if(GetPlayerVehicleSeat(playerid) == 0)
-    {
-        for(new speedometer = 0; speedometer < 6; speedometer++)
-            PlayerTextDrawShow(playerid, PTDInfo[playerid][Speedometer][speedometer]);
-        TextDrawsUpdateForPlayer(playerid, PTDInfo[playerid][Speedometer][1], _, (VInfo[vehicleid][IsDoorsClosed] ? (C_F_RED) : (C_F_GREEN)));
-        TextDrawsUpdateForPlayer(playerid, PTDInfo[playerid][Speedometer][2], _, (VInfo[vehicleid][IsEngine] ? (C_F_GREEN) : (C_F_RED)));
-        TextDrawsUpdateForPlayer(playerid, PTDInfo[playerid][Speedometer][3], _, (VInfo[vehicleid][IsLights] ? (C_F_GREEN) : (C_F_RED)));
-        return true;
-    }
-    return false;
+    for(new speedometer = 0; speedometer < 6; speedometer++)
+        PlayerTextDrawShow(playerid, PTDInfo[playerid][Speedometer][speedometer]);
+    TextDrawsUpdateForPlayer(playerid, PTDInfo[playerid][Speedometer][1], _, (VInfo[arrayid][IsDoorsClosed] ? (C_F_RED) : (C_F_GREEN)));
+    TextDrawsUpdateForPlayer(playerid, PTDInfo[playerid][Speedometer][2], _, (VInfo[arrayid][IsEngine] ? (C_F_GREEN) : (C_F_RED)));
+    TextDrawsUpdateForPlayer(playerid, PTDInfo[playerid][Speedometer][3], _, (VInfo[arrayid][IsLights] ? (C_F_GREEN) : (C_F_RED)));
+    return 1;
 }
 
 /*      [ СКРЫТЬ СПИДОМЕТР ТРАНСПОРТА ДЛЯ ИГРОКА ]      */
 /*      [ HIDE THE TRANSPORT SPEEDOMETER FOR THE PLAYER ]      */
 stock VehicleHideSpeedometerForPlayer(playerid)
 {
-    if(GetPlayerVehicleSeat(playerid) == 0)
-    {
-        for(new speedometer = 0; speedometer < 6; speedometer++)
-            PlayerTextDrawHide(playerid, PTDInfo[playerid][Speedometer][speedometer]);
-        return true;
-    }
-    return false;
+    for(new speedometer = 0; speedometer < 6; speedometer++)
+        PlayerTextDrawHide(playerid, PTDInfo[playerid][Speedometer][speedometer]);
+    return 1;
 }
 
 stock VehicleKeyStateChange(playerid, newkeys)
@@ -368,6 +362,11 @@ stock VehicleStateChange(playerid, newstate, oldstate)
         VInfo[id][IsUsed] = true;
         if(VehicleIsControlled(VInfo[id][Model]))
             VehicleShowSpeedometerForPlayer(playerid, id);
+    }
+    else if(oldstate == PLAYER_STATE_DRIVER)
+    {
+        CInfo[playerid][PInfo[playerid][CharacterSelect]][IsVehicle] = false;
+        VehicleHideSpeedometerForPlayer(playerid);
     }
     return 1;
 }

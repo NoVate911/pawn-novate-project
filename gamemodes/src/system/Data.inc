@@ -69,6 +69,8 @@ stock DataClearCharacterInfo(playerid)
         CInfo[playerid][i][DelaySendMessage] = 0;
         CInfo[playerid][i][DelaySendCommand] = 0;
         CInfo[playerid][i][DelayOpeningDialog] = 0;
+        CInfo[playerid][i][MoneyTime] = 0;
+        CInfo[playerid][i][PlayedHourTime] = 0;
 
         CInfo[playerid][i][ID] = 0;
         CInfo[playerid][i][AccountID] = 0;
@@ -97,7 +99,6 @@ stock DataClearCharacterInfo(playerid)
         CInfo[playerid][i][AdminPassword] = 0;
         CInfo[playerid][i][IsAdmin] = false;
         CInfo[playerid][i][Money] = 0;
-        CInfo[playerid][i][MoneyTime] = 0;
         CInfo[playerid][i][Working] = false;
         CInfo[playerid][i][WorkingType] = 0;
     }

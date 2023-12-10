@@ -17,24 +17,31 @@ stock PayDayCheck()
 stock PayDayLaunch()
 {
     printf("%s Текущее время %02d:%02d.", DEBUG_INFO, TInfo[Hour], TInfo[Minute]);
-    foreach(new i : Player)
+    WeatherSet();
+    foreach(new p : Player)
     {
-        if(PInfo[i][IsLogged])
+        if(PInfo[p][IsLogged])
         {
-            ChatClear(i, false, 1);
-            SCM(i, -1, "===== ЗАРПЛАТА =====");
-            SCM(i, -1, "");
-            SCMf(i, -1, "Текущее время: %02d:%02d", TInfo[Hour], TInfo[Minute]);
-            if(!PAFKInfo[i][IsTrue])
+            ChatClear(p, false, 1);
+            SCM(p, -1, "===== ЗАРПЛАТА =====");
+            SCM(p, -1, "");
+            SCMf(p, -1, "Текущее время: %02d:%02d", TInfo[Hour], TInfo[Minute]);
+            if(!PAFKInfo[p][IsTrue])
             {
-                SCMf(i, -1, "Пособие по безработице: %d$", MAX_PAYDAY_BENEFIT);
-                MoneyGive(i, 500);
+                if(CInfo[p][PInfo[p][CharacterSelect]][PlayedHourTime] < MAX_PAYDAY_PLAYED_HOUR)
+                    SCMf(p, -1, "Для получения зарплаты нужно отыграть %d минут.", MAX_PAYDAY_PLAYED_HOUR);
+                else
+                {
+                    SCMf(p, -1, "Пособие по безработице: %d$", MAX_PAYDAY_BENEFIT);
+                    MoneyGive(p, MAX_PAYDAY_BENEFIT);
+                }
             }
             else
-                SCM(i, -1, "Для получения зарплаты нельзя находиться в AFK.");
-            SCM(i, -1, "");
-            SCM(i, -1, "====================");
-            ChatClear(i, false, 1);
+                SCM(p, -1, "Для получения зарплаты нельзя находиться в AFK.");
+            SCM(p, -1, "");
+            SCM(p, -1, "====================");
+            ChatClear(p, false, 1);
+            CInfo[p][PInfo[p][CharacterSelect]][PlayedHourTime] = 0;
         }
     }
 

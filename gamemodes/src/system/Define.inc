@@ -49,6 +49,7 @@
 /*      [ ЗАРПЛАТА ]      */
 /*      [ PAYDAY ]      */
 #define MAX_PAYDAY_BENEFIT          (500) // Пособие по безработице | Unemployment benefits
+#define MAX_PAYDAY_PLAYED_HOUR      (1200) // Сколько нужно отыграть для получения зарплаты (в секундах) | How much you need to win back to receive a salary (in seconds)
 
 /*      [ ДИАЛОГИ ]      */
 /*      [ DIALOGUES ]      */

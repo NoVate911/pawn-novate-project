@@ -5,10 +5,8 @@ public OnPlayerExitVehicle(playerid, vehicleid)
 
     CInfo[playerid][PInfo[playerid][CharacterSelect]][IsVehicle] = false;
     new id = VehicleGetArrayID(vehicleid);
-    if(GetPlayerVehicleSeat(playerid) == 0)
+    if(GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
     {
-        if(IsValidPlayerTextDraw(playerid, PTDInfo[playerid][Speedometer][0]))
-            VehicleHideSpeedometerForPlayer(playerid);
         new Float:x, Float:y, Float:z;
         GetVehiclePos(vehicleid, x, y, z);
         VInfo[id][CurrentPosition][0] = x;
