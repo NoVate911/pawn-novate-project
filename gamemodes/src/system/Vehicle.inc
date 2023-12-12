@@ -340,35 +340,32 @@ stock VehicleHideSpeedometerForPlayer(playerid)
 
 stock VehicleKeyStateChange(playerid, newkeys)
 {
-    if(IsPlayerInAnyVehicle(playerid))
+    if(GetPlayerState(playerid) == PLAYER_STATE_DRIVER) // Водитель | Driver
     {
         new const vehicleid = GetPlayerVehicleID(playerid);
-        if(GetPlayerState(playerid) == PLAYER_STATE_DRIVER) // Водитель | Driver
+        if(VehicleFindID(vehicleid))
         {
-            if(VehicleFindID(vehicleid))
+            new id = VehicleGetArrayID(vehicleid);
+            if(VehicleIsControlled(VInfo[id][Model]))
             {
-                new id = VehicleGetArrayID(vehicleid);
-                if(VehicleIsControlled(VInfo[id][Model]))
+                switch(newkeys)
                 {
-                    switch(newkeys)
+                    case KEY_ACTION: // L. CTRL
                     {
-                        case KEY_ACTION: // L. CTRL
-                        {
-                            if(VInfo[id][IsEngine] && VInfo[id][Speed] > 0.0)
-                                return NotificationShow(playerid, "STOP", C_F_RED, false);
-                            VehicleSetEngineValue(id);
-                            TextDrawsUpdateForPlayer(playerid, PTDInfo[playerid][Speedometer][2], _, (VInfo[id][IsEngine] ? (C_F_GREEN) : (C_F_RED)));
-                        }
-                        case KEY_FIRE: // L. ALT
-                        {
-                            VehicleSetLightsValue(id);
-                            TextDrawsUpdateForPlayer(playerid, PTDInfo[playerid][Speedometer][3], _, (VInfo[id][IsLights] ? (C_F_GREEN) : (C_F_RED)));
-                        }
-                        case KEY_YES: // Y
-                        {
-                            PDialogInfo[playerid][IsActive] = true;
-                            Dialog_Show(playerid, Dialog:DlgVehicleControll);
-                        }
+                        if(VInfo[id][IsEngine] && VInfo[id][Speed] > 0.0)
+                            return NotificationShow(playerid, "STOP", C_F_RED, false);
+                        VehicleSetEngineValue(id);
+                        TextDrawsUpdateForPlayer(playerid, PTDInfo[playerid][Speedometer][2], _, (VInfo[id][IsEngine] ? (C_F_GREEN) : (C_F_RED)));
+                    }
+                    case KEY_FIRE: // L. ALT
+                    {
+                        VehicleSetLightsValue(id);
+                        TextDrawsUpdateForPlayer(playerid, PTDInfo[playerid][Speedometer][3], _, (VInfo[id][IsLights] ? (C_F_GREEN) : (C_F_RED)));
+                    }
+                    case KEY_YES: // Y
+                    {
+                        PDialogInfo[playerid][IsActive] = true;
+                        Dialog_Show(playerid, Dialog:DlgVehicleControll);
                     }
                 }
             }
@@ -379,7 +376,7 @@ stock VehicleKeyStateChange(playerid, newkeys)
 
 stock VehicleStateChange(playerid, newstate, oldstate)
 {
-    if(oldstate == PLAYER_STATE_ONFOOT && newstate == PLAYER_STATE_DRIVER || newstate == PLAYER_STATE_PASSENGER)
+    if(oldstate == PLAYER_STATE_ONFOOT && newstate == PLAYER_STATE_DRIVER)
     {
         new id = VehicleGetArrayID(GetPlayerVehicleID(playerid));
         CInfo[playerid][PInfo[playerid][CharacterSelect]][IsVehicle] = true;
@@ -394,6 +391,8 @@ stock VehicleStateChange(playerid, newstate, oldstate)
     }
     return 1;
 }
+
+/*      [ ========== ========== ========== ========== ========== ]      */
 
 dCreate:DlgVehicleControll(playerid)
 {

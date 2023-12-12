@@ -38,6 +38,6 @@ new TDInfo[TextDrawInfo];
 enum PlayerTextDrawInfo
 {
     PlayerText:Notification,
-    PlayerText:Speedometer[6],
+    PlayerText:Speedometer[6]
 }
 new PTDInfo[MAX_PLAYERS][PlayerTextDrawInfo];

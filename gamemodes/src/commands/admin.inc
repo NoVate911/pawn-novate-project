@@ -350,6 +350,9 @@ cmd:vehiclegoto(playerid, params[]) // Переместиться к транс�
             if(!PInfo[params[0]][IsLogged])
                 return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_FOUND"");
 
+            if(params[0] != playerid && CInfo[params[0]][PInfo[params[0]][CharacterSelect]][AdminLevel] >= CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel])
+                return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_VALID"");
+
             if(VehicleFindID(params[1]))
             {
                 new Float:x, Float:y, Float:z, Float:rotation, vw;
@@ -393,6 +396,9 @@ cmd:vehiclegethere(playerid, params[]) // Переместить транспо�
 
             if(!PInfo[params[0]][IsLogged])
                 return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_FOUND"");
+
+            if(params[0] != playerid && CInfo[params[0]][PInfo[params[0]][CharacterSelect]][AdminLevel] >= CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel])
+                return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_VALID"");
 
             if(VehicleFindID(params[1]))
             {
@@ -831,9 +837,6 @@ cmd:goto(playerid, params[]) // Телепортироваться к игрок
 
             if(params[0] == playerid)
                 return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_ME"");
-
-            if(params[0] != playerid && CInfo[params[0]][PInfo[params[0]][CharacterSelect]][AdminLevel] >= CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel])
-                return SCM(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_NOT_VALID"");
 
             new Float:x, Float:y, Float:z, Float:a, interior, vw;
             GetPlayerPos(params[0], x, y, z);
@@ -1398,7 +1401,7 @@ cmd:resetweather(playerid)
             if(CInfo[playerid][PInfo[playerid][CharacterSelect]][AdminLevel] < 4)
                 return SCMf(playerid, -1, ""NOTIF_ERROR" "C_WHITE""PLAYER_MISSING_ADMIN_LEVEL"");
         
-            WeatherSet();
+            WeatherSet(true, 0);
             new message_admin[56+(-2+MAX_PLAYER_NAME)+(-2+MAX_PLAYER_NAME)+(-2+4)];
             format(message_admin, sizeof(message_admin), ""C_LIGHTGRAY"Администратор %s %s(%d) восстановил погоду.", CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid);
             ChatSendMessageToAdmin(message_admin);

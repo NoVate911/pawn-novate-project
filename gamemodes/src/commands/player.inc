@@ -121,7 +121,7 @@ cmd:s(playerid, params[])
         new first[25+(-2+MAX_PLAYER_NAME)+(-2+MAX_PLAYER_NAME)+(-2+4)+(-2+1)+(-2+60)], second[4+(-2+126)];
         strmid(message, params, 60, 128, 128);
         strdel(params, 60, 128);
-        format(first, sizeof(first), "%s %s(%d) крикнул%s: %s..", CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, (CInfo[playerid][PInfo[playerid][CharacterSelect]][Sex] == 0 ? ("а") : ("")), params);
+        format(first, sizeof(first), "%s %s(%d) крикнул%s: %s..", CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, (CInfo[playerid][PInfo[playerid][CharacterSelect]][Sex] == 0 ? ("") : ("а")), params);
         ChatSendMessage(playerid, MAX_DISTANCE_CHAT, C_F_WHITE, first);
         format(second, sizeof(second), "..%s", message);
         ChatSendMessage(playerid, MAX_DISTANCE_CHAT, C_F_WHITE, second);
@@ -129,7 +129,7 @@ cmd:s(playerid, params[])
     }
     else
     {
-        format(message, sizeof(message), "%s %s(%d) крикнул%s: %s", CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, (CInfo[playerid][PInfo[playerid][CharacterSelect]][Sex] == 0 ? ("а") : ("")), params);
+        format(message, sizeof(message), "%s %s(%d) крикнул%s: %s", CInfo[playerid][PInfo[playerid][CharacterSelect]][FirstName], CInfo[playerid][PInfo[playerid][CharacterSelect]][LastName], playerid, (CInfo[playerid][PInfo[playerid][CharacterSelect]][Sex] == 0 ? ("") : ("а")), params);
         ChatSendMessage(playerid, MAX_DISTANCE_CHAT, C_F_WHITE, message);
         SetPlayerChatBubble(playerid, message, C_F_LIGHTGRAY, MAX_DISTANCE_CHAT/2, 3000);
     }
